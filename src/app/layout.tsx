@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
 import ProvidersWrapper from './providers-wrapper';
+import Navbar from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: 'Pixtern',
@@ -13,7 +14,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ProvidersWrapper>{children}</ProvidersWrapper>
+        
+        <ProvidersWrapper>
+          <Navbar />
+          {children}
+          
+        </ProvidersWrapper>
+        
       </body>
     </html>
   );
