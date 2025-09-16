@@ -9,9 +9,9 @@ export default function HeroSection() {
       position="relative"
       minH="100vh"
       overflow="hidden"
-      bg="linear-gradient(to bottom left, #27044F 1%, transparent 40%), #080427"
+      bg="brand.hero"
     >
-      <Container maxW="7xl" marginTop={"20"} position="relative" zIndex={10}>
+      <Container maxW="7xl" marginTop={"20"} position="relative" zIndex={50}>
         <Flex
           direction="column"
           align="center"
@@ -19,20 +19,20 @@ export default function HeroSection() {
           py={10}
           gap={10}
         >
-          {/* Logo / Title */}
+          {/* Logo */}
           <Image src="/images/logo.png" alt="Logo" maxW="400px" mb={6} />
 
-          {/* CTA Button */}
           <Button
             size="xs"
             colorScheme="whiteAlpha"
             bg="white"
-            color="black"
+            color="brand.text.black"
             _hover={{ bg: "gray.200" }}
             rounded={"full"}
             w={120}
+            fontFamily="heading"
             // marginTop={20}
-            borderColor={"black"}
+            borderColor={`brand.bg.black`}
             borderWidth={2}
             shadow={"0px 0px 6px 0px rgba(255,255,255,0.75)"}
           >
@@ -41,7 +41,6 @@ export default function HeroSection() {
         </Flex>
       </Container>
 
-      {/* Floating Assets */}
       <Image
         src="/images/planet2.png"
         alt="Saturn"
