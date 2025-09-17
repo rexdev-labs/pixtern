@@ -20,7 +20,7 @@ export default function HeroSection() {
           gap={10}
         >
           {/* Logo */}
-          <Image src="/images/logo.png" alt="Logo" maxW="400px" mb={6} />
+          <Image src="/images/logo/logo.png" alt="Logo" maxW="400px" mb={6} />
 
           <Button
             size="xs"
@@ -42,7 +42,7 @@ export default function HeroSection() {
       </Container>
 
       <Image
-        src="/images/planet2.png"
+        src="/images/float/planet2.png"
         alt="Saturn"
         position="absolute"
         top="1%"
@@ -52,7 +52,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/planet1.png"
+        src="/images/float/planet1.png"
         alt="Mars"
         position="absolute"
         top="10%"
@@ -62,7 +62,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/planet3.png"
+        src="/images/float/planet3.png"
         alt="Jupiter"
         position="absolute"
         bottom={"40%"}
@@ -72,7 +72,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/moon.png"
+        src="/images/float/moon.png"
         alt="Moon"
         position="absolute"
         bottom="45%"
@@ -82,7 +82,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/starpurple.png"
+        src="/images/float/starpurple.png"
         alt="StarPurple1"
         position="absolute"
         top="12%"
@@ -93,7 +93,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/staryellow.png"
+        src="/images/float/staryellow.png"
         alt="StarYellow"
         position="absolute"
         top="50%"
@@ -104,7 +104,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/starred.png"
+        src="/images/float/starred.png"
         alt="StarRed"
         position="absolute"
         top="12%"
@@ -115,7 +115,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/starpurple.png"
+        src="/images/float/starpurple.png"
         alt="StarPurple2"
         position="absolute"
         top="39%"
@@ -126,7 +126,7 @@ export default function HeroSection() {
       />
 
       <Image
-        src="/images/stargreen.png"
+        src="/images/float/stargreen.png"
         alt="StarGreen"
         position="absolute"
         top="63%"
@@ -138,7 +138,7 @@ export default function HeroSection() {
 
       <Box position="relative" minH="50vh">
         <Image
-          src="/images/character1.png"
+          src="/images/char/character1.png"
           alt="Character Left"
           position="absolute"
           bottom="0"
@@ -148,7 +148,7 @@ export default function HeroSection() {
         />
 
         <Image
-          src="/images/character2.png"
+          src="/images/char/character2.png"
           alt="Character Right"
           position="absolute"
           bottom="20%"
@@ -158,7 +158,7 @@ export default function HeroSection() {
         />
 
         <Image
-          src="/images/character3.png"
+          src="/images/char/character3.png"
           alt="Character Left"
           position="absolute"
           bottom="55%"
@@ -168,7 +168,7 @@ export default function HeroSection() {
         />
 
         <Image
-          src="/images/character4.png"
+          src="/images/char/character4.png"
           alt="Character Right"
           position="absolute"
           bottom="55%"
@@ -178,7 +178,7 @@ export default function HeroSection() {
         />
 
         <Image
-          src="/images/land.png"
+          src="/images/bg/land.png"
           alt="Planet Surface"
           position="absolute"
           bottom="0"
@@ -189,7 +189,7 @@ export default function HeroSection() {
         />
 
         <Image
-          src="/images/cloud.png"
+          src="/images/bg/cloud.png"
           alt="Cloud"
           position="absolute"
           bottom="0"

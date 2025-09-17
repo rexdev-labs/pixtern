@@ -19,7 +19,7 @@ export default function Navbar() {
     >
       {/* Logo */}
       <Link as={NextLink} href="/" maxW={"120px"}>
-        <img src="/images/pixel.png" alt="Pixel Logo" />
+        <img src="/images/logo/pixel.png" alt="Pixel Logo" />
       </Link>
 
       {/* Menu */}
