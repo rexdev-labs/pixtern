@@ -1,1 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Lexend+Deca:wght@400;600;700&family=Neulis+Cursive&display=swap');
+@font-face {
+    font-family: "Bestime";
+    src: url("/fonts/Bestime.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Neulis Cursive";
+    src: url("/fonts/NeulisCursive.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    }
+
+@font-face {
+    font-family: "Inter";
+    src: url("/fonts/Inter.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Lexend Deca";
+    src: url("/fonts/LexendDeca.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --font-bestime: "Bestime", sans-serif;
+    --font-neulis: "Neulis Cursive", cursive;
+    --font-inter: "Inter", sans-serif;
+    --font-lexend: "Lexend Deca", sans-serif;
+}

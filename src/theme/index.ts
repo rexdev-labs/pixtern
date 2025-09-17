@@ -67,13 +67,13 @@ const config = defineConfig({
                 },
             },
             fonts: {
-                body: { value: "Lexend Deca, sans-serif" },
-                heading: { value: "Inter, sans-serif" },
-                cursive: { value: "Neulis Cursive, cursive" },
-                decorative: { value: "Bestime, cursive" },
+                body: { value: "var(--font-lexend)" },
+                heading: { value: "var(--font-inter)" },
+                cursive: { value: "var(--font-neulis)" },
+                bestime: { value: "var(--font-bestime)" },
             },
         },
     },
 });
 
-export const system = createSystem(defaultConfig, config)
+export const system = createSystem(defaultConfig, config);
