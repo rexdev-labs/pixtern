@@ -7,12 +7,11 @@ import RocketParallax from "@/components/animations/RocketParallax";
 export default function Home() {
   return (
     <>
-      <Box minH="300vh">
+      <Box minH="200vh">
         <HeroSection />
         <RocketParallax />
       </Box>
 
-      {/* About Section - Appears after parallax animation */}
       <AboutSection />
     </>
   );

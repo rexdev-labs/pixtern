@@ -24,7 +24,7 @@ export default function RocketParallax() {
 
             tl.fromTo(
                 ".group1",
-                { y: 3000 }, 
+                { y: 3100 }, 
                 { y: -2000, ease: "none" },
                 0 
             );
@@ -54,7 +54,7 @@ export default function RocketParallax() {
             top="0"
             left={0}
             w="100%"
-            h="200vh"
+            h="300vh"
             bg="transparent"
             pointerEvents="none"
             zIndex={20}
