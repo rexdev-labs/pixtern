@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, Container, Image, Flex } from "@chakra-ui/react";
+import RocketParallax from "../animations/RocketParallax";
 
 export default function HeroSection() {
   return (
@@ -11,7 +12,7 @@ export default function HeroSection() {
       overflow="hidden"
       bg="brand.hero"
     >
-      <Container maxW="7xl" marginTop={"20"} position="relative" zIndex={50}>
+      <Container maxW="7xl" marginTop={"20"} position="relative" zIndex={3}>
         <Flex
           direction="column"
           align="center"
@@ -48,7 +49,7 @@ export default function HeroSection() {
         top="1%"
         left="16%"
         boxSize={{ base: "80px", md: "150px" }}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -58,7 +59,7 @@ export default function HeroSection() {
         top="10%"
         right="4%"
         maxW={"44"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -68,7 +69,7 @@ export default function HeroSection() {
         bottom={"40%"}
         right="12%"
         maxW={"44"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -78,7 +79,7 @@ export default function HeroSection() {
         bottom="45%"
         left="3%"
         w={"72"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -89,7 +90,7 @@ export default function HeroSection() {
         left="8%"
         maxW={"7"}
         rotate={"210deg"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -100,7 +101,7 @@ export default function HeroSection() {
         left="1%"
         maxW={"8"}
         rotate={"110deg"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -111,7 +112,7 @@ export default function HeroSection() {
         right="25%"
         maxW={"10"}
         rotate={"170deg"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -122,7 +123,7 @@ export default function HeroSection() {
         right="31%"
         maxW={"10"}
         rotate={"30deg"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Image
@@ -133,7 +134,7 @@ export default function HeroSection() {
         right="23%"
         maxW={"7"}
         rotate={"90deg"}
-        zIndex={20}
+        zIndex={3}
       />
 
       <Box position="relative" minH="50vh">
@@ -144,7 +145,7 @@ export default function HeroSection() {
           bottom="0"
           left="1%"
           w={"64"}
-          zIndex={20}
+          zIndex={3}
         />
 
         <Image
@@ -154,7 +155,7 @@ export default function HeroSection() {
           bottom="20%"
           right="0%"
           w={"60"}
-          zIndex={20}
+          zIndex={3}
         />
 
         <Image
@@ -164,7 +165,7 @@ export default function HeroSection() {
           bottom="55%"
           left="20%"
           w={"60"}
-          zIndex={20}
+          zIndex={3}
         />
 
         <Image
@@ -174,7 +175,7 @@ export default function HeroSection() {
           bottom="55%"
           right="25%"
           w={"36"}
-          zIndex={20}
+          zIndex={3}
         />
 
         <Image
@@ -185,7 +186,7 @@ export default function HeroSection() {
           left="0"
           w="100%"
           objectFit="cover"
-          zIndex={10}
+          zIndex={1}
         />
 
         <Image
@@ -198,6 +199,7 @@ export default function HeroSection() {
           zIndex={0}
         />
       </Box>
+      {/* <RocketParallax/> */}
     </Box>
   );
 }
