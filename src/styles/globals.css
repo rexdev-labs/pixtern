@@ -36,3 +36,16 @@
     --font-inter: "Inter", sans-serif;
     --font-lexend: "Lexend Deca", sans-serif;
 }
+
+html {
+    scroll-behavior: smooth;
+}
+
+#smooth-wrapper {
+    overflow: hidden;
+}
+
+#smooth-content {
+    overflow: visible;
+    width: 100%;
+}

@@ -22,19 +22,9 @@ export default function RocketParallax() {
                 },
             });
 
-            tl.fromTo(
-                ".group1",
-                { y: 3100 }, 
-                { y: -2000, ease: "none" },
-                0 
-            );
+            tl.fromTo(".group1", { y: 3100 }, { y: -2000, ease: "none" }, 0);
 
-            tl.fromTo(
-                ".cloud2",
-                { y: 2000 },
-                { y: -500, ease: "none" },
-                0 
-            );
+            tl.fromTo(".cloud2", { y: 2000 }, { y: -500, ease: "none" }, 0);
 
             gsap.to(".rocket", {
                 y: 15,
@@ -43,6 +33,36 @@ export default function RocketParallax() {
                 repeat: -1,
                 ease: "sine.inOut",
             });
+        },
+        { scope: parallaxRef }
+    );
+
+    useGSAP(
+        () => {
+            ScrollTrigger.create({
+                trigger: ".airballoon",
+                pin: true,
+                start: "center center",
+                end: "+=500",
+                scrub: true,
+                markers: true,
+            });
+
+            gsap.fromTo(
+                ".airballoon",
+                { y: 0 },
+                {
+                    y: 1500,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".airballoon",
+                        start: "center center",
+                        end: "+=800",
+                        scrub: true,
+                        markers: true,
+                    },
+                }
+            );
         },
         { scope: parallaxRef }
     );
@@ -95,6 +115,92 @@ export default function RocketParallax() {
                     h="auto"
                     alt=""
                 />
+
+                <Box
+                    className="airballoon"
+                    position="absolute"
+                    top="23%"
+                    left="22%"
+                    transform="translateX(-50%)"
+                    zIndex={2}
+                >
+                    <Image
+                        src="/images/cloud/airballon.png"
+                        alt="Air Balloon"
+                        w={{
+                            base: "80px",
+                            sm: "100px",
+                            md: "120px",
+                            lg: "140px",
+                            xl: "160px",
+                            "2xl": "180px",
+                        }}
+                        filter="drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+                    />
+                </Box>
+
+                <Box
+                    position="absolute"
+                    top="34%"
+                    left="15%"
+                    transform="translateX(50%)"
+                    zIndex={1}
+                >
+                    <Image
+                        src="/images/cloud/cloudsmall.png"
+                        alt="Small Cloud"
+                        w={{
+                            base: "60px",
+                            sm: "80px",
+                            md: "100px",
+                            lg: "120px",
+                            xl: "140px",
+                            "2xl": "160px",
+                        }}
+                        opacity={0.8}
+                    />
+                </Box>
+                <Box
+                    position="absolute"
+                    top="64%"
+                    right="15%"
+                    transform="translateX(50%)"
+                >
+                    <Image
+                        src="/images/cloud/cloudsmall.png"
+                        alt="Small Cloud"
+                        w={{
+                            base: "60px",
+                            sm: "80px",
+                            md: "100px",
+                            lg: "120px",
+                            xl: "140px",
+                            "2xl": "160px",
+                        }}
+                        opacity={0.8}
+                    />
+                </Box>
+                <Box
+                    position="absolute"
+                    bottom="0"
+                    left="15%"
+                    transform="translateX(50%)"
+                    zIndex={3}
+                >
+                    <Image
+                        src="/images/cloud/cloudsmall.png"
+                        alt="Small Cloud"
+                        w={{
+                            base: "60px",
+                            sm: "80px",
+                            md: "100px",
+                            lg: "120px",
+                            xl: "140px",
+                            "2xl": "160px",
+                        }}
+                        opacity={0.8}
+                    />
+                </Box>
             </Box>
         </Box>
     );
