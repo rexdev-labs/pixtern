@@ -38,15 +38,34 @@ export default function RocketParallax() {
 
     useGSAP(
         () => {
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: ".airballoon",
-                    start: "center center",
-                    end: "bottom 34%",
-                    scrub: true,
-                    pin: true,
-                    // markers: true,
-                },
+            let mm = gsap.matchMedia();
+
+            // laptop
+            mm.add("(max-width: 1280px)", () => {
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".airballoon",
+                        start: "center center",
+                        end: "bottom 26%",
+                        scrub: true,
+                        pin: true,
+                        // markers: true,
+                    },
+                });
+            });
+
+            // desktop
+            mm.add("(min-width: 1440px)", () => {
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".airballoon",
+                        start: "center center",
+                        end: "bottom 34%",
+                        scrub: true,
+                        pin: true,
+                        // markers: true,
+                    },
+                });
             });
         },
         { scope: parallaxRef }

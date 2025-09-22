@@ -22,7 +22,7 @@ export default function Home() {
     let smoother = ScrollSmoother.create({
       wrapper: smoothWrapperRef.current,
       content: smoothContentRef.current,
-      smooth: 2, 
+      smooth: 5, 
       effects: true, 
       normalizeScroll: true,
       ignoreMobileResize: true,
@@ -36,7 +36,7 @@ export default function Home() {
         e.preventDefault();
         const targetId = link.getAttribute('href');
         if (targetId) {
-          smoother.scrollTo(targetId, true, "top top");
+          smoother.scrollTo(targetId, true, "center center");
         }
       });
     });
@@ -52,6 +52,7 @@ export default function Home() {
         </Box>
 
         <AboutSection />
+
       </div>
     </div>
   );

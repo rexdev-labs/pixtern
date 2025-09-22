@@ -30,7 +30,7 @@ export default function Navbar() {
         
         display={{ base: "none", md: "flex" }}>
         <Link as={NextLink} color="white" href="#home">Beranda</Link>
-        <Link as={NextLink} color="white" href="#about">Tentang</Link>
+        <Link as={NextLink} href="#about" color="white">Tentang</Link>
         <Link as={NextLink} color="white" href="#profil">Profil</Link>
         <Link as={NextLink} color="white" href="#projects">Karya & Proyek</Link>
         <Link as={NextLink} color="white" href="#testimoni">Testimoni</Link>

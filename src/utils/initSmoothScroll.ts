@@ -14,7 +14,7 @@ export const setSmoother = (instance: ScrollSmoother) => {
 export const scrollToElement = (
   selector: string,
   smooth: boolean = true,
-  position: string = "top top"
+  position: string,
 ) => {
   if (smoother) {
     smoother.scrollTo(selector, smooth, position);
