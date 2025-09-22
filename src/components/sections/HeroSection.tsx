@@ -1,8 +1,9 @@
 "use client";
 
 import { Box, Button, Container, Image, Flex } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function HeroSection() {
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -16,7 +17,7 @@ export default function HeroSection() {
         hoverRefs.current[idx] = el;
     };
 
-    useEffect(() => {
+    useGSAP(() => {
         if (!containerRef.current) return;
 
         const nodes =
@@ -46,53 +47,54 @@ export default function HeroSection() {
             nodeX.forEach((tween, i) => tween(x * (i * 0.6 + 0.5)));
             nodeY.forEach((tween, i) => tween(y * (i * 0.6 + 0.5)));
 
-            bgX.forEach((tween, i) => tween(x * (i * 0.4 + 0.2)));
-            bgY.forEach((tween, i) => tween(y * (i * 0.4 + 0.2)));
+            bgX.forEach((tween, i) => tween(x * (i * 1 + 1)));
+            bgY.forEach((tween, i) => tween(y * (i * 1 + 1)));
         };
 
+        // Floating effect
+        floatRefs.current.forEach((el) => {
+            if (!el) return;
+            gsap.to(el, {
+                y: "+=20",
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+            });
+        });
+
+        // Mousemove listener
+        window.addEventListener("mousemove", handleMouseMove);
+
+        // Hover zoom
         const hoverListenerStore: Array<{
             el: HTMLElement;
             enter: EventListener;
             leave: EventListener;
         }> = [];
 
-        const ctx = gsap.context(() => {
-            floatRefs.current.forEach((el) => {
-                if (!el) return;
+        hoverRefs.current.forEach((el) => {
+            if (!el) return;
+            const enter: EventListener = (() => {
                 gsap.to(el, {
-                    y: "+=20",
-                    duration: 3,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut",
+                    scale: 1.12,
+                    duration: 0.45,
+                    ease: "power3.out",
                 });
-            });
+            }) as unknown as EventListener;
+            const leave: EventListener = (() => {
+                gsap.to(el, {
+                    scale: 1,
+                    duration: 0.45,
+                    ease: "power3.out",
+                });
+            }) as unknown as EventListener;
 
-            window.addEventListener("mousemove", handleMouseMove);
+            el.addEventListener("mouseenter", enter);
+            el.addEventListener("mouseleave", leave);
 
-            hoverRefs.current.forEach((el) => {
-                if (!el) return;
-                const enter: EventListener = (() => {
-                    gsap.to(el, {
-                        scale: 1.12,
-                        duration: 0.45,
-                        ease: "power3.out",
-                    });
-                }) as unknown as EventListener;
-                const leave: EventListener = (() => {
-                    gsap.to(el, {
-                        scale: 1,
-                        duration: 0.45,
-                        ease: "power3.out",
-                    });
-                }) as unknown as EventListener;
-
-                el.addEventListener("mouseenter", enter);
-                el.addEventListener("mouseleave", leave);
-
-                hoverListenerStore.push({ el, enter, leave });
-            });
-        }, containerRef);
+            hoverListenerStore.push({ el, enter, leave });
+        });
 
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
@@ -100,7 +102,6 @@ export default function HeroSection() {
                 el.removeEventListener("mouseenter", enter);
                 el.removeEventListener("mouseleave", leave);
             });
-            ctx.revert();
         };
     }, []);
 
@@ -278,7 +279,7 @@ export default function HeroSection() {
                     left="1%"
                     w="64"
                     zIndex={20}
-                    className="parallax"
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 2)}
                 />
                 <Image
@@ -289,7 +290,7 @@ export default function HeroSection() {
                     right="0%"
                     w="60"
                     zIndex={20}
-                    className="parallax"
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 3)}
                 />
                 <Image
@@ -300,7 +301,7 @@ export default function HeroSection() {
                     left="20%"
                     w="60"
                     zIndex={20}
-                    className="parallax"
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 4)}
                 />
                 <Image
@@ -311,7 +312,7 @@ export default function HeroSection() {
                     right="25%"
                     w="36"
                     zIndex={20}
-                    className="parallax"
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 5)}
                 />
 
@@ -326,7 +327,6 @@ export default function HeroSection() {
                     zIndex={1}
                     data-speed-x="0.5"
                     data-speed-y="0.3"
-                    className="parallax parallax-bg"
                 />
                 <Image
                     src="/images/bg/cloud.png"
