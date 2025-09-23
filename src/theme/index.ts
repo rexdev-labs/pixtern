@@ -2,7 +2,7 @@ import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
 const config = defineConfig({
     globalCss: {
-        body: {
+        html: {
             bg: "#EFFFFF",
         },
     },
