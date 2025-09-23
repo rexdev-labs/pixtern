@@ -1,8 +1,9 @@
 "use client";
 
 import { Box, Button, Container, Image, Flex } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function HeroSection() {
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -16,7 +17,7 @@ export default function HeroSection() {
         hoverRefs.current[idx] = el;
     };
 
-    useEffect(() => {
+    useGSAP(() => {
         if (!containerRef.current) return;
 
         const nodes =
@@ -46,53 +47,54 @@ export default function HeroSection() {
             nodeX.forEach((tween, i) => tween(x * (i * 0.6 + 0.5)));
             nodeY.forEach((tween, i) => tween(y * (i * 0.6 + 0.5)));
 
-            bgX.forEach((tween, i) => tween(x * (i * 0.4 + 0.2)));
-            bgY.forEach((tween, i) => tween(y * (i * 0.4 + 0.2)));
+            bgX.forEach((tween, i) => tween(x * (i * 1 + 1)));
+            bgY.forEach((tween, i) => tween(y * (i * 1 + 1)));
         };
 
+        // Floating effect
+        floatRefs.current.forEach((el) => {
+            if (!el) return;
+            gsap.to(el, {
+                y: "+=20",
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+            });
+        });
+
+        // Mousemove listener
+        window.addEventListener("mousemove", handleMouseMove);
+
+        // Hover zoom
         const hoverListenerStore: Array<{
             el: HTMLElement;
             enter: EventListener;
             leave: EventListener;
         }> = [];
 
-        const ctx = gsap.context(() => {
-            floatRefs.current.forEach((el) => {
-                if (!el) return;
+        hoverRefs.current.forEach((el) => {
+            if (!el) return;
+            const enter: EventListener = (() => {
                 gsap.to(el, {
-                    y: "+=20",
-                    duration: 3,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut",
+                    scale: 1.12,
+                    duration: 0.45,
+                    ease: "power3.out",
                 });
-            });
+            }) as unknown as EventListener;
+            const leave: EventListener = (() => {
+                gsap.to(el, {
+                    scale: 1,
+                    duration: 0.45,
+                    ease: "power3.out",
+                });
+            }) as unknown as EventListener;
 
-            window.addEventListener("mousemove", handleMouseMove);
+            el.addEventListener("mouseenter", enter);
+            el.addEventListener("mouseleave", leave);
 
-            hoverRefs.current.forEach((el) => {
-                if (!el) return;
-                const enter: EventListener = (() => {
-                    gsap.to(el, {
-                        scale: 1.12,
-                        duration: 0.45,
-                        ease: "power3.out",
-                    });
-                }) as unknown as EventListener;
-                const leave: EventListener = (() => {
-                    gsap.to(el, {
-                        scale: 1,
-                        duration: 0.45,
-                        ease: "power3.out",
-                    });
-                }) as unknown as EventListener;
-
-                el.addEventListener("mouseenter", enter);
-                el.addEventListener("mouseleave", leave);
-
-                hoverListenerStore.push({ el, enter, leave });
-            });
-        }, containerRef);
+            hoverListenerStore.push({ el, enter, leave });
+        });
 
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
@@ -100,7 +102,6 @@ export default function HeroSection() {
                 el.removeEventListener("mouseenter", enter);
                 el.removeEventListener("mouseleave", leave);
             });
-            ctx.revert();
         };
     }, []);
 
@@ -115,33 +116,35 @@ export default function HeroSection() {
         >
             <Container
                 maxW="7xl"
-                marginTop="20"
+                marginTop={{ base: 20, md: 16, lg: 15 }}
                 position="relative"
-                zIndex={50}
+                zIndex={7}
+                py={{ base: 8, md: 14, lg: 20 }}
             >
                 <Flex
                     direction="column"
                     align="center"
                     justify="center"
                     py={10}
-                    gap={10}
+                    gap={{ base: 10, md: 16, lg: 24 }}
                 >
                     <Image
                         src="/images/logo/logo.png"
                         alt="Logo"
-                        maxW="400px"
-                        mb={6}
+                        maxW={{ base: "220px", md: "320px", lg: "400px" }}
+                        mb={{ base: 6, md: 4, lg: 1 }}
                         filter="drop-shadow(0px -6px 25px rgba(255,255,255,0.25))"
                         className="parallax"
                         ref={(el) => setHoverRef(el, 0)}
                     />
+
                     <Button
-                        size="xs"
+                        size={{ base: "sm", md: "sm", lg: "xs" }}
                         bg="white"
                         color="brand.text.black"
                         _hover={{ bg: "gray.200" }}
                         rounded="full"
-                        w={120}
+                        w={{ base: "100px", md: "110px", lg: 120 }}
                         fontFamily="heading"
                         borderColor="brand.bg.black"
                         borderWidth={2}
@@ -165,10 +168,10 @@ export default function HeroSection() {
                 src="/images/float/planet2.png"
                 alt="Saturn"
                 position="absolute"
-                top="1%"
-                left="16%"
-                boxSize={{ base: "80px", md: "150px" }}
-                zIndex={20}
+                top={{ base: "6%", md: "4%", lg: "1%" }}
+                left={{ base: "5%", md: "10%", lg: "16%" }}
+                boxSize={{ base: "60px", md: "100px", lg: "150px" }}
+                zIndex={4}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 0)}
             />
@@ -176,10 +179,10 @@ export default function HeroSection() {
                 src="/images/float/planet1.png"
                 alt="Mars"
                 position="absolute"
-                top="10%"
-                right="4%"
-                maxW="44"
-                zIndex={20}
+                top={{ base: "10%", md: "12%", lg: "10%" }}
+                right={{ base: "0%", md: "6%", lg: "4%" }}
+                maxW={{ base: "28", md: "36", lg: "44" }}
+                zIndex={4}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 1)}
             />
@@ -187,10 +190,10 @@ export default function HeroSection() {
                 src="/images/float/planet3.png"
                 alt="Jupiter"
                 position="absolute"
-                bottom="40%"
-                right="12%"
-                maxW="44"
-                zIndex={20}
+                bottom={{ base: "25%", md: "32%", lg: "40%" }}
+                right={{ base: "5%", md: "8%", lg: "12%" }}
+                maxW={{ base: "28", md: "36", lg: "44" }}
+                zIndex={4}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 2)}
             />
@@ -198,10 +201,10 @@ export default function HeroSection() {
                 src="/images/float/moon.png"
                 alt="Moon"
                 position="absolute"
-                bottom="45%"
-                left="3%"
-                w="72"
-                zIndex={20}
+                bottom={{ base: "30%", md: "35%", lg: "45%" }}
+                left={{ base: "1%", md: "2%", lg: "3%" }}
+                w={{ base: "36", md: "60", lg: "72" }}
+                zIndex={4}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 3)}
             />
@@ -211,11 +214,11 @@ export default function HeroSection() {
                 src="/images/float/starpurple.png"
                 alt="StarPurple1"
                 position="absolute"
-                top="12%"
-                left="8%"
-                maxW="7"
+                top={{ base: "18%", md: "14%", lg: "12%" }}
+                left={{ base: "12%", md: "10%", lg: "8%" }}
+                maxW={{ base: "5", md: "6", lg: "7" }}
                 rotate="210deg"
-                zIndex={20}
+                zIndex={3}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 4)}
             />
@@ -223,11 +226,11 @@ export default function HeroSection() {
                 src="/images/float/staryellow.png"
                 alt="StarYellow"
                 position="absolute"
-                top="50%"
-                left="1%"
-                maxW="8"
+                top={{ base: "70%", md: "52%", lg: "50%" }}
+                left={{ base: "4%", md: "2%", lg: "1%" }}
+                maxW={{ base: "5", md: "7", lg: "8" }}
                 rotate="110deg"
-                zIndex={20}
+                zIndex={3}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 5)}
             />
@@ -235,11 +238,11 @@ export default function HeroSection() {
                 src="/images/float/starred.png"
                 alt="StarRed"
                 position="absolute"
-                top="12%"
-                right="25%"
-                maxW="10"
+                top={{ base: "8%", md: "10%", lg: "12%" }}
+                right={{ base: "12%", md: "18%", lg: "25%" }}
+                maxW={{ base: "5", md: "9", lg: "10" }}
                 rotate="170deg"
-                zIndex={20}
+                zIndex={3}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 6)}
             />
@@ -247,11 +250,11 @@ export default function HeroSection() {
                 src="/images/float/starpurple.png"
                 alt="StarPurple2"
                 position="absolute"
-                top="39%"
-                right="31%"
-                maxW="10"
+                top={{ base: "30%", md: "35%", lg: "35%" }}
+                right={{ base: "18%", md: "20%", lg: "32%" }}
+                maxW={{ base: "7", md: "9", lg: "10" }}
                 rotate="30deg"
-                zIndex={51}
+                zIndex={8}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 7)}
             />
@@ -259,59 +262,59 @@ export default function HeroSection() {
                 src="/images/float/stargreen.png"
                 alt="StarGreen"
                 position="absolute"
-                top="63%"
-                right="23%"
-                maxW="7"
+                top={{ base: "75%", md: "66%", lg: "63%" }}
+                right={{ base: "15%", md: "18%", lg: "23%" }}
+                maxW={{ base: "4", md: "7", lg: "7" }}
                 rotate="90deg"
-                zIndex={20}
+                zIndex={3}
                 className="parallax"
                 ref={(el) => setFloatRef(el, 8)}
             />
 
             {/* CHARACTERS */}
-            <Box position="relative" minH="50vh">
+            <Box position="relative" minH="45vh">
                 <Image
                     src="/images/char/character1.png"
                     alt="Character Left"
                     position="absolute"
                     bottom="0"
-                    left="1%"
-                    w="64"
-                    zIndex={20}
-                    className="parallax"
+                    left={{ base: "0%", md: "1%", lg: "1%" }}
+                    w={{ base: "24", md: "40", lg: "64" }}
+                    zIndex={6}
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 2)}
                 />
                 <Image
                     src="/images/char/character2.png"
                     alt="Character Right"
                     position="absolute"
-                    bottom="20%"
-                    right="0%"
-                    w="60"
-                    zIndex={20}
-                    className="parallax"
+                    bottom={{ base: "5%", md: "12%", lg: "20%" }}
+                    right={{ base: "0%", md: "2%", lg: "0%" }}
+                    w={{ base: "24", md: "40", lg: "60" }}
+                    zIndex={6}
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 3)}
                 />
                 <Image
                     src="/images/char/character3.png"
                     alt="Character Left"
                     position="absolute"
-                    bottom="55%"
-                    left="20%"
-                    w="60"
-                    zIndex={20}
-                    className="parallax"
+                    bottom={{ base: "10%", md: "35%", lg: "55%" }}
+                    left={{ base: "15%", md: "18%", lg: "20%" }}
+                    w={{ base: "28", md: "44", lg: "60" }}
+                    zIndex={5}
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 4)}
                 />
                 <Image
                     src="/images/char/character4.png"
                     alt="Character Right"
                     position="absolute"
-                    bottom="55%"
-                    right="25%"
-                    w="36"
-                    zIndex={20}
-                    className="parallax"
+                    bottom={{ base: "12%", md: "35%", lg: "55%" }}
+                    right={{ base: "20%", md: "22%", lg: "25%" }}
+                    w={{ base: "20", md: "28", lg: "36" }}
+                    zIndex={5}
+                    className="parallax-bg"
                     ref={(el) => setHoverRef(el, 5)}
                 />
 
@@ -324,9 +327,6 @@ export default function HeroSection() {
                     w="100%"
                     objectFit="cover"
                     zIndex={1}
-                    data-speed-x="0.5"
-                    data-speed-y="0.3"
-                    className="parallax parallax-bg"
                 />
                 <Image
                     src="/images/bg/cloud.png"
