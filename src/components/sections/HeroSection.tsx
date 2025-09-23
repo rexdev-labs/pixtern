@@ -272,7 +272,7 @@ export default function HeroSection() {
             />
 
             {/* CHARACTERS */}
-            <Box position="relative" minH="45vh">
+            <Box position="relative" minH="50vh">
                 <Image
                     src="/images/char/character1.png"
                     alt="Character Left"
@@ -299,7 +299,7 @@ export default function HeroSection() {
                     src="/images/char/character3.png"
                     alt="Character Left"
                     position="absolute"
-                    bottom={{ base: "10%", md: "35%", lg: "55%" }}
+                    bottom={{ base: "10%", md: "20%", lg: "45%" }}
                     left={{ base: "15%", md: "18%", lg: "20%" }}
                     w={{ base: "28", md: "44", lg: "60" }}
                     zIndex={5}
@@ -310,7 +310,7 @@ export default function HeroSection() {
                     src="/images/char/character4.png"
                     alt="Character Right"
                     position="absolute"
-                    bottom={{ base: "12%", md: "35%", lg: "55%" }}
+                    bottom={{ base: "12%", md: "25%", lg: "50%" }}
                     right={{ base: "20%", md: "22%", lg: "25%" }}
                     w={{ base: "20", md: "28", lg: "36" }}
                     zIndex={5}
