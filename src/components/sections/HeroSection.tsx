@@ -8,7 +8,11 @@ export default function HeroSection() {
     <Box
       as="section"
       position="relative"
-      minH="100vh"
+      minH={{
+        base: "120vh",
+        md: "110vh",
+        xl: "100vh",
+      }}
       overflow="hidden"
       bg="brand.hero"
     >

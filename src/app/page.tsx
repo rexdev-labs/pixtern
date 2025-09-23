@@ -17,13 +17,13 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 export default function Home() {
   const smoothWrapperRef = useRef(null);
   const smoothContentRef = useRef(null);
-  
+
   useGSAP(() => {
     let smoother = ScrollSmoother.create({
       wrapper: smoothWrapperRef.current,
       content: smoothContentRef.current,
-      smooth: 5, 
-      effects: true, 
+      smooth: 5,
+      effects: true,
       normalizeScroll: true,
       ignoreMobileResize: true,
     });
@@ -31,28 +31,31 @@ export default function Home() {
     setSmoother(smoother);
 
     const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-      link.addEventListener('click', (e) => {
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href');
+        const targetId = link.getAttribute("href");
         if (targetId) {
           smoother.scrollTo(targetId, true, "center center");
         }
       });
     });
-
   }, []);
 
   return (
     <div ref={smoothWrapperRef} id="smooth-wrapper">
       <div ref={smoothContentRef} id="smooth-content">
-        <Box minH="200vh">
+        <Box
+          minH={{
+            base: "130vh",
+            xl: "200vh",
+          }}
+        >
           <HeroSection />
           <RocketParallax />
         </Box>
 
         <AboutSection />
-
       </div>
     </div>
   );
