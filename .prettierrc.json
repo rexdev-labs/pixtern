@@ -5,11 +5,11 @@
     "trailingComma": "es5",
     "overrides": [
         {
-        "files": ["*.ts"],
-        "options": {
-            "parser": "typescript",
-            "tabWidth": 4
-        }
+            "files": ["*.ts"],
+            "options": {
+                "parser": "typescript",
+                "tabWidth": 4
+            }
         }
     ]
 }
