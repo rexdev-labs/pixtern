@@ -14,28 +14,35 @@ import {
 } from "@chakra-ui/react";
 import { MdSearch, MdMenu, MdClose } from "react-icons/md";
 import NextLink from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function Navbar() {
-  const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const idleTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
+  useGSAP(() => {
+    let idleTimeout: gsap.core.Tween | null = null;
+
+    const nav = document.querySelector("nav") as HTMLElement;
+
     const handleScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 0);
-      setVisible(false);
 
-      if (idleTimeout.current) clearTimeout(idleTimeout.current);
-      idleTimeout.current = setTimeout(() => setVisible(true), 800);
+      gsap.to(nav, { y: -100, opacity: 0, duration: 0.3 });
+
+      if (idleTimeout) idleTimeout.kill();
+
+      idleTimeout = gsap.to({}, { duration: 0.8, onComplete: () => {
+        gsap.to(nav, { y: 0, opacity: 1, duration: 0.4 });
+      }});
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (idleTimeout.current) clearTimeout(idleTimeout.current);
+      if (idleTimeout) idleTimeout.kill();
     };
   }, []);
 
@@ -52,8 +59,6 @@ export default function Navbar() {
       left={0}
       zIndex={1000}
       transition="all 0.36s ease"
-      transform={visible ? "translateY(0)" : "translateY(-100%)"}
-      opacity={visible ? 1 : 0}
       bg={scrolled ? "rgba(0,0,0,0.4)" : "transparent"}
       backdropFilter={scrolled ? "blur(12px)" : "none"}
       borderBottom={scrolled ? "1px solid rgba(255,255,255,0.06)" : "none"}
@@ -63,7 +68,7 @@ export default function Navbar() {
         <img src="/images/logo/pixel.png" alt="Pixel Logo" />
       </Link>
 
-      {/* Desktop Menu */}
+      {/* Menu desktop */}
       <HStack
         as="ul"
         gap={8}
@@ -87,8 +92,9 @@ export default function Navbar() {
         </Link>
       </HStack>
 
+      {/* Right side */}
       <HStack gap={3}>
-        {/* Search popover (desktop only) */}
+        {/* Search popover */}
         <Popover.Root>
           <Popover.Trigger asChild>
             <IconButton
@@ -148,8 +154,8 @@ export default function Navbar() {
           Login
         </Button>
 
-        {/* Hamburger (mobile only) */}
-        <Drawer.Root open={open} onOpenChange={(evt) => setOpen(evt.open)}>
+        {/* Mobile drawer */}
+        <Drawer.Root>
           <Drawer.Trigger asChild>
             <IconButton
               aria-label="Open menu"
@@ -181,7 +187,7 @@ export default function Navbar() {
                     </Drawer.CloseTrigger>
                   </HStack>
 
-                  {/* Search bar (mobile drawer, atas) */}
+                  {/* Search bar mobile */}
                   <HStack bg="white" rounded="full" px={3} py={1} w="full">
                     <Input
                       placeholder="Search..."
@@ -204,41 +210,21 @@ export default function Navbar() {
                   </HStack>
                 </VStack>
 
-                {/* Links */}
+                {/* Links mobile */}
                 <VStack align="start" gap={5} mt={6}>
-                  <Link
-                    as={NextLink}
-                    href="#home"
-                    onClick={() => setOpen(false)}
-                  >
+                  <Link as={NextLink} href="#home">
                     Beranda
                   </Link>
-                  <Link
-                    as={NextLink}
-                    href="#about"
-                    onClick={() => setOpen(false)}
-                  >
+                  <Link as={NextLink} href="#about">
                     Tentang
                   </Link>
-                  <Link
-                    as={NextLink}
-                    href="#profil"
-                    onClick={() => setOpen(false)}
-                  >
+                  <Link as={NextLink} href="#profil">
                     Profil
                   </Link>
-                  <Link
-                    as={NextLink}
-                    href="#projects"
-                    onClick={() => setOpen(false)}
-                  >
+                  <Link as={NextLink} href="#projects">
                     Karya & Proyek
                   </Link>
-                  <Link
-                    as={NextLink}
-                    href="#testimoni"
-                    onClick={() => setOpen(false)}
-                  >
+                  <Link as={NextLink} href="#testimoni">
                     Testimoni
                   </Link>
                 </VStack>

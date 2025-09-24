@@ -22,12 +22,12 @@ export default function RocketParallax() {
             start: "top bottom",
             end: "=+1000",
             scrub: true,
-            // markers: true,
+            markers: true,
           },
         });
 
         tl.fromTo(".group1", { y: 3100 }, { y: -2000, ease: "none" }, 0);
-        tl.fromTo(".cloud2", { y: 2000 }, { y: -500, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 2000 }, { y: -500, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -51,7 +51,7 @@ export default function RocketParallax() {
         });
 
         tl.fromTo(".group1", { y: 2180 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud2", { y: 1450 }, { y: 800, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 1450 }, { y: 800, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -75,7 +75,7 @@ export default function RocketParallax() {
         });
 
         tl.fromTo(".group1", { y: 1528 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud2", { y: 1100 }, { y: 700, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 1100 }, { y: 700, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 12,
@@ -219,7 +219,7 @@ export default function RocketParallax() {
       </Box>
 
       {/* Cloud */}
-      <Box className="cloud2" position="relative" w="100%">
+      <Box className="cloud-2" position="relative" w="100%">
         <Image src="/images/cloud/cloud2.svg" w="100%" h="auto" alt="" />
 
         <Box
@@ -269,7 +269,7 @@ export default function RocketParallax() {
         className="airballoon"
         position="absolute"
         top={{
-          base: "71%",
+          base: "70.5%",
           md: "66%",
           xl: "40%",
         }}

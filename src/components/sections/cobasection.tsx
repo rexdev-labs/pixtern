@@ -6,7 +6,7 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export default function AboutSection() {
+export default function CobaSections() {
   const aboutRef = useRef(null);
 
   useGSAP(
@@ -321,7 +321,7 @@ export default function AboutSection() {
           justify="center"
           align="flex-start"
           mt="10px"
-          mb={{ base: "200px", md: "400px", lg: "300px" }}
+          mb={{ base: "300px", md: "400px", lg: "300px" }}
           p="10"
           position="relative"
         >
@@ -401,7 +401,7 @@ export default function AboutSection() {
               className="main-title"
               fontFamily="Bestime"
               fontSize={{
-                base: "22px",
+                base: "24px",
                 sm: "32px",
                 md: "40px",
                 lg: "48px",

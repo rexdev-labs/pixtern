@@ -107,9 +107,15 @@ export default function HeroSection() {
 
   return (
     <Box
+      id="home"
       as="section"
       position="relative"
-      minH="100vh"
+      minH={{
+        base: "120vh",
+        sm: "120vh",
+        md: "120vh",
+        xl: "100vh"
+      }}
       overflow="hidden"
       bg="brand.hero"
       ref={containerRef}

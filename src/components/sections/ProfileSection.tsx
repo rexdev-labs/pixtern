@@ -22,11 +22,11 @@ export default function ProfileSection() {
   const containerRef = useRef(null);
 
   useGSAP(() => {
-    gsap.set(".title", { opacity: 0, y: 50 });
-    gsap.set(".profile-card-right", { opacity: 0, x: 50, scale: 0.9 });
-    gsap.set(".profile-card-left", { opacity: 0, x: -50, scale: 0.9 });
-    gsap.set(".text-section-left", { opacity: 0, x: -50 });
-    gsap.set(".text-section-right", { opacity: 0, x: 50 });
+    gsap.set(".title-profile", { opacity: 0, y: 50 });
+    gsap.set(".profile-card-right", { opacity: 0, x: 30, scale: 0.9 });
+    gsap.set(".profile-card-left", { opacity: 0, x: -30, scale: 0.9 });
+    gsap.set(".text-section-left", { opacity: 0, x: -30 });
+    gsap.set(".text-section-right", { opacity: 0, x: 10 });
     gsap.set(".bird-up", { opacity: 1 });
     gsap.set(".bird-down", { opacity: 0 });
     gsap.set(".bird-container", { opacity: 0, x: -50, scale: 0.8 });
@@ -83,11 +83,12 @@ export default function ProfileSection() {
     });
 
     ScrollTrigger.create({
-      trigger: ".title",
+      trigger: ".title-profile",
       start: "top 85%",
       end: "bottom top",
+      // markers: true,
       toggleActions: "play reverse play reverse",
-      animation: gsap.to(".title", {
+      animation: gsap.to(".title-profile", {
         opacity: 1,
         y: 0,
         duration: 0.8,
@@ -280,6 +281,7 @@ export default function ProfileSection() {
 
       <VStack gap={{ base: 16, md: 24, lg: 32 }}>
         <Flex
+          id="profil"
           gap={{ base: 4, md: 12, lg: 20 }}
           align="center"
           mx={{ base: "4", md: "20", lg: "20" }}

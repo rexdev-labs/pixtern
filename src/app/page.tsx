@@ -23,7 +23,7 @@ export default function Home() {
     let smoother = ScrollSmoother.create({
       wrapper: smoothWrapperRef.current,
       content: smoothContentRef.current,
-      smooth: 5,
+      smooth: 4,
       effects: true,
       normalizeScroll: true,
       ignoreMobileResize: true,
@@ -48,8 +48,11 @@ export default function Home() {
       <div ref={smoothContentRef} id="smooth-content">
         <Box
           minH={{
-            base: "130vh",
-            xl: "200vh",
+            base: "140vh",
+            sm: "130vh",
+            md: "200vh",
+            xl: "210vh",
+            "2xl" : "220vh",
           }}
         >
           <HeroSection />

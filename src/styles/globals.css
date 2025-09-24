@@ -39,13 +39,10 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
-#smooth-wrapper {
-    overflow: hidden;
-}
-
-#smooth-content {
-    overflow: visible;
-    width: 100%;
+#smooth-wrapper, #smooth-content {
+  overflow-x: hidden;
+  position: relative;
 }
