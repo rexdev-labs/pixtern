@@ -1,7 +1,7 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -10,8 +10,9 @@ import { useGSAP } from "@gsap/react";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import RocketParallax from "@/components/animations/RocketParallax";
-import { setSmoother } from "@/utils/initSmoothScroll";
 import ProfileSection from "@/components/sections/ProfileSection";
+
+import { setSmoother, getSmoother } from "@/utils/initSmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -21,12 +22,13 @@ export default function Home() {
 
   useGSAP(() => {
     let smoother = ScrollSmoother.create({
-      wrapper: smoothWrapperRef.current,
-      content: smoothContentRef.current,
+      wrapper: smoothWrapperRef.current!,
+      content: smoothContentRef.current!,
       smooth: 4,
       effects: true,
       normalizeScroll: true,
-      ignoreMobileResize: true,
+      ignoreMobileResize: false,  
+      smoothTouch: 0.1,
     });
 
     setSmoother(smoother);
@@ -41,6 +43,31 @@ export default function Home() {
         }
       });
     });
+
+    const handleResize = () => {
+      let sm = getSmoother();
+      if (sm) {
+        sm.refresh();
+        ScrollTrigger.refresh();
+      } else {
+        smoother = ScrollSmoother.create({
+          wrapper: smoothWrapperRef.current!,
+          content: smoothContentRef.current!,
+          smooth: 4,
+          effects: true,
+          normalizeScroll: true,
+          ignoreMobileResize: false,
+          smoothTouch: 0.1,
+        });
+        setSmoother(smoother);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      smoother.kill();
+    };
   }, []);
 
   return (
@@ -50,9 +77,9 @@ export default function Home() {
           minH={{
             base: "140vh",
             sm: "130vh",
-            md: "200vh",
+            md: "135vh",
             xl: "210vh",
-            "2xl" : "220vh",
+            "2xl": "220vh",
           }}
         >
           <HeroSection />

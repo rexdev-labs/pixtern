@@ -1,6 +1,5 @@
 "use client";
 
-import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 let smoother: ScrollSmoother | null = null;
@@ -14,7 +13,7 @@ export const setSmoother = (instance: ScrollSmoother) => {
 export const scrollToElement = (
   selector: string,
   smooth: boolean = true,
-  position: string,
+  position: string = "center center"
 ) => {
   if (smoother) {
     smoother.scrollTo(selector, smooth, position);
@@ -34,20 +33,14 @@ export const scrollToOffset = (offset: number, smooth: boolean = true) => {
 };
 
 export const getScrollY = () => {
-  if (smoother) {
-    return smoother.scrollTop();
-  }
+  if (smoother) return smoother.scrollTop();
   return 0;
 };
 
 export const pauseSmoothing = () => {
-  if (smoother) {
-    smoother.paused(true);
-  }
+  if (smoother) smoother.paused(true);
 };
 
 export const resumeSmoothing = () => {
-  if (smoother) {
-    smoother.paused(false);
-  }
+  if (smoother) smoother.paused(false);
 };
