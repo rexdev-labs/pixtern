@@ -9,12 +9,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function RocketParallax() {
   const parallaxRef = useRef(null);
+  const balloonCloudPointRef = useRef<HTMLImageElement | null>(null);
 
   useGSAP(
     () => {
       let mm = gsap.matchMedia();
 
-      // Default (desktop/laptop besar)
+      // Default
       mm.add("(min-width: 1280px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -22,7 +23,7 @@ export default function RocketParallax() {
             start: "top bottom",
             end: "=+1000",
             scrub: true,
-            markers: true,
+            // markers: true,
           },
         });
 
@@ -91,62 +92,17 @@ export default function RocketParallax() {
 
   useGSAP(
     () => {
-      let mm = gsap.matchMedia();
-
-      // Desktop
-      mm.add("(min-width: 1440px)", () => {
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: ".airballoon",
-            start: "center center",
-            end: "bottom 34%",
-            scrub: true,
-            pin: true,
-            // markers: true,
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: ".airballoon",
+          start: "center center",
+          endTrigger: "#balloon-cloud-point",
+          end: (_) => {
+            const rect = balloonCloudPointRef.current!.getBoundingClientRect();
+            return `top center+=${rect.height * 1.5}px`;
           },
-        });
-      });
-
-      // Laptop
-      mm.add("(max-width: 1280px)", () => {
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: ".airballoon",
-            start: "center center",
-            end: "bottom 25%",
-            scrub: true,
-            pin: true,
-            // markers: true,
-          },
-        });
-      });
-
-      // ipad
-      mm.add("(min-width: 880px)", () => {
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: ".airballoon",
-            start: "center center",
-            end: "bottom 15%",
-            scrub: true,
-            // pin: true,
-            // markers: true,
-          },
-        });
-      });
-
-      // Hp
-      mm.add("(max-width: 468px)", () => {
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: ".airballoon",
-            start: "30% 10%",
-            end: "=+1500",
-            scrub: true,
-            // pin: true,
-            // markers: true,
-          },
-        });
+          pin: true,
+        },
       });
     },
     { scope: parallaxRef }
@@ -167,7 +123,6 @@ export default function RocketParallax() {
             trigger: ".woooosh-text",
             start: "top center",
             toggleActions: "play none none reverse",
-            // markers: true,
           },
         }
       );
@@ -265,7 +220,7 @@ export default function RocketParallax() {
       </Box>
 
       {/* Airballoon */}
-      <Box
+      <Image
         className="airballoon"
         position="absolute"
         top={{
@@ -279,21 +234,18 @@ export default function RocketParallax() {
         }}
         transform="translateX(-50%)"
         zIndex={2}
-      >
-        <Image
-          src="/images/cloud/airballon.png"
-          alt="Air Balloon"
-          w={{
-            base: "80px",
-            sm: "100px",
-            md: "120px",
-            lg: "140px",
-            xl: "160px",
-            "2xl": "180px",
-          }}
-          filter="drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
-        />
-      </Box>
+        src="/images/cloud/airballon.png"
+        alt="Air Balloon"
+        w={{
+          base: "80px",
+          sm: "100px",
+          md: "120px",
+          lg: "140px",
+          xl: "160px",
+          "2xl": "180px",
+        }}
+        filter="drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
+      />
 
       {/* Cloud Point Ballon */}
       <Box
@@ -308,6 +260,8 @@ export default function RocketParallax() {
         zIndex={3}
       >
         <Image
+          ref={balloonCloudPointRef}
+          id="balloon-cloud-point"
           src="/images/cloud/cloudsmall.png"
           alt="Small Cloud"
           w={{
@@ -331,7 +285,7 @@ export default function RocketParallax() {
           fontSize={{
             base: "xl",
             md: "2xl",
-            lg: "3xl"
+            lg: "3xl",
           }}
           fontFamily="Bestime"
           fontWeight="bold"
