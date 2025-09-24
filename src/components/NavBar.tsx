@@ -34,9 +34,15 @@ export default function Navbar() {
 
       if (idleTimeout) idleTimeout.kill();
 
-      idleTimeout = gsap.to({}, { duration: 0.8, onComplete: () => {
-        gsap.to(nav, { y: 0, opacity: 1, duration: 0.4 });
-      }});
+      idleTimeout = gsap.to(
+        {},
+        {
+          duration: 0.8,
+          onComplete: () => {
+            gsap.to(nav, { y: 0, opacity: 1, duration: 0.4 });
+          },
+        }
+      );
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -212,19 +218,19 @@ export default function Navbar() {
 
                 {/* Links mobile */}
                 <VStack align="start" gap={5} mt={6}>
-                  <Link as={NextLink} href="#home">
+                  <Link as={NextLink} href="#home" color="white">
                     Beranda
                   </Link>
-                  <Link as={NextLink} href="#about">
+                  <Link as={NextLink} href="#about" color="white">
                     Tentang
                   </Link>
-                  <Link as={NextLink} href="#profil">
+                  <Link as={NextLink} href="#profil" color="white">
                     Profil
                   </Link>
-                  <Link as={NextLink} href="#projects">
+                  <Link as={NextLink} href="#projects" color="white">
                     Karya & Proyek
                   </Link>
-                  <Link as={NextLink} href="#testimoni">
+                  <Link as={NextLink} href="#testimoni" color="white">
                     Testimoni
                   </Link>
                 </VStack>
