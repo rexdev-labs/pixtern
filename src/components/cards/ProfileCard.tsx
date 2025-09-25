@@ -9,6 +9,7 @@ interface ProfileCardProps {
   charImage: string;
   realImage?: string;
   bg: string;
+  bgImage?: string;
   className?: string;
 }
 
@@ -17,6 +18,7 @@ export default function ProfileCard({
   charImage,
   realImage,
   bg,
+  bgImage,
   className,
 }: ProfileCardProps) {
   const cardContainerRef = useRef(null);
@@ -62,19 +64,19 @@ export default function ProfileCard({
           bg="white"
           border="2px solid"
           borderColor="brand.text.black"
-          px={{ base: 1, md: 1.5 }}
-          pt={{ base: 1, md: 1.5 }}
-          rounded={{ base: "xl", md: "2xl" }}
+          px={{ base: 1.5, md: 2 }}
+          pt={{ base: 1.5, md: 2 }}
+          rounded={{ base: "2xl", md: "3xl", lg: "3xl" }}
           style={{ backfaceVisibility: "hidden" }}
         >
           <VStack
             bg={bg}
-            borderRadius={{ base: "lg", md: "xl" }}
+            rounded={{ base: "xl", md: "2xl", lg: "2xl" }}
             shadow="md"
             border="2px solid"
             borderColor="brand.text.black"
-            minW={{ base: "80px", sm: "100px", md: "120px", lg: "175px" }}
-            minH={{ base: "100px", sm: "120px", md: "140px", lg: "205px" }}
+            minW={{ base: "90px", sm: "105px", md: "120px", lg: "175px" }}
+            minH={{ base: "105px", sm: "120px", md: "140px", lg: "205px" }}
             position="relative"
             justifyContent="flex-start"
             alignItems="center"
@@ -82,11 +84,11 @@ export default function ProfileCard({
             <Image
               src={charImage}
               alt={`${name} char`}
-              boxSize={{ base: "123px", sm: "140px", md: "172px", lg: "250px" }}
+              boxSize={{ base: "126px", sm: "145px", md: "173px", lg: "250px" }}
               objectFit="cover"
               objectPosition="center"
               position="absolute"
-              top={{ base: "-8px", md: "-10px" }}
+              top={{ base: "-1.5", md: "-2.5" }}
               left="50%"
               transform="translateX(-50%)"
               zIndex={2}
@@ -113,35 +115,42 @@ export default function ProfileCard({
           bg="white"
           border="2px solid"
           borderColor="brand.text.black"
-          px={{ base: 1, md: 1.5 }}
-          pt={{ base: 1, md: 1.5 }}
-          rounded={{ base: "xl", md: "2xl" }}
+          px={{ base: 1.5, md: 2 }}
+          pt={{ base: 1.5, md: 2 }}
+          rounded={{ base: "2xl", md: "3xl", lg: "3xl" }}
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
           }}
         >
           <VStack
-            bg={bg}
-            borderRadius={{ base: "lg", md: "xl" }}
-            shadow="md"
+            backgroundImage={`url(${bgImage})`}
+            backgroundSize={{ base: "107%", lg: "102%" }}
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+            borderRadius="30px"
+            rounded={{ base: "xl", md: "2xl", lg: "2xl" }}
             border="2px solid"
             borderColor="brand.text.black"
-            minW={{ base: "80px", sm: "100px", md: "120px", lg: "175px" }}
-            minH={{ base: "100px", sm: "120px", md: "140px", lg: "205px" }}
+            minW={{ base: "90px", sm: "105px", md: "120px", lg: "175px" }}
+            minH={{ base: "105px", sm: "120px", md: "140px", lg: "205px" }}
             position="relative"
             justifyContent="center"
             alignItems="center"
           >
-            <Box
+            <Image
+              src={realImage}
+              alt={`${name} char`}
+              boxSize={{ base: "107px", sm: "122px", md: "143px", lg: "211px" }}
+              objectFit="cover"
+              objectPosition="center"
               position="absolute"
-              inset="0"
-              rounded={{ base: "md", md: "lg" }}
-              zIndex={1}
-              backgroundImage={realImage ? `url(${realImage})` : "none"}
-              backgroundSize="cover"
-              backgroundPosition="center"
+              top={{ base: "-1.5", md: "-2", lg: "-2.5" }}
+              left="50%"
+              transform="translateX(-50%)"
+              zIndex={2}
               pointerEvents="none"
+              overflow="visible"
             />
           </VStack>
           <Text

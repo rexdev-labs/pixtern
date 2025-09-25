@@ -185,32 +185,37 @@ export default function ProfileSection() {
     {
       name: "Jelita",
       charImage: "/images/char/lita.png",
-      realImage: "/images/char/litaReal.jpg",
+      realImage: "/images/char/litaReal.png",
       bg: "brand.bg.blue.cyan",
+      bgImage: "/images/char/bgLita.png",
     },
     {
       name: "Rexsi",
       charImage: "/images/char/rexsi.png",
-      realImage: "/images/char/rexsiReal.jpg",
+      realImage: "/images/char/rexsiReal.png",
       bg: "brand.bg.blue.primary",
+      bgImage: "/images/char/bgRexsi.png",
     },
     {
       name: "Sheva",
       charImage: "/images/char/sheva.png",
-      realImage: "/images/char/shevaReal.jpg",
+      realImage: "/images/char/shevaReal.png",
       bg: "brand.bg.green.emelard",
+      bgImage: "/images/char/bgSheva.png",
     },
     {
       name: "Firman",
       charImage: "/images/char/firman.png",
-      realImage: "/images/char/firmanReal.jpg",
+      realImage: "/images/char/firmanReal.png",
       bg: "brand.bg.purple",
+      bgImage: "/images/char/bgFirman.png",
     },
     {
       name: "Raihan",
       charImage: "/images/char/raihan.png",
-      realImage: "/images/char/raihanReal.jpg",
+      realImage: "/images/char/raihanReal.png",
       bg: "brand.bg.green.lime",
+      bgImage: "/images/char/bgRaihan.png",
     },
   ];
 
@@ -220,30 +225,35 @@ export default function ProfileSection() {
       charImage: "/images/char/tio.png",
       realImage: "/images/char/tioReal.png",
       bg: "brand.bg.blue.cyan",
+      bgImage: "/images/char/bgTio.png",
     },
     {
       name: "Nova",
       charImage: "/images/char/nova.png",
       realImage: "/images/char/novaReal.png",
       bg: "brand.bg.green.softLime",
+      bgImage: "/images/char/bgNova.png",
     },
     {
       name: "Arya",
       charImage: "/images/char/arya.png",
-      realImage: "/images/char/aryaReal.jpg",
+      realImage: "/images/char/aryaReal.png",
       bg: "brand.bg.green.lightAqua",
+      bgImage: "/images/char/bgArya.png",
     },
     {
       name: "Farel",
       charImage: "/images/char/farel.png",
-      realImage: "/images/char/farelReal.jpg",
+      realImage: "/images/char/farelReal.png",
       bg: "brand.bg.green.mint",
+      bgImage: "/images/char/bgFarel.png",
     },
     {
       name: "Nabil",
       charImage: "/images/char/nabil.png",
-      realImage: "/images/char/nabilReal.jpg",
+      realImage: "/images/char/nabilReal.png",
       bg: "brand.bg.yellow.bright",
+      bgImage: "/images/char/bgNabil.png",
     },
   ];
 
@@ -380,6 +390,7 @@ export default function ProfileSection() {
                     charImage={character.charImage}
                     realImage={character.realImage}
                     bg={character.bg}
+                    bgImage={character.bgImage}
                     className="profile-card-right"
                   />
                 ))}
@@ -396,6 +407,7 @@ export default function ProfileSection() {
                     charImage={character.charImage}
                     realImage={character.realImage}
                     bg={character.bg}
+                    bgImage={character.bgImage}
                     className="profile-card-right"
                   />
                 ))}
@@ -424,6 +436,7 @@ export default function ProfileSection() {
                     charImage={character.charImage}
                     realImage={character.realImage}
                     bg={character.bg}
+                    bgImage={character.bgImage}
                     className="profile-card-left"
                   />
                 ))}
@@ -440,6 +453,7 @@ export default function ProfileSection() {
                     charImage={character.charImage}
                     realImage={character.realImage}
                     bg={character.bg}
+                    bgImage={character.bgImage}
                     className="profile-card-left"
                   />
                 ))}
