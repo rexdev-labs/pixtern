@@ -23,18 +23,13 @@ export default function HeroSection() {
   useGSAP(() => {
     if (!containerRef.current) return;
 
-    const w = window.innerWidth;
-    const duration =
-      w <= 600 ? "150" : w <= 990 ? "200" : w <= 1280 ? "200" : "150";
-
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: () => containerRef.current!.offsetHeight + "px bottom",
-      end: `+=${duration}`,
+      end: `+=180`,
       pin: true,
       pinSpacing: false,
       anticipatePin: 1,
-      markers: false, // ganti ke true kalau mau debug
     });
 
     const nodes =

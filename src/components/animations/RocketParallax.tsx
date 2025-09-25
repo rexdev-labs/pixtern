@@ -15,7 +15,7 @@ export default function RocketParallax() {
     () => {
       let mm = gsap.matchMedia();
 
-      // Default / Desktop
+      // Default
       mm.add("(min-width: 1280px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -27,8 +27,8 @@ export default function RocketParallax() {
           },
         });
 
-        tl.fromTo(".group1", { y: 3000 }, { y: -150, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 2180 }, { y: 600, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 3200 }, { y: -150, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 2380 }, { y: 600, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -39,42 +39,20 @@ export default function RocketParallax() {
         });
       });
 
-      // Laptop/Tablet
-      mm.add("(max-width: 1280px)", () => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: parallaxRef.current,
-            start: "top bottom",
-            end: "+=1700",
-            scrub: true,
-          },
-        });
-
-        tl.fromTo(".group1", { y: 3000 }, { y: -150, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 2180 }, { y: 600, ease: "none" }, 0);
-
-        gsap.to(".rocket", {
-          y: 15,
-          duration: 3,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut",
-        });
-      });
-
-      // iPad
-      mm.add("(min-width: 601px) and (max-width: 990px)", () => {
+      // Ipad
+      mm.add("(min-width: 601px) and (max-width: 1279px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: parallaxRef.current,
             start: "top bottom",
             end: "=+1000",
             scrub: true,
+            // markers: true,
           },
         });
 
-        tl.fromTo(".group1", { y: 2800 }, { y: -120, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 2180 }, { y: 400, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 2480 }, { y: 145, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 1650 }, { y: 800, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -93,28 +71,7 @@ export default function RocketParallax() {
             start: "top bottom",
             end: "bottom top",
             scrub: true,
-          },
-        });
-
-        tl.fromTo(".group1", { y: 1528 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 1100 }, { y: 700, ease: "none" }, 0);
-
-        gsap.to(".rocket", {
-          y: 12,
-          duration: 2.5,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut",
-        });
-      });
-
-      mm.add("(max-width: 600px)", () => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: parallaxRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
+            // markers: true,
           },
         });
 
