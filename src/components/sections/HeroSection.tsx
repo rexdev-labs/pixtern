@@ -4,6 +4,9 @@ import { Box, Button, Container, Image, Flex } from "@chakra-ui/react";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -19,6 +22,20 @@ export default function HeroSection() {
 
   useGSAP(() => {
     if (!containerRef.current) return;
+
+    const w = window.innerWidth;
+    const duration =
+      w <= 600 ? "150" : w <= 990 ? "200" : w <= 1280 ? "200" : "150";
+
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: () => containerRef.current!.offsetHeight + "px bottom",
+      end: `+=${duration}`,
+      pin: true,
+      pinSpacing: false,
+      anticipatePin: 1,
+      markers: false, // ganti ke true kalau mau debug
+    });
 
     const nodes =
       containerRef.current.querySelectorAll<HTMLElement>(".parallax");
@@ -110,12 +127,7 @@ export default function HeroSection() {
       id="home"
       as="section"
       position="relative"
-      minH={{
-        base: "120vh",
-        sm: "120vh",
-        md: "120vh",
-        xl: "100vh"
-      }}
+      minH="100vh"
       overflow="hidden"
       bg="brand.hero"
       ref={containerRef}

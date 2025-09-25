@@ -1,15 +1,15 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { useGSAP } from "@gsap/react";
 
 import HeroSection from "@/components/sections/HeroSection";
-import AboutSection from "@/components/sections/AboutSection";
 import RocketParallax from "@/components/animations/RocketParallax";
+import AboutSection from "@/components/sections/AboutSection";
 import ProfileSection from "@/components/sections/ProfileSection";
 
 import { setSmoother, getSmoother } from "@/utils/initSmoothScroll";
@@ -21,14 +21,13 @@ export default function Home() {
   const smoothContentRef = useRef(null);
 
   useGSAP(() => {
-    let smoother = ScrollSmoother.create({
+    const smoother = ScrollSmoother.create({
       wrapper: smoothWrapperRef.current!,
       content: smoothContentRef.current!,
       smooth: 4,
       effects: true,
       normalizeScroll: true,
-      ignoreMobileResize: false,  
-      smoothTouch: 0.1,
+      ignoreMobileResize: true,
     });
 
     setSmoother(smoother);
@@ -45,21 +44,10 @@ export default function Home() {
     });
 
     const handleResize = () => {
-      let sm = getSmoother();
+      const sm = getSmoother();
       if (sm) {
         sm.refresh();
         ScrollTrigger.refresh();
-      } else {
-        smoother = ScrollSmoother.create({
-          wrapper: smoothWrapperRef.current!,
-          content: smoothContentRef.current!,
-          smooth: 4,
-          effects: true,
-          normalizeScroll: true,
-          ignoreMobileResize: false,
-          smoothTouch: 0.1,
-        });
-        setSmoother(smoother);
       }
     };
 
@@ -74,13 +62,17 @@ export default function Home() {
     <div ref={smoothWrapperRef} id="smooth-wrapper">
       <div ref={smoothContentRef} id="smooth-content">
         <Box
+          bg="brand.bg.black"
+          position="relative"
           minH={{
-            base: "140vh",
+            base: "130vh",
             sm: "130vh",
             md: "135vh",
+            lg: "180vh",
             xl: "210vh",
-            "2xl": "220vh",
+            "2xl": "290vh",
           }}
+          overflow="visible"
         >
           <HeroSection />
           <RocketParallax />

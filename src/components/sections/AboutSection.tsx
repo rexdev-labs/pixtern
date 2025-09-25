@@ -181,7 +181,7 @@ export default function AboutSection() {
             zIndex={20}
           >
             <Image
-              src="/images/char/BirdGreen.png"
+              src="/images/float/BirdGreen.png"
               alt="Bird"
               w={{
                 base: "46px",
@@ -204,7 +204,7 @@ export default function AboutSection() {
             zIndex={20}
           >
             <Image
-              src="/images/char/BirdPurple.png"
+              src="/images/float/BirdPurple.png"
               alt="Bird"
               w={{
                 base: "46px",
@@ -304,7 +304,7 @@ export default function AboutSection() {
         >
           <Box className="bird" position="absolute" right="34%" bottom="10%">
             <Image
-              src="/images/char/BirdPurple2.png"
+              src="/images/float/BirdPurple2.png"
               alt="Bird"
               w={{
                 base: "40px",

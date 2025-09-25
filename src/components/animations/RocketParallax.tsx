@@ -15,20 +15,20 @@ export default function RocketParallax() {
     () => {
       let mm = gsap.matchMedia();
 
-      // Default
+      // Default / Desktop
       mm.add("(min-width: 1280px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: parallaxRef.current,
             start: "top bottom",
-            end: "=+1000",
+            end: "+=1700",
             scrub: true,
             // markers: true,
           },
         });
 
-        tl.fromTo(".group1", { y: 3100 }, { y: -2000, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 2000 }, { y: -500, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 3000 }, { y: -150, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 2180 }, { y: 600, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -39,7 +39,30 @@ export default function RocketParallax() {
         });
       });
 
-      // Ipad
+      // Laptop/Tablet
+      mm.add("(max-width: 1280px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: parallaxRef.current,
+            start: "top bottom",
+            end: "+=1700",
+            scrub: true,
+          },
+        });
+
+        tl.fromTo(".group1", { y: 3000 }, { y: -150, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 2180 }, { y: 600, ease: "none" }, 0);
+
+        gsap.to(".rocket", {
+          y: 15,
+          duration: 3,
+          yoyo: true,
+          repeat: -1,
+          ease: "sine.inOut",
+        });
+      });
+
+      // iPad
       mm.add("(min-width: 601px) and (max-width: 990px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -47,12 +70,11 @@ export default function RocketParallax() {
             start: "top bottom",
             end: "=+1000",
             scrub: true,
-            // markers: true,
           },
         });
 
-        tl.fromTo(".group1", { y: 2180 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 1450 }, { y: 800, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 2800 }, { y: -120, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 2180 }, { y: 400, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -64,14 +86,35 @@ export default function RocketParallax() {
       });
 
       // HP
-      mm.add("(max-width: 428px)", () => {
+      mm.add("(max-width: 600px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: parallaxRef.current,
             start: "top bottom",
             end: "bottom top",
             scrub: true,
-            // markers: true,
+          },
+        });
+
+        tl.fromTo(".group1", { y: 1528 }, { y: 145, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 1100 }, { y: 700, ease: "none" }, 0);
+
+        gsap.to(".rocket", {
+          y: 12,
+          duration: 2.5,
+          yoyo: true,
+          repeat: -1,
+          ease: "sine.inOut",
+        });
+      });
+
+      mm.add("(max-width: 600px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: parallaxRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
           },
         });
 
@@ -99,7 +142,7 @@ export default function RocketParallax() {
           endTrigger: "#balloon-cloud-point",
           end: (_) => {
             const rect = balloonCloudPointRef.current!.getBoundingClientRect();
-            return `top center+=${rect.height * 1.5}px`;
+            return `top center+=${rect.height * 1.3}px`;
           },
           pin: true,
         },
@@ -133,20 +176,25 @@ export default function RocketParallax() {
   return (
     <Box
       ref={parallaxRef}
+      id="rocket-parallax"
       position="absolute"
       top="0"
       left={0}
       w="100%"
       h={{
         base: "150vh",
+        sm: "150vh",
         md: "160vh",
-        xl: "300vh",
+        lg: "220vh",
+        xl: "220vh",
+        "2xl": "300vh",
       }}
       bg="transparent"
       pointerEvents="none"
       zIndex={20}
       overflow="hidden"
     >
+      {/* Group Cloud + Rocket */}
       <Box className="group1" position="absolute" top="0" w="100%">
         <Image src="/images/cloud/cloud1.svg" w="100%" h="auto" alt="" />
         <Box
@@ -173,7 +221,7 @@ export default function RocketParallax() {
         </Box>
       </Box>
 
-      {/* Cloud */}
+      {/* Cloud 2 */}
       <Box className="cloud-2" position="relative" w="100%">
         <Image src="/images/cloud/cloud2.svg" w="100%" h="auto" alt="" />
 
@@ -225,8 +273,11 @@ export default function RocketParallax() {
         position="absolute"
         top={{
           base: "70.5%",
+          sm: "68.5%",
           md: "66%",
-          xl: "40%",
+          lg: "65%",
+          xl: "70%",
+          "2xl": "60%",
         }}
         left={{
           base: "24%",
@@ -247,14 +298,10 @@ export default function RocketParallax() {
         filter="drop-shadow(0 4px 8px rgba(0,0,0,0.1))"
       />
 
-      {/* Cloud Point Ballon */}
+      {/* Cloud Point + Text */}
       <Box
         position="absolute"
-        bottom={{
-          base: "0",
-          md: "4%",
-          xl: "37%",
-        }}
+        bottom="0"
         left="15%"
         transform="translateX(50%)"
         zIndex={3}
