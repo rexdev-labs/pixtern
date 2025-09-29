@@ -13,20 +13,19 @@ import {
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProfileCard from "../cards/ProfileCard";
+import { ScrollTrigger, ScrambleTextPlugin, SplitText } from "gsap/all";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin, SplitText);
 
 export default function ProfileSection() {
   const containerRef = useRef(null);
 
   useGSAP(() => {
-    gsap.set(".title-profile", { opacity: 0, y: 50 });
-    gsap.set(".profile-card-right", { opacity: 0, x: 30, scale: 0.9 });
-    gsap.set(".profile-card-left", { opacity: 0, x: -30, scale: 0.9 });
-    gsap.set(".text-section-left", { opacity: 0, x: -30 });
-    gsap.set(".text-section-right", { opacity: 0, x: 10 });
+    gsap.set(".scramble-who", { text: "" });
+    gsap.set(".scramble-we-are", { text: "" });
+    gsap.set(".profile-card-right", { opacity: 0, x: 20, scale: 0.9 });
+    gsap.set(".profile-card-left", { opacity: 0, x: -20, scale: 0.9 });
     gsap.set(".bird-up", { opacity: 1 });
     gsap.set(".bird-down", { opacity: 0 });
     gsap.set(".bird-container", { opacity: 0, x: -50, scale: 0.8 });
@@ -86,14 +85,31 @@ export default function ProfileSection() {
       trigger: ".title-profile",
       start: "top 85%",
       end: "bottom top",
-      // markers: true,
       toggleActions: "play reverse play reverse",
-      animation: gsap.to(".title-profile", {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "back.out",
-      }),
+      animation: gsap
+        .timeline()
+        .to(".scramble-who", {
+          duration: 1.2,
+          scrambleText: {
+            text: "Who",
+            chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            revealDelay: 0.5,
+            speed: 0.4,
+          },
+        })
+        .to(
+          ".scramble-we-are",
+          {
+            duration: 1.5,
+            scrambleText: {
+              text: "We Are?",
+              chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ?",
+              revealDelay: 0.5,
+              speed: 0.4,
+            },
+          },
+          "-=0.8"
+        ),
     });
 
     ScrollTrigger.create({
@@ -131,28 +147,79 @@ export default function ProfileSection() {
       }),
     });
 
+    const splitLeft = new SplitText(".text-section-left .split-heading", {
+      type: "words,chars",
+    });
+    const splitLeftPara = new SplitText(".text-section-left .split-paragraph", {
+      type: "lines",
+    });
+
+    gsap.set(splitLeft.chars, { opacity: 0, y: 20 });
+    gsap.set(splitLeftPara.lines, { opacity: 0, y: 20 });
+
     ScrollTrigger.create({
       trigger: ".text-section-left",
       start: "top 90%",
       toggleActions: "play reverse play reverse",
-      animation: gsap.to(".text-section-left", {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: "back.out",
-      }),
+      animation: gsap
+        .timeline()
+        .to(splitLeft.chars, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.02,
+          ease: "back.out(1.2)",
+        })
+        .to(
+          splitLeftPara.lines,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+          },
+          "-=0.3"
+        ),
     });
+
+    const splitRight = new SplitText(".text-section-right .split-heading", {
+      type: "words,chars",
+    });
+    const splitRightPara = new SplitText(
+      ".text-section-right .split-paragraph",
+      {
+        type: "lines",
+      }
+    );
+
+    gsap.set(splitRight.chars, { opacity: 0, y: 20 });
+    gsap.set(splitRightPara.lines, { opacity: 0, y: 20 });
 
     ScrollTrigger.create({
       trigger: ".text-section-right",
       start: "top 90%",
       toggleActions: "play reverse play reverse",
-      animation: gsap.to(".text-section-right", {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: "back.out",
-      }),
+      animation: gsap
+        .timeline()
+        .to(splitRight.chars, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.02,
+          ease: "back.out(1.2)",
+        })
+        .to(
+          splitRightPara.lines,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+          },
+          "-=0.3"
+        ),
     });
 
     gsap.to(".ballon", {
@@ -259,9 +326,10 @@ export default function ProfileSection() {
 
   return (
     <Box ref={containerRef}>
-      <Center my={{ base: "10", md: "20" }}>
+      <Center my={{ base: "10", md: "20" }} className="title-profile">
         <Flex gap={2} className="title">
           <Heading
+            className="scramble-who"
             fontFamily="bestime"
             fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
             fontWeight="light"
@@ -271,6 +339,7 @@ export default function ProfileSection() {
           </Heading>
           <Box display="flex" flexDirection="column" alignItems="center">
             <Heading
+              className="scramble-we-are"
               fontFamily="bestime"
               fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
               color="brand.text.blue"
@@ -346,6 +415,7 @@ export default function ProfileSection() {
               textAlign={{ base: "center", lg: "left" }}
             >
               <Heading
+                className="split-heading"
                 fontFamily="bestime"
                 fontWeight="light"
                 fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
@@ -359,6 +429,7 @@ export default function ProfileSection() {
                 PIXEL SPACE CREATIVE DIGITAL?
               </Heading>
               <Text
+                className="split-paragraph"
                 fontSize={{ base: "xs", md: "md" }}
                 lineHeight="1.6"
                 color="brand.text.gray"
@@ -472,6 +543,7 @@ export default function ProfileSection() {
             order={{ base: 2, lg: 2 }}
           >
             <Heading
+              className="split-heading"
               fontFamily="bestime"
               fontWeight="light"
               fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
@@ -485,6 +557,7 @@ export default function ProfileSection() {
               PIXEL SPACE CREATIVE DIGITAL?
             </Heading>
             <Text
+              className="split-paragraph"
               fontSize={{ base: "xs", md: "md" }}
               lineHeight="1.6"
               color="brand.text.gray"
@@ -507,9 +580,9 @@ export default function ProfileSection() {
         justifyContent="space-between"
         alignItems="end"
         px={{ base: "4", md: "10", lg: "20" }}
-        mt={{ base: 8, md: 12, lg: 16 }}
+        mt={{ base: "4", md: "10", lg: "20" }}
       >
-        <Box ms={{ base: "14", md: "20", lg: 36 }}>
+        <Box ms={{ base: "14", md: "20", lg: "24" }}>
           <Image
             className="cloud2"
             src="/images/cloud/cloud2-profile.png"

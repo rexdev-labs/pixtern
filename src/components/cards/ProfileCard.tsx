@@ -100,7 +100,7 @@ export default function ProfileCard({
             fontFamily="bestime"
             fontWeight="light"
             textAlign="center"
-            fontSize={{ base: "sm", sm: "md", md: "lg" }}
+            fontSize={{ base: "sm", sm: "md", md: "lg", lg: "2xl" }}
             color="brand.text.black"
             mt={1}
           >
@@ -157,7 +157,7 @@ export default function ProfileCard({
             fontFamily="bestime"
             fontWeight="light"
             textAlign="center"
-            fontSize={{ base: "sm", sm: "md", md: "lg" }}
+            fontSize={{ base: "sm", sm: "md", md: "lg", lg: "2xl" }}
             color="brand.text.black"
             mt={1}
             position="relative"
