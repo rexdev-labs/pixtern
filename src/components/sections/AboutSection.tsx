@@ -1,110 +1,189 @@
 import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { SplitText, ScrollTrigger } from "gsap/all";
 import { useRef } from "react";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger, useGSAP, SplitText);
 
 export default function AboutSection() {
   const aboutRef = useRef(null);
 
   useGSAP(
     () => {
-      gsap.set(".title", { opacity: 0, y: 50 });
-      gsap.set(".ampersand", { opacity: 0, x: 100 });
-      gsap.set(".box-title", { opacity: 0, y: 100, rotation: 0 });
-      gsap.set(".bird", { oopacity: 0, scale: 0 });
-      gsap.set(".main-title", { opacity: 0, y: 30 });
-      gsap.set(".main-description", { opacity: 0, y: 20 });
-      gsap.set(".character", { opacity: 0, y: 80 });
-      gsap.set(".flowting-box", { opacity: 0, scale: 0 });
+      const titleSplit = new SplitText(".title", { 
+        type: "chars,words", 
+        charsClass: "title-char",
+        wordsClass: "title-word"
+      });
+      
+      const mainTitleSplit = new SplitText(".main-title", { 
+        type: "chars,words,lines", 
+        charsClass: "main-title-char",
+        wordsClass: "main-title-word",
+        linesClass: "main-title-line"
+      });
+      
+      const descriptionSplit = new SplitText(".main-description", { 
+        type: "words,lines", 
+        wordsClass: "desc-word",
+        linesClass: "desc-line"
+      });
 
-      //Title
+      gsap.set(".title-char", { opacity: 0, y: 100, rotationX: 90 });
+      gsap.set(".ampersand", { opacity: 0, scale: 0, rotation: 360 });
+      gsap.set(".box-title", { opacity: 0, y: 150, rotationY: 45, scale: 0.8 });
+      gsap.set(".main-bird", { opacity: 0, scale: 0, rotation: 180 });
+      gsap.set(".bird", { opacity: 0, scale: 0, rotation: 180 });
+      gsap.set(".main-title-char", { opacity: 0, y: 50, rotationY: 90, scale: 0.5 });
+      gsap.set(".desc-word", { opacity: 0, y: 30, rotationX: 45 });
+      gsap.set(".character", { opacity: 0, y: 100, scale: 0.8, rotationY: 15 });
+      gsap.set(".floating-box", { opacity: 0, scale: 0, rotation: 0 });
+
       ScrollTrigger.create({
         trigger: ".title",
         start: "top 75%",
         end: "bottom top",
-        // markers: true,
         toggleActions: "play reverse play reverse",
-        animation: gsap.to(".title", {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "back.inOut(1.7)",
-        }),
+        animation: gsap.timeline()
+          .to(".title-char", {
+            opacity: 1,
+            y: 0,
+            rotationX: 0,
+            duration: 0.8,
+            stagger: {
+              amount: 1.2,
+              from: "center",
+              ease: "back.out(2)"
+            },
+            ease: "back.out(1.7)",
+          })
+          .to(".title-word", {
+            rotationX: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out"
+          }, "-=0.5")
       });
 
-      //ampersend
       ScrollTrigger.create({
         trigger: ".ampersand",
         start: "top 75%",
         end: "bottom top",
         toggleActions: "play reverse play reverse",
-        animation: gsap.to(".ampersand", {
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: "bounce.out",
-        }),
+        animation: gsap.timeline()
+          .to(".ampersand", {
+            opacity: 1,
+            scale: 1,
+            rotation: 10,
+            duration: 0.6,
+            ease: "back.out(2)",
+          })
+          .to(".ampersand", {
+            rotation: 0,
+            duration: 0.4,
+            ease: "elastic.out(1, 0.3)"
+          })
       });
 
-      // box title
       ScrollTrigger.create({
         trigger: ".box-title",
         start: "top 85%",
-        end: "bottom top",
+        end: "bottom 15%",
         toggleActions: "play reverse play reverse",
         animation: gsap.to(".box-title", {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "bounce.out",
-        }),
-      });
-
-      //bird
-      ScrollTrigger.create({
-        trigger: ".bird",
-        start: "top 80%",
-        end: "bottom top",
-        toggleActions: "play reverse play reverse",
-        animation: gsap.to(".bird", {
-          opacity: 1,
+          rotationY: 0,
           scale: 1,
-          duration: 0.6,
-          stagger: 0.1,
+          duration: 1,
+          stagger: 0.3,
           ease: "back.out(1.7)",
         }),
       });
 
-      //main title
       ScrollTrigger.create({
-        trigger: ".main-title",
-        start: "top 85%",
-        end: "bottom top",
+        trigger: ".bird",
+        start: "top 80%",
+        end: "bottom 15%",
         toggleActions: "play reverse play reverse",
-        animation: gsap.to(".main-title", {
+        animation: gsap.to(".bird", {
           opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
+          scale: 1,
+          rotation: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: "back.out(2)",
         }),
       });
 
-      //description
+      ScrollTrigger.create({
+        trigger: ".main-bird",
+        start: "top 80%",
+        end: "bottom 15%",
+        toggleActions: "play reverse play reverse",
+        animation: gsap.to(".main-bird", {
+          opacity: 1,
+          scale: 1,
+          rotation: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: "back.out(2)",
+        }),
+      });
+
+      ScrollTrigger.create({
+        trigger: ".main-title",
+        start: "top 85%",
+        end: "bottom 15%",
+        toggleActions: "play reverse play reverse",
+        animation: gsap.timeline()
+          .to(".main-title-line", {
+            opacity: 1,
+            duration: 0.1
+          })
+          .to(".main-title-char", {
+            opacity: 1,
+            y: 0,
+            rotationY: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: {
+              amount: 1.5,
+              from: "start",
+              ease: "power2.out"
+            },
+            ease: "back.out(1.2)",
+          })
+          .to(".main-title-word", {
+            rotationX: 0,
+            duration: 0.4,
+            stagger: 0.1
+          }, "-=1")
+      });
+
       ScrollTrigger.create({
         trigger: ".main-description",
         start: "top 85%",
         end: "bottom 15%",
         toggleActions: "play reverse play reverse",
-        animation: gsap.to(".main-description", {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out",
-        }),
+        animation: gsap.timeline()
+          .to(".desc-line", {
+            opacity: 1,
+            duration: 0.1
+          })
+          .to(".desc-word", {
+            opacity: 1,
+            y: 0,
+            rotationX: 0,
+            duration: 0.4,
+            stagger: {
+              amount: 2,
+              from: "start",
+              ease: "power1.out"
+            },
+            ease: "power2.out",
+          })
       });
 
       ScrollTrigger.create({
@@ -116,26 +195,38 @@ export default function AboutSection() {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: "back.out(1.7)",
+          rotationY: 0,
+          duration: 1.2,
+          stagger: 0.3,
+          ease: "back.out(1.5)",
         }),
       });
 
-      // floating boxes
       ScrollTrigger.create({
         trigger: ".floating-box",
         start: "top 80%",
         end: "bottom 15%",
         toggleActions: "play reverse play reverse",
-        animation: gsap.to(".floating-box", {
-          opacity: 0.7,
-          scale: 1,
-          duration: 0.6,
-          stagger: 0.05,
-          ease: "back.out(1.7)",
-        }),
+        animation: gsap.timeline()
+          .to(".floating-box", {
+            opacity: 0.7,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+          })
       });
+
+      gsap.to(".floating-box", {
+        y: "random(-10, 10)",
+        rotation: "random(-5, 5)",
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: 0.2
+      });
+
     },
     { scope: aboutRef }
   );
@@ -302,7 +393,7 @@ export default function AboutSection() {
           position="relative"
           h={{ base: "80px", md: "120px" }}
         >
-          <Box className="bird" position="absolute" right="34%" bottom="10%">
+          <Box className="main-bird" position="absolute" right="34%" bottom="10%">
             <Image
               src="/images/float/BirdPurple2.png"
               alt="Bird"

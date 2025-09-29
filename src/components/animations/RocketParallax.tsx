@@ -110,6 +110,101 @@ export default function RocketParallax() {
 
   useGSAP(
     () => {
+      let mm = gsap.matchMedia();
+      const rect = balloonCloudPointRef.current!.getBoundingClientRect();
+
+      mm.add("(min-width: 1281px)", () => {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".airballoon",
+              start: "top center",
+              endTrigger: "#balloon-cloud-point",
+              end: `top center+=${rect.height * 1.3}px`,
+              scrub: true,
+              pin: true,
+              anticipatePin: 1,
+            },
+          })
+          .fromTo(
+            ".airballoon",
+            {
+              x: "130vh",
+              y: "0",
+              rotate: 8,
+            },
+            {
+              x: "0",
+              y: "-110vh",
+              rotate: -5,
+              ease: "none",
+            }
+          );
+      });
+
+      mm.add("(min-width: 601px) and (max-width: 1279px)", () => {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".airballoon",
+              start: "top center",
+              endTrigger: "#balloon-cloud-point",
+              end: `top center+=${rect.height * 1.3}px`,
+              scrub: true,
+              pin: true,
+              anticipatePin: 1,
+            },
+          })
+          .fromTo(
+            ".airballoon",
+            {
+              x: "50vh",
+              y: "0",
+              rotate: 8,
+            },
+            {
+              x: "0",
+              y: "-80vh",
+              rotate: -5,
+              ease: "none",
+            }
+          );
+      });
+
+      mm.add("(max-width: 600px)", () => {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".airballoon",
+              start: "top center",
+              endTrigger: "#balloon-cloud-point",
+              end: `top center+=${rect.height * 1.3}px`,
+              scrub: true,
+              pin: true,
+              anticipatePin: 1,
+            },
+          })
+          .fromTo(
+            ".airballoon",
+            {
+              x: "30vh",
+              y: "0",
+              rotate: 8,
+            },
+            {
+              x: "0",
+              y: "-60vh",
+              rotate: -5,
+              ease: "none",
+            }
+          );
+      });
+    },
+    { scope: parallaxRef }
+  );
+
+  useGSAP(
+    () => {
       gsap.fromTo(
         ".woooosh-text",
         { opacity: 0, y: 30, scale: 0.8 },
