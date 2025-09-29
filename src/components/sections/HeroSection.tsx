@@ -26,7 +26,7 @@ export default function HeroSection() {
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: () => containerRef.current!.offsetHeight + "px bottom",
-      end: `+=180`,
+      end: `+=200`,
       pin: true,
       pinSpacing: false,
       anticipatePin: 1,

@@ -42,6 +42,18 @@ html {
     overflow-x: hidden;
 }
 
+html,
+body {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
 #smooth-wrapper, #smooth-content {
   overflow-x: hidden;
   position: relative;
