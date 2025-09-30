@@ -113,7 +113,7 @@ export default function RocketParallax() {
       let mm = gsap.matchMedia();
       const rect = balloonCloudPointRef.current!.getBoundingClientRect();
 
-      mm.add("(min-width: 1281px)", () => {
+      mm.add("(min-width: 1301px)", () => {
         gsap
           .timeline({
             scrollTrigger: {
@@ -142,7 +142,7 @@ export default function RocketParallax() {
           );
       });
 
-      mm.add("(min-width: 601px) and (max-width: 1279px)", () => {
+      mm.add("(min-width: 1001px) and (max-width: 1300px)", () => {
         gsap
           .timeline({
             scrollTrigger: {
@@ -158,7 +158,36 @@ export default function RocketParallax() {
           .fromTo(
             ".airballoon",
             {
-              x: "50vh",
+              x: "90vh",
+              y: "0",
+              rotate: 8,
+            },
+            {
+              x: "0",
+              y: "-110vh",
+              rotate: -5,
+              ease: "none",
+            }
+          );
+      });
+
+      mm.add("(min-width: 601px) and (max-width: 1000px)", () => {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".airballoon",
+              start: "top center",
+              endTrigger: "#balloon-cloud-point",
+              end: `top center+=${rect.height * 1.3}px`,
+              scrub: true,
+              pin: true,
+              anticipatePin: 1,
+            },
+          })
+          .fromTo(
+            ".airballoon",
+            {
+              x: "40vh",
               y: "0",
               rotate: 8,
             },
