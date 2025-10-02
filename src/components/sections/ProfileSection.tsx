@@ -15,71 +15,50 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ProfileCard from "../cards/ProfileCard";
 import { ScrollTrigger, ScrambleTextPlugin, SplitText } from "gsap/all";
+import { TeamSection } from "@/types/profileSection";
+import { InternSection } from "@/types/profileSection";
+import useFetch from "@/hooks/useFetch";
 
 gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin, SplitText);
 
 export default function ProfileSection() {
   const containerRef = useRef(null);
+  const { data: dataTeam } = useFetch<TeamSection>(
+    "/homepage?populate[profileSection][populate][teamSection][populate][section][populate]=*&populate[profileSection][populate][teamSection][populate][teams][populate]=*"
+  );
+  const { data: dataIntern } = useFetch<InternSection>(
+    "/homepage?populate[profileSection][populate][internSection][populate][section][populate]=*&populate[profileSection][populate][internSection][populate][interns][populate]=*"
+  );
+
+  const teamSection = dataTeam?.data.profileSection.teamSection.section;
+
+  const teams =
+    dataTeam?.data.profileSection.teamSection.teams.map((t) => ({
+      name: t.name,
+      charImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.avatarImage.url}`,
+      realImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileImage.url}`,
+      bg: t.backgroundColor,
+      bgImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileBackground.url}`,
+    })) ?? [];
+
+  const internSection = dataIntern?.data.profileSection.internSection.section;
+
+  const interns =
+    dataIntern?.data.profileSection.internSection.interns.map((t) => ({
+      name: t.name,
+      charImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.avatarImage.url}`,
+      realImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileImage.url}`,
+      bg: t.backgroundColor,
+      bgImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileBackground.url}`,
+    })) ?? [];
+
+  console.log(interns);
 
   useGSAP(() => {
     gsap.set(".scramble-who", { text: "" });
     gsap.set(".scramble-we-are", { text: "" });
     gsap.set(".profile-card-right", { opacity: 0, x: 20, scale: 0.9 });
     gsap.set(".profile-card-left", { opacity: 0, x: -20, scale: 0.9 });
-    gsap.set(".bird-up", { opacity: 1 });
-    gsap.set(".bird-down", { opacity: 0 });
-    gsap.set(".bird-container", { opacity: 0, x: -50, scale: 0.8 });
-
-    const birdTimeline = gsap.timeline({ repeat: -1 });
-
-    birdTimeline
-      .to(".bird-up", {
-        opacity: 0,
-        duration: 0.4,
-        ease: "sine.inOut",
-      })
-      .to(
-        ".bird-down",
-        {
-          opacity: 1,
-          duration: 0.4,
-          ease: "sine.inOut",
-        },
-        "<"
-      )
-      .to(".bird-up", {
-        opacity: 1,
-        duration: 0.4,
-        ease: "sine.inOut",
-      })
-      .to(
-        ".bird-down",
-        {
-          opacity: 0,
-          duration: 0.4,
-          ease: "sine.inOut",
-        },
-        "<"
-      );
-
-    gsap.to(".bird-container", {
-      x: 0,
-      duration: 3,
-      ease: "sine.inOut",
-    });
-
-    ScrollTrigger.create({
-      trigger: ".bird-container",
-      start: "top 90%",
-      toggleActions: "play reverse play reverse",
-      animation: gsap.to(".bird-container", {
-        opacity: 1,
-        x: 0,
-        scale: 1,
-        duration: 2,
-        ease: "power2.out",
-      }),
-    });
 
     ScrollTrigger.create({
       trigger: ".title-profile",
@@ -248,82 +227,6 @@ export default function ProfileSection() {
     });
   }, []);
 
-  const data = [
-    {
-      name: "Jelita",
-      charImage: "/images/char/lita.png",
-      realImage: "/images/char/litaReal.png",
-      bg: "brand.bg.blue.cyan",
-      bgImage: "/images/char/bgLita.png",
-    },
-    {
-      name: "Rexsi",
-      charImage: "/images/char/rexsi.png",
-      realImage: "/images/char/rexsiReal.png",
-      bg: "brand.bg.blue.primary",
-      bgImage: "/images/char/bgRexsi.png",
-    },
-    {
-      name: "Sheva",
-      charImage: "/images/char/sheva.png",
-      realImage: "/images/char/shevaReal.png",
-      bg: "brand.bg.green.emelard",
-      bgImage: "/images/char/bgSheva.png",
-    },
-    {
-      name: "Firman",
-      charImage: "/images/char/firman.png",
-      realImage: "/images/char/firmanReal.png",
-      bg: "brand.bg.purple",
-      bgImage: "/images/char/bgFirman.png",
-    },
-    {
-      name: "Raihan",
-      charImage: "/images/char/raihan.png",
-      realImage: "/images/char/raihanReal.png",
-      bg: "brand.bg.green.lime",
-      bgImage: "/images/char/bgRaihan.png",
-    },
-  ];
-
-  const intern = [
-    {
-      name: "Tio",
-      charImage: "/images/char/tio.png",
-      realImage: "/images/char/tioReal.png",
-      bg: "brand.bg.blue.cyan",
-      bgImage: "/images/char/bgTio.png",
-    },
-    {
-      name: "Nova",
-      charImage: "/images/char/nova.png",
-      realImage: "/images/char/novaReal.png",
-      bg: "brand.bg.green.softLime",
-      bgImage: "/images/char/bgNova.png",
-    },
-    {
-      name: "Arya",
-      charImage: "/images/char/arya.png",
-      realImage: "/images/char/aryaReal.png",
-      bg: "brand.bg.green.lightAqua",
-      bgImage: "/images/char/bgArya.png",
-    },
-    {
-      name: "Farel",
-      charImage: "/images/char/farel.png",
-      realImage: "/images/char/farelReal.png",
-      bg: "brand.bg.green.mint",
-      bgImage: "/images/char/bgFarel.png",
-    },
-    {
-      name: "Nabil",
-      charImage: "/images/char/nabil.png",
-      realImage: "/images/char/nabilReal.png",
-      bg: "brand.bg.yellow.bright",
-      bgImage: "/images/char/bgNabil.png",
-    },
-  ];
-
   return (
     <Box ref={containerRef}>
       <Center my={{ base: "10", md: "20" }} className="title-profile">
@@ -373,7 +276,6 @@ export default function ProfileSection() {
             order={{ base: 2, lg: 1 }}
           >
             <Box
-              className="bird-container"
               position="absolute"
               top={{ md: "-220%", lg: "-65%" }}
               left={{ md: "0", lg: "10%" }}
@@ -390,17 +292,6 @@ export default function ProfileSection() {
                 top="0"
                 left="0"
                 alt="bird-wing-up"
-                objectFit="contain"
-              />
-              <Image
-                className="bird-down"
-                src="/images/float/bird-profile-wing-down.png"
-                w={{ base: "16", md: "20", lg: "24" }}
-                h={{ base: "16", md: "20", lg: "24" }}
-                position="absolute"
-                top="0"
-                left="0"
-                alt="bird-wing-down"
                 objectFit="contain"
               />
             </Box>
@@ -437,12 +328,7 @@ export default function ProfileSection() {
                 maxW={{ base: "full", lg: "none" }}
                 mx={{ base: "6", lg: "0" }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged.
+                {teamSection?.description}
               </Text>
             </VStack>
           </Box>
@@ -454,7 +340,7 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", sm: "nowrap" }}
                 justify="center"
               >
-                {data.slice(0, 2).map((character, index) => (
+                {teams.slice(0, 2).map((character, index) => (
                   <ProfileCard
                     key={index}
                     name={character.name}
@@ -471,7 +357,7 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", md: "nowrap" }}
                 justify="center"
               >
-                {data.slice(2, 5).map((character, index) => (
+                {teams.slice(2, 5).map((character, index) => (
                   <ProfileCard
                     key={index}
                     name={character.name}
@@ -500,7 +386,7 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", md: "nowrap" }}
                 justify="center"
               >
-                {intern.slice(0, 3).map((character, index) => (
+                {interns.slice(0, 3).map((character, index) => (
                   <ProfileCard
                     key={index}
                     name={character.name}
@@ -517,7 +403,7 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", sm: "nowrap" }}
                 justify="center"
               >
-                {intern.slice(3, 5).map((character, index) => (
+                {interns.slice(3, 5).map((character, index) => (
                   <ProfileCard
                     key={index}
                     name={character.name}
@@ -565,12 +451,7 @@ export default function ProfileSection() {
               maxW={{ base: "full", lg: "none" }}
               mx={{ base: "6", lg: "0" }}
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged.
+              {internSection?.description}
             </Text>
           </VStack>
         </Flex>
