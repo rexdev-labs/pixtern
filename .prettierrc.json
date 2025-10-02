@@ -5,10 +5,10 @@
     "trailingComma": "es5",
     "overrides": [
         {
-            "files": ["*.ts"],
+            "files": [".ts", ".tsx"],
             "options": {
                 "parser": "typescript",
-                "tabWidth": 4
+                "tabWidth": 2
             }
         }
     ]
