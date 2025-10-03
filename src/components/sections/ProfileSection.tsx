@@ -10,7 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ProfileCard from "../cards/ProfileCard";
@@ -18,6 +18,7 @@ import { ScrollTrigger, ScrambleTextPlugin, SplitText } from "gsap/all";
 import { TeamSection } from "@/types/profileSection";
 import { InternSection } from "@/types/profileSection";
 import useFetch from "@/hooks/useFetch";
+import { splitTextFirst, splitTextTwo } from "@/utils/splitText";
 
 gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin, SplitText);
 
@@ -30,7 +31,13 @@ export default function ProfileSection() {
     "/homepage?populate[profileSection][populate][internSection][populate][section][populate]=*&populate[profileSection][populate][internSection][populate][interns][populate]=*"
   );
 
+  const titleProfile = dataTeam?.data.profileSection.title;
+  const [splitFirst, rest] = splitTextFirst(titleProfile ?? "");
   const teamSection = dataTeam?.data.profileSection.teamSection.section;
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, [dataTeam, dataIntern]);
 
   const teams =
     dataTeam?.data.profileSection.teamSection.teams.map((t) => ({
@@ -52,11 +59,20 @@ export default function ProfileSection() {
       bgImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileBackground.url}`,
     })) ?? [];
 
+  const [splitTeam, restTeam] = splitTextTwo(teamSection?.title ?? "");
+  const [splitIntern, restIntern] = splitTextTwo(internSection?.title ?? "");
+
+  console.log("splitTeam:", splitTeam);
+  console.log("restTeam:", restTeam);
+  console.log("splitIntern:", splitIntern);
+  console.log("restIntern:", restIntern);
+
   useGSAP(() => {
     gsap.set(".scramble-who", { text: "" });
     gsap.set(".scramble-we-are", { text: "" });
     gsap.set(".profile-card-right", { opacity: 0, x: 20, scale: 0.9 });
     gsap.set(".profile-card-left", { opacity: 0, x: -20, scale: 0.9 });
+    gsap.set(".underline-profile", { opacity: 0, y: 50 });
 
     ScrollTrigger.create({
       trigger: ".title-profile",
@@ -124,6 +140,18 @@ export default function ProfileSection() {
       }),
     });
 
+    ScrollTrigger.create({
+      trigger: ".underline-profile",
+      start: "top 85%",
+      toggleActions: "play reverse play reverse",
+      animation: gsap.to(".underline-profile", {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "sine.out",
+      }),
+    });
+
     const splitLeft = new SplitText(".text-section-left .split-heading", {
       type: "words,chars",
     });
@@ -131,7 +159,7 @@ export default function ProfileSection() {
       type: "lines",
     });
 
-    gsap.set(splitLeft.chars, { opacity: 0, y: 20 });
+    gsap.set(".heading-left", { opacity: 0, y: 20 });
     gsap.set(splitLeftPara.lines, { opacity: 0, y: 20 });
 
     ScrollTrigger.create({
@@ -140,11 +168,10 @@ export default function ProfileSection() {
       toggleActions: "play reverse play reverse",
       animation: gsap
         .timeline()
-        .to(splitLeft.chars, {
+        .to(".heading-left", {
           opacity: 1,
           y: 0,
-          duration: 0.6,
-          stagger: 0.02,
+          duration: 0.8,
           ease: "back.out(1.2)",
         })
         .to(
@@ -170,7 +197,7 @@ export default function ProfileSection() {
       }
     );
 
-    gsap.set(splitRight.chars, { opacity: 0, y: 20 });
+    gsap.set(".heading-right", { opacity: 0, y: 20 });
     gsap.set(splitRightPara.lines, { opacity: 0, y: 20 });
 
     ScrollTrigger.create({
@@ -179,11 +206,10 @@ export default function ProfileSection() {
       toggleActions: "play reverse play reverse",
       animation: gsap
         .timeline()
-        .to(splitRight.chars, {
+        .to(".heading-right", {
           opacity: 1,
           y: 0,
-          duration: 0.6,
-          stagger: 0.02,
+          duration: 0.8,
           ease: "back.out(1.2)",
         })
         .to(
@@ -223,7 +249,7 @@ export default function ProfileSection() {
       yoyo: true,
       ease: "sine.inOut",
     });
-  }, []);
+  }, [dataTeam, dataIntern]);
 
   return (
     <Box ref={containerRef}>
@@ -236,7 +262,7 @@ export default function ProfileSection() {
             fontWeight="light"
             color="brand.text.black"
           >
-            Who
+            {splitFirst}
           </Heading>
           <Box display="flex" flexDirection="column" alignItems="center">
             <Heading
@@ -246,9 +272,10 @@ export default function ProfileSection() {
               color="brand.text.blue"
               fontWeight="light"
             >
-              We Are?
+              {rest}
             </Heading>
             <Image
+              className="underline-profile"
               src="/images/bg/underline-profile.png"
               w={{ base: "28", md: "40" }}
               mt={{ base: "-1.5", md: "0" }}
@@ -304,7 +331,7 @@ export default function ProfileSection() {
               textAlign={{ base: "center", lg: "left" }}
             >
               <Heading
-                className="split-heading"
+                className="heading-left"
                 fontFamily="bestime"
                 fontWeight="light"
                 fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
@@ -313,9 +340,9 @@ export default function ProfileSection() {
                 maxW={{ base: "full", md: "70%", xl: "full" }}
               >
                 <Text as="span" color="brand.text.blue">
-                  What is
+                  {splitTeam}
                 </Text>{" "}
-                PIXEL SPACE CREATIVE DIGITAL?
+                <Text as="span"> {restTeam}</Text>
               </Heading>
               <Text
                 className="split-paragraph"
@@ -427,7 +454,7 @@ export default function ProfileSection() {
             order={{ base: 2, lg: 2 }}
           >
             <Heading
-              className="split-heading"
+              className="heading-right"
               fontFamily="bestime"
               fontWeight="light"
               fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
@@ -436,9 +463,9 @@ export default function ProfileSection() {
               maxW={{ base: "full", md: "70%", xl: "full" }}
             >
               <Text as="span" color="brand.text.orange">
-                What is
+                {splitIntern}
               </Text>{" "}
-              PIXEL SPACE CREATIVE DIGITAL?
+              {restIntern}
             </Heading>
             <Text
               className="split-paragraph"
