@@ -16,6 +16,7 @@ const config = defineConfig({
                     bg: {
                         black: { value: "#06041C" },
                         white: { value: "#EFFFFF" },
+                        gray: { value: "#D9D9D9" },
 
                         // 🔵 Blues
                         blue: {

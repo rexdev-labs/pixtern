@@ -13,6 +13,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import ProfileSection from "@/components/sections/ProfileSection";
 
 import { setSmoother, getSmoother } from "@/utils/initSmoothScroll";
+import ProjectSection from "@/components/sections/ProjectSection";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -80,6 +81,7 @@ export default function Home() {
 
         <AboutSection />
         <ProfileSection />
+        <ProjectSection />
       </div>
     </div>
   );

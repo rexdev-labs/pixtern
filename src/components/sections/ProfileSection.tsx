@@ -52,8 +52,6 @@ export default function ProfileSection() {
       bgImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileBackground.url}`,
     })) ?? [];
 
-  console.log(interns);
-
   useGSAP(() => {
     gsap.set(".scramble-who", { text: "" });
     gsap.set(".scramble-we-are", { text: "" });
