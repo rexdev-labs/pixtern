@@ -203,6 +203,7 @@ export default function ProfileSection() {
     ScrollTrigger.create({
       trigger: ".text-section-right",
       start: "top 90%",
+      // markers: true,
       toggleActions: "play reverse play reverse",
       animation: gsap
         .timeline()

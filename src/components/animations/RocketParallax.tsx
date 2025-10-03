@@ -289,7 +289,7 @@ export default function RocketParallax() {
           transform="translateX(-50%)"
         >
           <Image
-            src="/images/cloud/rocket3.svg"
+            src="/images/cloud/rocket.svg"
             alt="Rocket"
             w={{
               base: "100px",
