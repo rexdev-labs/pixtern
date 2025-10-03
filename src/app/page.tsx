@@ -62,7 +62,7 @@ export default function Home() {
   return (
     <div ref={smoothWrapperRef} id="smooth-wrapper">
       <div ref={smoothContentRef} id="smooth-content">
-        <Box
+        {/* <Box
           bg="brand.bg.black"
           position="relative"
           minH={{
@@ -80,7 +80,7 @@ export default function Home() {
         </Box>
 
         <AboutSection />
-        <ProfileSection />
+        <ProfileSection /> */}
         <DoSection/>
       </div>
     </div>
