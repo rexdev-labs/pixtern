@@ -11,6 +11,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import RocketParallax from "@/components/animations/RocketParallax";
 import AboutSection from "@/components/sections/AboutSection";
 import ProfileSection from "@/components/sections/ProfileSection";
+import ClientSection from "@/components/sections/ClientSection";
 
 import { setSmoother, getSmoother } from "@/utils/initSmoothScroll";
 import ProjectSection from "@/components/sections/ProjectSection";
@@ -82,6 +83,7 @@ export default function Home() {
         <AboutSection />
         <ProfileSection />
         <ProjectSection />
+        <ClientSection />
       </div>
     </div>
   );
