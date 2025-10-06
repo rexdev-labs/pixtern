@@ -2,15 +2,21 @@ import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP, SplitText);
 
 export default function AboutSection() {
   const aboutRef = useRef(null);
 
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  })
+
   useGSAP(
     () => {
+      ScrollTrigger.refresh();
+      
       const titleSplit = new SplitText(".title", { 
         type: "chars,words", 
         charsClass: "title-char",
@@ -531,6 +537,7 @@ export default function AboutSection() {
               color="brand.text.black"
               lineHeight="1.6"
               textAlign="center"
+              overflow="hidden"
             >
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text

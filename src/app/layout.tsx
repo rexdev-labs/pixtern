@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import ProvidersWrapper from "./providers-wrapper";
-import Navbar from "@/components/NavBar";
+import Navbar from "@/components/Navbar/NavBar";
 
 export const metadata: Metadata = {
     title: "Pixtern",

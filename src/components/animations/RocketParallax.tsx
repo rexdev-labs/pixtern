@@ -13,6 +13,7 @@ export default function RocketParallax() {
 
   useGSAP(
     () => {
+      ScrollTrigger.refresh();
       let mm = gsap.matchMedia();
 
       // Default
@@ -303,8 +304,12 @@ export default function RocketParallax() {
       </Box>
 
       {/* Cloud 2 */}
-      <Box className="cloud-2" position="relative" w="100%">
-        <Image src="/images/cloud/cloud2.svg" w="100%" h="auto" alt="" />
+      <Box 
+        className="cloud-2" 
+        position="relative" 
+        w="100%" 
+      >
+        <Image src="/images/cloud/cloud2.svg" w="100%"  alt="cloud"/>
 
         <Box
           position="absolute"

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -26,7 +26,7 @@ export default function Home() {
         const smoother = ScrollSmoother.create({
             wrapper: smoothWrapperRef.current!,
             content: smoothContentRef.current!,
-            smooth: 4,
+            smooth: 2,
             effects: true,
             normalizeScroll: true,
             ignoreMobileResize: true,
@@ -83,7 +83,7 @@ export default function Home() {
                 <AboutSection />
                 <ProfileSection />
                 <DoSection />
-                <ProjectSection />
+                <ProjectSection /> 
             </div>
         </div>
     );

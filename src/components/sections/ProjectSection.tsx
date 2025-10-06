@@ -158,7 +158,7 @@ export default function ProjectSection() {
   }, [splitFirst, rest]);
 
   return (
-    <Box py="10" className="containerRef">
+    <Box py="10" className="containerRef" id="project">
       <Center mt={{ base: "10", md: "20" }} mb="10" className="title-project">
         <Flex gap={4}>
           <Heading

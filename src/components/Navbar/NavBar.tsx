@@ -90,7 +90,7 @@ export default function Navbar() {
         <Link as={NextLink} color="white" href="#profil">
           Profil
         </Link>
-        <Link as={NextLink} color="white" href="#projects">
+        <Link as={NextLink} color="white" href="#project">
           Karya & Proyek
         </Link>
         <Link as={NextLink} color="white" href="#testimoni">
