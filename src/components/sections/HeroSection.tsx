@@ -2,13 +2,13 @@
 
 import { Box, Button, Container, Image, Flex } from "@chakra-ui/react";
 import { useRef } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger);
+import type { HeroSection } from "@/types/api/homepage/heroSection";
 
-export default function HeroSection() {
+export default function HeroSection({ data }: Readonly<{ data: HeroSection }>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const floatRefs = useRef<Array<HTMLImageElement | null>>([]);
   const hoverRefs = useRef<Array<HTMLImageElement | null>>([]);
@@ -168,7 +168,7 @@ export default function HeroSection() {
               setHoverRef(el as unknown as HTMLImageElement | null, 1);
             }}
           >
-            Join Us
+            {data.button.title}
           </Button>
         </Flex>
       </Container>

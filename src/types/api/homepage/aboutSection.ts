@@ -1,4 +1,4 @@
-export default interface AboutSection {
+export interface AboutSection {
     title: string;
     description: string;
 }

@@ -1,43 +1,90 @@
+"use client";
+
 import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
 import { useRef } from "react";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP, SplitText);
+import type { AboutSection } from "@/types/api/homepage/aboutSection";
 
-export default function AboutSection() {
+export default function AboutSection({ data }: { data: AboutSection }) {
   const aboutRef = useRef(null);
 
   useGSAP(
     () => {
-      const titleSplit = new SplitText(".title", { 
-        type: "chars,words", 
+      const titleSplit = new SplitText(".title", {
+        type: "chars,words",
         charsClass: "title-char",
-        wordsClass: "title-word"
+        wordsClass: "title-word",
       });
-      
-      const mainTitleSplit = new SplitText(".main-title", { 
-        type: "chars,words,lines", 
+
+      const mainTitleSplit = new SplitText(".main-title", {
+        type: "chars,words,lines",
         charsClass: "main-title-char",
         wordsClass: "main-title-word",
-        linesClass: "main-title-line"
+        linesClass: "main-title-line",
       });
-      
-      const descriptionSplit = new SplitText(".main-description", { 
-        type: "words,lines", 
-        wordsClass: "desc-word",
-        linesClass: "desc-line"
+
+      document.fonts.ready.then(() => {
+        /* About Description */
+        const descriptionSplit = new SplitText(".main-description", {
+          type: "words,lines",
+          wordsClass: "desc-word",
+          linesClass: "desc-line",
+        });
+
+        gsap.set(descriptionSplit.words, { opacity: 0, y: 30, rotationX: 45 });
+
+        ScrollTrigger.create({
+          trigger: ".main-description",
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play reverse play reverse",
+          animation: gsap
+            .timeline()
+            .to(descriptionSplit.lines, {
+              opacity: 1,
+              duration: 0.1,
+            })
+            .to(descriptionSplit.words, {
+              opacity: 1,
+              y: 0,
+              rotationX: 0,
+              duration: 0.4,
+              stagger: {
+                amount: 2,
+                from: "start",
+                ease: "power1.out",
+              },
+              ease: "power2.out",
+            }),
+        });
       });
 
       gsap.set(".title-char", { opacity: 0, y: 100, rotationX: 90 });
       gsap.set(".ampersand", { opacity: 0, scale: 0, rotation: 360 });
-      gsap.set(".box-title", { opacity: 0, y: 150, rotationY: 45, scale: 0.8 });
+      gsap.set(".box-title", {
+        opacity: 0,
+        y: 150,
+        rotationY: 45,
+        scale: 0.8,
+      });
       gsap.set(".main-bird", { opacity: 0, scale: 0, rotation: 180 });
       gsap.set(".bird", { opacity: 0, scale: 0, rotation: 180 });
-      gsap.set(".main-title-char", { opacity: 0, y: 50, rotationY: 90, scale: 0.5 });
-      gsap.set(".desc-word", { opacity: 0, y: 30, rotationX: 45 });
-      gsap.set(".character", { opacity: 0, y: 100, scale: 0.8, rotationY: 15 });
+      gsap.set(".main-title-char", {
+        opacity: 0,
+        y: 50,
+        rotationY: 90,
+        scale: 0.5,
+      });
+
+      gsap.set(".character", {
+        opacity: 0,
+        y: 100,
+        scale: 0.8,
+        rotationY: 15,
+      });
       gsap.set(".floating-box", { opacity: 0, scale: 0, rotation: 0 });
 
       ScrollTrigger.create({
@@ -45,7 +92,8 @@ export default function AboutSection() {
         start: "top 75%",
         end: "bottom top",
         toggleActions: "play reverse play reverse",
-        animation: gsap.timeline()
+        animation: gsap
+          .timeline()
           .to(".title-char", {
             opacity: 1,
             y: 0,
@@ -54,16 +102,20 @@ export default function AboutSection() {
             stagger: {
               amount: 1.2,
               from: "center",
-              ease: "back.out(2)"
+              ease: "back.out(2)",
             },
             ease: "back.out(1.7)",
           })
-          .to(".title-word", {
-            rotationX: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: "power2.out"
-          }, "-=0.5")
+          .to(
+            ".title-word",
+            {
+              rotationX: 0,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: "power2.out",
+            },
+            "-=0.5"
+          ),
       });
 
       ScrollTrigger.create({
@@ -71,7 +123,8 @@ export default function AboutSection() {
         start: "top 75%",
         end: "bottom top",
         toggleActions: "play reverse play reverse",
-        animation: gsap.timeline()
+        animation: gsap
+          .timeline()
           .to(".ampersand", {
             opacity: 1,
             scale: 1,
@@ -82,8 +135,8 @@ export default function AboutSection() {
           .to(".ampersand", {
             rotation: 0,
             duration: 0.4,
-            ease: "elastic.out(1, 0.3)"
-          })
+            ease: "elastic.out(1, 0.3)",
+          }),
       });
 
       ScrollTrigger.create({
@@ -137,10 +190,11 @@ export default function AboutSection() {
         start: "top 85%",
         end: "bottom 15%",
         toggleActions: "play reverse play reverse",
-        animation: gsap.timeline()
+        animation: gsap
+          .timeline()
           .to(".main-title-line", {
             opacity: 1,
-            duration: 0.1
+            duration: 0.1,
           })
           .to(".main-title-char", {
             opacity: 1,
@@ -151,39 +205,19 @@ export default function AboutSection() {
             stagger: {
               amount: 1.5,
               from: "start",
-              ease: "power2.out"
+              ease: "power2.out",
             },
             ease: "back.out(1.2)",
           })
-          .to(".main-title-word", {
-            rotationX: 0,
-            duration: 0.4,
-            stagger: 0.1
-          }, "-=1")
-      });
-
-      ScrollTrigger.create({
-        trigger: ".main-description",
-        start: "top 85%",
-        end: "bottom 15%",
-        toggleActions: "play reverse play reverse",
-        animation: gsap.timeline()
-          .to(".desc-line", {
-            opacity: 1,
-            duration: 0.1
-          })
-          .to(".desc-word", {
-            opacity: 1,
-            y: 0,
-            rotationX: 0,
-            duration: 0.4,
-            stagger: {
-              amount: 2,
-              from: "start",
-              ease: "power1.out"
+          .to(
+            ".main-title-word",
+            {
+              rotationX: 0,
+              duration: 0.4,
+              stagger: 0.1,
             },
-            ease: "power2.out",
-          })
+            "-=1"
+          ),
       });
 
       ScrollTrigger.create({
@@ -207,14 +241,13 @@ export default function AboutSection() {
         start: "top 80%",
         end: "bottom 15%",
         toggleActions: "play reverse play reverse",
-        animation: gsap.timeline()
-          .to(".floating-box", {
-            opacity: 0.7,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "back.out(1.7)",
-          })
+        animation: gsap.timeline().to(".floating-box", {
+          opacity: 0.7,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "back.out(1.7)",
+        }),
       });
 
       gsap.to(".floating-box", {
@@ -224,9 +257,8 @@ export default function AboutSection() {
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        stagger: 0.2
+        stagger: 0.2,
       });
-
     },
     { scope: aboutRef }
   );
@@ -393,7 +425,12 @@ export default function AboutSection() {
           position="relative"
           h={{ base: "80px", md: "120px" }}
         >
-          <Box className="main-bird" position="absolute" right="34%" bottom="10%">
+          <Box
+            className="main-bird"
+            position="absolute"
+            right="34%"
+            bottom="10%"
+          >
             <Image
               src="/images/float/BirdPurple2.png"
               alt="Bird"
@@ -532,10 +569,7 @@ export default function AboutSection() {
               lineHeight="1.6"
               textAlign="center"
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
+              {data.description}
             </Text>
           </Box>
 

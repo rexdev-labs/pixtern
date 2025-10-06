@@ -4,21 +4,21 @@ import ProvidersWrapper from "./providers-wrapper";
 import Navbar from "@/components/NavBar";
 
 export const metadata: Metadata = {
-    title: "Pixtern",
-    description: "Website Pixtern",
+  title: "Pixtern",
+  description: "Website Pixtern",
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{ children: React.ReactNode }>) {
-    return (
-        <html lang="en" suppressHydrationWarning>
-            <body>
-                <ProvidersWrapper>
-                    <Navbar />
-                    {children}
-                </ProvidersWrapper>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body suppressHydrationWarning>
+        <ProvidersWrapper>
+          <Navbar />
+          {children}
+        </ProvidersWrapper>
+      </body>
+    </html>
+  );
 }

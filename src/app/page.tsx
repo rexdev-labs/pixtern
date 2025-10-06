@@ -1,90 +1,111 @@
-"use client";
-
 import { Box } from "@chakra-ui/react";
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
-import { useGSAP } from "@gsap/react";
+import qs from "qs";
 
 import HeroSection from "@/components/sections/HeroSection";
-import RocketParallax from "@/components/animations/RocketParallax";
 import AboutSection from "@/components/sections/AboutSection";
 import ProfileSection from "@/components/sections/ProfileSection";
-
-import { setSmoother, getSmoother } from "@/utils/initSmoothScroll";
 import DoSection from "@/components/sections/DoSection";
 import ProjectSection from "@/components/sections/ProjectSection";
+import RocketParallax from "@/components/animations/RocketParallax";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 
-export default function Home() {
-    const smoothWrapperRef = useRef(null);
-    const smoothContentRef = useRef(null);
+import type { ApiResponse } from "@/types/api/apiResponse";
+import type { HomepageResponse } from "@/types/api/homepageResponse";
 
-    useGSAP(() => {
-        const smoother = ScrollSmoother.create({
-            wrapper: smoothWrapperRef.current!,
-            content: smoothContentRef.current!,
-            smooth: 4,
-            effects: true,
-            normalizeScroll: true,
-            ignoreMobileResize: true,
-        });
+async function getHomepageData(): Promise<ApiResponse<HomepageResponse>> {
+  const query = qs.stringify({
+    populate: {
+      heroSection: { populate: "*" },
+      aboutSection: { populate: "*" },
+      profileSection: {
+        populate: {
+          teamSection: {
+            populate: {
+              section: {
+                populate: "*",
+              },
+              teams: {
+                populate: "*",
+              },
+            },
+          },
+          internSection: {
+            populate: {
+              section: {
+                populate: "*",
+              },
+              interns: {
+                populate: "*",
+              },
+            },
+          },
+        },
+      },
+      whatWeDoSection: {
+        populate: {
+          section: {
+            populate: "*",
+          },
+          jobs: {
+            populate: "*",
+          },
+        },
+      },
+      projectSection: {
+        populate: {
+          section: {
+            populate: "*",
+          },
+          projects: {
+            populate: "*",
+          },
+        },
+      },
+      testimonialSection: { populate: "*" },
+    },
+  });
 
-        setSmoother(smoother);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/homepage?${query}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
 
-        const links = document.querySelectorAll('a[href^="#"]');
-        links.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute("href");
-                if (targetId) {
-                    smoother.scrollTo(targetId, true, "center center");
-                }
-            });
-        });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
 
-        const handleResize = () => {
-            const sm = getSmoother();
-            if (sm) {
-                sm.refresh();
-                ScrollTrigger.refresh();
-            }
-        };
+  return res.json();
+}
 
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-            smoother.kill();
-        };
-    }, []);
+export default async function Home() {
+  const response = await getHomepageData();
 
-    return (
-        <div ref={smoothWrapperRef} id="smooth-wrapper">
-            <div ref={smoothContentRef} id="smooth-content">
-                <Box
-                    bg="brand.bg.black"
-                    position="relative"
-                    minH={{
-                        base: "130vh",
-                        sm: "130vh",
-                        md: "135vh",
-                        lg: "180vh",
-                        xl: "210vh",
-                        "2xl": "290vh",
-                    }}
-                    overflow="visible"
-                >
-                    <HeroSection />
-                    <RocketParallax />
-                </Box>
+  return (
+    <ScrollSmootherWrapper>
+      <Box
+        bg="brand.bg.black"
+        position="relative"
+        minH={{
+          base: "130vh",
+          sm: "130vh",
+          md: "135vh",
+          lg: "180vh",
+          xl: "210vh",
+          "2xl": "290vh",
+        }}
+        overflow="visible"
+      >
+        <HeroSection data={response.data.heroSection} />
+        <RocketParallax />
+      </Box>
 
-                <AboutSection />
-                <ProfileSection />
-                <DoSection />
-                <ProjectSection />
-            </div>
-        </div>
-    );
+      <AboutSection data={response.data.aboutSection} />
+      <ProfileSection data={response.data.profileSection} />
+      <DoSection data={response.data.whatWeDoSection} />
+      <ProjectSection data={response.data.projectSection} />
+    </ScrollSmootherWrapper>
+  );
 }
