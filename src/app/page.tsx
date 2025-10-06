@@ -1,7 +1,7 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -14,7 +14,9 @@ import ProfileSection from "@/components/sections/ProfileSection";
 import ClientSection from "@/components/sections/ClientSection";
 
 import { setSmoother, getSmoother } from "@/utils/initSmoothScroll";
+import DoSection from "@/components/sections/DoSection";
 import ProjectSection from "@/components/sections/ProjectSection";
+import Footer from "@/components/Footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -23,13 +25,15 @@ export default function Home() {
   const smoothContentRef = useRef(null);
 
   useGSAP(() => {
+    ScrollTrigger.refresh();
+
     const smoother = ScrollSmoother.create({
       wrapper: smoothWrapperRef.current!,
       content: smoothContentRef.current!,
-      smooth: 4,
+      smooth: 3,
       effects: true,
       normalizeScroll: true,
-      ignoreMobileResize: true,
+      ignoreMobileResize: false,
     });
 
     setSmoother(smoother);
@@ -82,8 +86,10 @@ export default function Home() {
 
         <AboutSection />
         <ProfileSection />
+        <DoSection />
         <ProjectSection />
         <ClientSection />
+        <Footer />
       </div>
     </div>
   );

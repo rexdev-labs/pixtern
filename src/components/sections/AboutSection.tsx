@@ -1,16 +1,24 @@
+import { splitTextFirst, splitTextTwo } from "@/utils/splitText";
 import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP, SplitText);
 
 export default function AboutSection() {
   const aboutRef = useRef(null);
+  const [splitFirst, rest] = splitTextTwo("What is PIXEL SPACE CREATIVE DIGITAL?");
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  })
 
   useGSAP(
     () => {
+      ScrollTrigger.refresh();
+      
       const titleSplit = new SplitText(".title", { 
         type: "chars,words", 
         charsClass: "title-char",
@@ -497,23 +505,20 @@ export default function AboutSection() {
                 md: "40px",
                 lg: "48px",
               }}
-              fontWeight="400"
+              fontWeight="normal"
               mb={4}
               textAlign="center"
+              px={{
+                base: "0",
+                md: "20",
+                xl: "10"
+              }}
             >
               <Text as="span" color="brand.bg.blue.primary">
-                What is{" "}
+                {splitFirst} {" "}
               </Text>
               <Text as="span" color="brand.text.black" fontWeight="bold">
-                PIXEL SPACE
-              </Text>
-              <Text
-                as="span"
-                display="block"
-                color="brand.text.black"
-                fontWeight="bold"
-              >
-                CREATIVE DIGITAL?
+                {rest}
               </Text>
             </Text>
 
@@ -522,20 +527,18 @@ export default function AboutSection() {
               px={{
                 base: "20px",
                 sm: "40px",
-                md: "80px",
-                lg: "130px",
+                md: "100px",
+                lg: "150px",
               }}
               fontFamily="Inter"
               fontSize={{ base: "14px", md: "16px" }}
-              fontWeight="400"
+              fontWeight="light"
               color="brand.text.black"
-              lineHeight="1.6"
+              lineHeight="1.3"
               textAlign="center"
+              overflow="hidden"
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             </Text>
           </Box>
 

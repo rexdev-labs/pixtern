@@ -14,6 +14,8 @@ export default function ProjectSection() {
   const [splitFirst, rest] = splitTextFirst("Our Project?");
 
   useGSAP(() => {
+    ScrollTrigger.refresh();
+    
     gsap.set(".subtitle-project-main", { opacity: 0, y: 50 });
     gsap.set(".card-project-main", { opacity: 0, x: -50, scale: 0.9 });
     gsap.set(".card-list", { opacity: 0, y: -50, scale: 0.9 });
@@ -158,7 +160,7 @@ export default function ProjectSection() {
   }, [splitFirst, rest]);
 
   return (
-    <Box py="10" className="containerRef">
+    <Box py="10" className="containerRef" id="project">
       <Center mt={{ base: "10", md: "20" }} mb="10" className="title-project">
         <Flex gap={4}>
           <Heading
