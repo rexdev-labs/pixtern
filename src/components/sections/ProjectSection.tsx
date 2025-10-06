@@ -14,6 +14,8 @@ export default function ProjectSection() {
   const [splitFirst, rest] = splitTextFirst("Our Project?");
 
   useGSAP(() => {
+    ScrollTrigger.refresh();
+    
     gsap.set(".subtitle-project-main", { opacity: 0, y: 50 });
     gsap.set(".card-project-main", { opacity: 0, x: -50, scale: 0.9 });
     gsap.set(".card-list", { opacity: 0, y: -50, scale: 0.9 });

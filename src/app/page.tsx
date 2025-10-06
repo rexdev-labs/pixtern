@@ -15,76 +15,80 @@ import ProfileSection from "@/components/sections/ProfileSection";
 import { setSmoother, getSmoother } from "@/utils/initSmoothScroll";
 import DoSection from "@/components/sections/DoSection";
 import ProjectSection from "@/components/sections/ProjectSection";
+import Footer from "@/components/Footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export default function Home() {
-    const smoothWrapperRef = useRef(null);
-    const smoothContentRef = useRef(null);
+  const smoothWrapperRef = useRef(null);
+  const smoothContentRef = useRef(null);
 
-    useGSAP(() => {
-        const smoother = ScrollSmoother.create({
-            wrapper: smoothWrapperRef.current!,
-            content: smoothContentRef.current!,
-            smooth: 2,
-            effects: true,
-            normalizeScroll: true,
-            ignoreMobileResize: true,
-        });
+  useGSAP(() => {
+    ScrollTrigger.refresh();
 
-        setSmoother(smoother);
+    const smoother = ScrollSmoother.create({
+      wrapper: smoothWrapperRef.current!,
+      content: smoothContentRef.current!,
+      smooth: 3,
+      effects: true,
+      normalizeScroll: true,
+      ignoreMobileResize: false,
+    });
 
-        const links = document.querySelectorAll('a[href^="#"]');
-        links.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute("href");
-                if (targetId) {
-                    smoother.scrollTo(targetId, true, "center center");
-                }
-            });
-        });
+    setSmoother(smoother);
 
-        const handleResize = () => {
-            const sm = getSmoother();
-            if (sm) {
-                sm.refresh();
-                ScrollTrigger.refresh();
-            }
-        };
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href");
+        if (targetId) {
+          smoother.scrollTo(targetId, true, "center center");
+        }
+      });
+    });
 
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-            smoother.kill();
-        };
-    }, []);
+    const handleResize = () => {
+      const sm = getSmoother();
+      if (sm) {
+        sm.refresh();
+        ScrollTrigger.refresh();
+      }
+    };
 
-    return (
-        <div ref={smoothWrapperRef} id="smooth-wrapper">
-            <div ref={smoothContentRef} id="smooth-content">
-                <Box
-                    bg="brand.bg.black"
-                    position="relative"
-                    minH={{
-                        base: "130vh",
-                        sm: "130vh",
-                        md: "135vh",
-                        lg: "180vh",
-                        xl: "210vh",
-                        "2xl": "290vh",
-                    }}
-                    overflow="visible"
-                >
-                    <HeroSection />
-                    <RocketParallax />
-                </Box>
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      smoother.kill();
+    };
+  }, []);
 
-                <AboutSection />
-                <ProfileSection />
-                <DoSection />
-                <ProjectSection /> 
-            </div>
-        </div>
-    );
+  return (
+    <div ref={smoothWrapperRef} id="smooth-wrapper">
+      <div ref={smoothContentRef} id="smooth-content">
+        <Box
+          bg="brand.bg.black"
+          position="relative"
+          minH={{
+            base: "130vh",
+            sm: "130vh",
+            md: "135vh",
+            lg: "180vh",
+            xl: "210vh",
+            "2xl": "290vh",
+          }}
+          overflow="visible"
+        >
+          <HeroSection />
+          <RocketParallax />
+        </Box>
+
+        <AboutSection />
+        <ProfileSection />
+        <DoSection />
+        <ProjectSection />
+        <Footer />
+      </div>
+    </div>
+  );
 }

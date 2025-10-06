@@ -8,7 +8,7 @@
             "files": ["*.ts", "*.tsx"],
             "options": {
                 "parser": "typescript",
-                "tabWidth": 4
+                "tabWidth": 2
             }
         }
     ]
