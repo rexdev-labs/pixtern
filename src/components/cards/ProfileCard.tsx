@@ -20,7 +20,7 @@ export default function ProfileCard({
   bg,
   bgImage,
   className,
-}: ProfileCardProps) {
+}: Readonly<ProfileCardProps>) {
   const cardContainerRef = useRef(null);
 
   const handleEnter = () => {

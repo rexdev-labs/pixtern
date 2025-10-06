@@ -10,247 +10,218 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useMemo, useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import ProfileCard from "../cards/ProfileCard";
-import { ScrollTrigger, ScrambleTextPlugin, SplitText } from "gsap/all";
-import { TeamSection } from "@/types/profileSection";
-import { InternSection } from "@/types/profileSection";
-import useFetch from "@/hooks/useFetch";
+import { ScrollTrigger, SplitText } from "gsap/all";
 import { splitTextFirst, splitTextTwo } from "@/utils/splitText";
+import ProfileCard from "../cards/ProfileCard";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin, SplitText);
+import type { ProfileSection } from "@/types/api/homepage/profileSection";
 
-export default function ProfileSection() {
+export default function ProfileSection({
+  data,
+}: Readonly<{ data: ProfileSection }>) {
   const containerRef = useRef(null);
-  const { data: dataTeam } = useFetch<TeamSection>(
-    "/homepage?populate[profileSection][populate][teamSection][populate][section][populate]=*&populate[profileSection][populate][teamSection][populate][teams][populate]=*"
+
+  const [splitFirst, rest] = useMemo(
+    () => splitTextFirst(data.title ?? ""),
+    [data.title]
   );
-  const { data: dataIntern } = useFetch<InternSection>(
-    "/homepage?populate[profileSection][populate][internSection][populate][section][populate]=*&populate[profileSection][populate][internSection][populate][interns][populate]=*"
+
+  const [splitTeam, restTeam] = splitTextTwo(
+    data.teamSection.section.title ?? ""
+  );
+  const [splitIntern, restIntern] = splitTextTwo(
+    data.internSection.section.title ?? ""
   );
 
-  const titleProfile = dataTeam?.data.profileSection.title;
-  const [splitFirst, rest] = splitTextFirst(titleProfile ?? "");
-  const teamSection = dataTeam?.data.profileSection.teamSection.section;
+  useGSAP(
+    () => {
+      gsap.set(".scramble-who", { text: "" });
+      gsap.set(".scramble-we-are", { text: "" });
+      gsap.set(".profile-card-right", { opacity: 0, x: 20, scale: 0.9 });
+      gsap.set(".profile-card-left", { opacity: 0, x: -20, scale: 0.9 });
+      gsap.set(".underline-profile", { opacity: 0, y: 50 });
 
-  useEffect(() => {
-    ScrollTrigger.refresh();
-  }, [dataTeam, dataIntern]);
-
-  const teams =
-    dataTeam?.data.profileSection.teamSection.teams.map((t) => ({
-      name: t.name,
-      charImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.avatarImage.url}`,
-      realImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileImage.url}`,
-      bg: t.backgroundColor,
-      bgImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileBackground.url}`,
-    })) ?? [];
-
-  const internSection = dataIntern?.data.profileSection.internSection.section;
-
-  const interns =
-    dataIntern?.data.profileSection.internSection.interns.map((t) => ({
-      name: t.name,
-      charImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.avatarImage.url}`,
-      realImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileImage.url}`,
-      bg: t.backgroundColor,
-      bgImage: `${process.env.NEXT_PUBLIC_BASE_URL}${t.profileBackground.url}`,
-    })) ?? [];
-
-  const [splitTeam, restTeam] = splitTextTwo(teamSection?.title ?? "");
-  const [splitIntern, restIntern] = splitTextTwo(internSection?.title ?? "");
-
-  console.log("splitTeam:", splitTeam);
-  console.log("restTeam:", restTeam);
-  console.log("splitIntern:", splitIntern);
-  console.log("restIntern:", restIntern);
-
-  useGSAP(() => {
-    gsap.set(".scramble-who", { text: "" });
-    gsap.set(".scramble-we-are", { text: "" });
-    gsap.set(".profile-card-right", { opacity: 0, x: 20, scale: 0.9 });
-    gsap.set(".profile-card-left", { opacity: 0, x: -20, scale: 0.9 });
-    gsap.set(".underline-profile", { opacity: 0, y: 50 });
-
-    ScrollTrigger.create({
-      trigger: ".title-profile",
-      start: "top 85%",
-      end: "bottom top",
-      toggleActions: "play reverse play reverse",
-      animation: gsap
-        .timeline()
-        .to(".scramble-who", {
-          duration: 1.2,
-          scrambleText: {
-            text: "Who",
-            chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-            revealDelay: 0.5,
-            speed: 0.4,
-          },
-        })
-        .to(
-          ".scramble-we-are",
-          {
-            duration: 1.5,
+      ScrollTrigger.create({
+        trigger: ".title-profile",
+        start: "top 85%",
+        end: "bottom top",
+        toggleActions: "play reverse play reverse",
+        animation: gsap
+          .timeline()
+          .to(".scramble-who", {
+            duration: 1.2,
             scrambleText: {
-              text: "We Are?",
-              chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ?",
+              text: splitFirst,
+              chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
               revealDelay: 0.5,
               speed: 0.4,
             },
-          },
-          "-=0.8"
-        ),
-    });
+          })
+          .to(
+            ".scramble-we-are",
+            {
+              duration: 1.5,
+              scrambleText: {
+                text: rest,
+                chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ?",
+                revealDelay: 0.5,
+                speed: 0.4,
+              },
+            },
+            "-=0.8"
+          )
+          .to(
+            ".underline-profile",
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "sine.out",
+            },
+            "-=0.8"
+          ),
+      });
 
-    ScrollTrigger.create({
-      trigger: ".profile-card-right",
-      start: "top 85%",
-      toggleActions: "play reverse play reverse",
-      animation: gsap.to(".profile-card-right", {
-        opacity: 1,
-        x: 0,
-        scale: 1,
-        duration: 0.8,
-        stagger: {
-          amount: 0.8,
-          from: "start",
-        },
-        ease: "back.out",
-      }),
-    });
-
-    ScrollTrigger.create({
-      trigger: ".profile-card-left",
-      start: "top 85%",
-      toggleActions: "play reverse play reverse",
-      animation: gsap.to(".profile-card-left", {
-        opacity: 1,
-        x: 0,
-        scale: 1,
-        duration: 0.8,
-        stagger: function (index) {
-          const customOrder = [2, 1, 0, 4, 3];
-          const position = customOrder.indexOf(index);
-          return position * (0.8 / 4);
-        },
-        ease: "back.out",
-      }),
-    });
-
-    ScrollTrigger.create({
-      trigger: ".underline-profile",
-      start: "top 85%",
-      toggleActions: "play reverse play reverse",
-      animation: gsap.to(".underline-profile", {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "sine.out",
-      }),
-    });
-
-    const splitLeft = new SplitText(".text-section-left .split-heading", {
-      type: "words,chars",
-    });
-    const splitLeftPara = new SplitText(".text-section-left .split-paragraph", {
-      type: "lines",
-    });
-
-    gsap.set(".heading-left", { opacity: 0, y: 20 });
-    gsap.set(splitLeftPara.lines, { opacity: 0, y: 20 });
-
-    ScrollTrigger.create({
-      trigger: ".text-section-left",
-      start: "top 90%",
-      toggleActions: "play reverse play reverse",
-      animation: gsap
-        .timeline()
-        .to(".heading-left", {
+      ScrollTrigger.create({
+        trigger: ".profile-card-right",
+        start: "top 85%",
+        toggleActions: "play reverse play reverse",
+        animation: gsap.to(".profile-card-right", {
           opacity: 1,
-          y: 0,
+          x: 0,
+          scale: 1,
           duration: 0.8,
-          ease: "back.out(1.2)",
-        })
-        .to(
-          splitLeftPara.lines,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "power2.out",
+          stagger: {
+            amount: 0.8,
+            from: "start",
           },
-          "-=0.3"
-        ),
-    });
+          ease: "back.out",
+        }),
+      });
 
-    const splitRight = new SplitText(".text-section-right .split-heading", {
-      type: "words,chars",
-    });
-    const splitRightPara = new SplitText(
-      ".text-section-right .split-paragraph",
-      {
-        type: "lines",
-      }
-    );
-
-    gsap.set(".heading-right", { opacity: 0, y: 20 });
-    gsap.set(splitRightPara.lines, { opacity: 0, y: 20 });
-
-    ScrollTrigger.create({
-      trigger: ".text-section-right",
-      start: "top 90%",
-      // markers: true,
-      toggleActions: "play reverse play reverse",
-      animation: gsap
-        .timeline()
-        .to(".heading-right", {
+      ScrollTrigger.create({
+        trigger: ".profile-card-left",
+        start: "top 85%",
+        toggleActions: "play reverse play reverse",
+        animation: gsap.to(".profile-card-left", {
           opacity: 1,
-          y: 0,
+          x: 0,
+          scale: 1,
           duration: 0.8,
-          ease: "back.out(1.2)",
-        })
-        .to(
-          splitRightPara.lines,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "power2.out",
+          stagger: function (index) {
+            const customOrder = [2, 1, 0, 4, 3];
+            const position = customOrder.indexOf(index);
+            return position * (0.8 / 4);
           },
-          "-=0.3"
-        ),
-    });
+          ease: "back.out",
+        }),
+      });
 
-    gsap.to(".ballon", {
-      y: -10,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
+      document.fonts.ready.then(() => {
+        const teamSectionText = new SplitText(
+          ".text-section-left .split-paragraph",
+          {
+            type: "lines",
+          }
+        );
 
-    gsap.to(".cloud1", {
-      y: -10,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
+        gsap.set(teamSectionText.lines, { opacity: 0, y: 20 });
 
-    gsap.to(".cloud2", {
-      y: 10,
-      x: -15,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-  }, [dataTeam, dataIntern]);
+        ScrollTrigger.create({
+          trigger: ".text-section-left",
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+          animation: gsap
+            .timeline()
+            .to(".heading-left", {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "back.out(1.2)",
+            })
+            .to(
+              teamSectionText.lines,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.1,
+                ease: "power2.out",
+              },
+              "-=0.3"
+            ),
+        });
+
+        const internSectionText = new SplitText(
+          ".text-section-right .split-paragraph",
+          {
+            type: "lines",
+          }
+        );
+
+        gsap.set(internSectionText.lines, { opacity: 0, y: 20 });
+
+        ScrollTrigger.create({
+          trigger: ".text-section-right",
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+          animation: gsap
+            .timeline()
+            .to(".heading-right", {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "back.out(1.2)",
+            })
+            .to(
+              internSectionText.lines,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.1,
+                ease: "power2.out",
+              },
+              "-=0.3"
+            ),
+        });
+      });
+
+      gsap.set(".heading-left", { opacity: 0, y: 20 });
+      gsap.set(".heading-right", { opacity: 0, y: 20 });
+
+      gsap.to(".ballon", {
+        y: -10,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(".cloud1", {
+        y: -10,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(".cloud2", {
+        y: 10,
+        x: -15,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    },
+    {
+      scope: containerRef,
+    }
+  );
 
   return (
     <Box ref={containerRef}>
@@ -354,7 +325,7 @@ export default function ProfileSection() {
                 maxW={{ base: "full", lg: "none" }}
                 mx={{ base: "6", lg: "0" }}
               >
-                {teamSection?.description}
+                {data.teamSection.section.description}
               </Text>
             </VStack>
           </Box>
@@ -366,14 +337,14 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", sm: "nowrap" }}
                 justify="center"
               >
-                {teams.slice(0, 2).map((character, index) => (
+                {data.teamSection.teams.slice(0, 2).map((character) => (
                   <ProfileCard
-                    key={index}
+                    key={character.id}
                     name={character.name}
-                    charImage={character.charImage}
-                    realImage={character.realImage}
-                    bg={character.bg}
-                    bgImage={character.bgImage}
+                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
+                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
+                    bg={character.backgroundColor}
+                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
                     className="profile-card-right"
                   />
                 ))}
@@ -383,14 +354,14 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", md: "nowrap" }}
                 justify="center"
               >
-                {teams.slice(2, 5).map((character, index) => (
+                {data.teamSection.teams.slice(2, 5).map((character) => (
                   <ProfileCard
-                    key={index}
+                    key={character.id}
                     name={character.name}
-                    charImage={character.charImage}
-                    realImage={character.realImage}
-                    bg={character.bg}
-                    bgImage={character.bgImage}
+                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
+                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
+                    bg={character.backgroundColor}
+                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
                     className="profile-card-right"
                   />
                 ))}
@@ -412,14 +383,14 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", md: "nowrap" }}
                 justify="center"
               >
-                {interns.slice(0, 3).map((character, index) => (
+                {data.internSection.interns.slice(0, 3).map((character) => (
                   <ProfileCard
-                    key={index}
+                    key={character.id}
                     name={character.name}
-                    charImage={character.charImage}
-                    realImage={character.realImage}
-                    bg={character.bg}
-                    bgImage={character.bgImage}
+                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
+                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
+                    bg={character.backgroundColor}
+                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
                     className="profile-card-left"
                   />
                 ))}
@@ -429,14 +400,14 @@ export default function ProfileSection() {
                 flexWrap={{ base: "wrap", sm: "nowrap" }}
                 justify="center"
               >
-                {interns.slice(3, 5).map((character, index) => (
+                {data.internSection.interns.slice(3, 5).map((character) => (
                   <ProfileCard
-                    key={index}
+                    key={character.id}
                     name={character.name}
-                    charImage={character.charImage}
-                    realImage={character.realImage}
-                    bg={character.bg}
-                    bgImage={character.bgImage}
+                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
+                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
+                    bg={character.backgroundColor}
+                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
                     className="profile-card-left"
                   />
                 ))}
@@ -477,7 +448,7 @@ export default function ProfileSection() {
               maxW={{ base: "full", lg: "none" }}
               mx={{ base: "6", lg: "0" }}
             >
-              {internSection?.description}
+              {data.internSection.section.description}
             </Text>
           </VStack>
         </Flex>

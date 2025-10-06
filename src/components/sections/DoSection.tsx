@@ -1,6 +1,5 @@
 "use client";
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -12,52 +11,27 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 import { splitTextFirst } from "@/utils/splitText";
+import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+import type { WhatWeDoSection } from "@/types/api/homepage/whatWeDoSection";
 
-export default function DoSection() {
+export default function DoSection({
+  data,
+}: Readonly<{ data: WhatWeDoSection }>) {
   const sectionRef = useRef(null);
-  const [splitFirst, rest] = splitTextFirst("What We Do?");
   const descRef = useRef(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const buttonRef = useRef(null);
   const birdRef = useRef(null);
-
-  const doData = [
-    {
-      id: 1,
-      title: "PROGRAMING",
-      img: "/images/char/programing.png",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    },
-    {
-      id: 2,
-      title: "UI/UX DESIGNER",
-      img: "/images/char/uiUx.png",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    },
-    {
-      id: 3,
-      title: "DEV?",
-      img: "/images/char/programing.png",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    },
-  ];
-
-  useEffect(() => {
-    ScrollTrigger.refresh();
-  });
+  const [splitFirst, rest] = splitTextFirst("What We Do?");
 
   useGSAP(
     () => {
-      ScrollTrigger.refresh();
-
       ScrollTrigger.create({
         trigger: ".title-whatwedo",
         start: "top 85%",
@@ -171,13 +145,12 @@ export default function DoSection() {
 
   return (
     <Box
-      ref={sectionRef}
       id="DoSection"
-      mt={{ base: 6, md: 10 }}
-      py={{ base: 16, md: 20, lg: 28 }}
-      overflow="hidden"
+      ref={sectionRef}
+      mt={{ base: "6", md: "10" }}
+      py={{ base: "16", md: "28" }}
     >
-      <Box>
+      <Box spaceY="6">
         <Center
           px={{ base: 4, sm: 6, md: 8, lg: 0 }}
           className="title-whatwedo"
@@ -228,28 +201,26 @@ export default function DoSection() {
             </Box>
           </Flex>
         </Center>
-        
+
         <Container
           maxW={{
             base: "100%",
             md: "container.md",
             lg: "container.lg",
-            xl: "container.xl",
           }}
-          px={{ base: 4, sm: 6, md: 8 }}
-          mt={{ base: 6, md: 8 }}
+          px={{ base: "4", md: "6" }}
         >
           <Flex
             justify="center"
             align="center"
             position="relative"
-            minH={{ base: 16, md: 20 }}
+            minH={{ base: "60px", md: "80px" }}
           >
             <Box
               ref={birdRef}
               position="absolute"
               bottom={{ base: "5%", sm: "10%", md: "60%" }}
-              left={{ md: "2%", xl: "8%" }}
+              left={{ base: "5%", sm: "8%", md: "8%" }}
             >
               <Image
                 src="/images/float/birdDo.png"
@@ -332,9 +303,8 @@ export default function DoSection() {
           position="relative"
           maxW="1200px"
           mx="auto"
-          px={{ base: 10, md: "auto" }}
         >
-          {doData.map((item, index) => {
+          {data.jobs.map((item, index) => {
             if (index >= 3) return null;
 
             return (
@@ -380,7 +350,7 @@ export default function DoSection() {
                     mt={1}
                   >
                     <Image
-                      src={item.img}
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.illustration.url}`}
                       alt={item.title}
                       w={{
                         base: "75%",
@@ -430,7 +400,7 @@ export default function DoSection() {
                       mt={1}
                       color="gray.600"
                     >
-                      {item.desc}
+                      {item.description}
                     </Card.Description>
                   </Box>
                 </Card.Body>

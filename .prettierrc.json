@@ -2,17 +2,5 @@
     "semi": true,
     "singleQuote": false,
     "tabWidth": 2,
-    "trailingComma": "es5",
-    "overrides": [
-        {
-            "files": [
-                "*.ts",
-                "*.tsx"
-            ],
-            "options": {
-                "parser": "typescript",
-                "tabWidth": 2
-            }
-        }
-    ]
+    "trailingComma": "es5"
 }
