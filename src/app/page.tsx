@@ -75,11 +75,11 @@ export default function Home() {
           }}
           overflow="visible"
         >
-          <HeroSection />
-          <RocketParallax />
+          {/* <HeroSection />
+          <RocketParallax /> */}
         </Box>
 
-        <AboutSection />
+        {/* <AboutSection /> */}
         <ProfileSection />
         <ClientSection />
       </div>
