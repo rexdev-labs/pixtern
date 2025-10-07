@@ -4,7 +4,11 @@ import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
+<<<<<<< Updated upstream
 import { useEffect, useRef } from "react";
+=======
+import { useRef } from "react";
+>>>>>>> Stashed changes
 import { splitTextTwo } from "@/utils/splitText";
 
 import type { AboutSection } from "@/types/api/homepage/aboutSection";
@@ -13,6 +17,7 @@ export default function AboutSection({
   data,
 }: Readonly<{ data: AboutSection }>) {
   const aboutRef = useRef(null);
+<<<<<<< Updated upstream
   const [splitFirst, rest] = splitTextTwo(
     "What is PIXEL SPACE CREATIVE DIGITAL?"
   );
@@ -42,6 +47,99 @@ export default function AboutSection({
           type: "words,lines",
           wordsClass: "desc-word",
           linesClass: "desc-line",
+=======
+  const [splitFirst, rest] = splitTextTwo(data.title);
+
+  useGSAP(
+    () => {
+      document.fonts.ready.then(() => {
+        const titleSplit = new SplitText(".title", {
+          type: "chars,words",
+        });
+
+        gsap.set(titleSplit.chars, { opacity: 0, y: 100, rotationX: 90 });
+
+        ScrollTrigger.create({
+          trigger: ".title",
+          start: "top 75%",
+          end: "bottom top",
+          toggleActions: "play reverse play reverse",
+          animation: gsap
+            .timeline()
+            .to(titleSplit.chars, {
+              opacity: 1,
+              y: 0,
+              rotationX: 0,
+              duration: 0.8,
+              stagger: {
+                amount: 1.2,
+                from: "center",
+                ease: "back.out(2)",
+              },
+              ease: "back.out(1.7)",
+            })
+            .to(
+              titleSplit.words,
+              {
+                rotationX: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power2.out",
+              },
+              "-=0.5"
+            ),
+        });
+
+        const mainTitleSplit = new SplitText(".main-title", {
+          type: "chars,words,lines",
+        });
+
+        gsap.set(mainTitleSplit.chars, {
+          opacity: 0,
+          y: 50,
+          rotationY: 90,
+          scale: 0.5,
+        });
+
+        ScrollTrigger.create({
+          trigger: ".main-title",
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play reverse play reverse",
+          animation: gsap
+            .timeline()
+            .to(mainTitleSplit.lines, {
+              opacity: 1,
+              duration: 0.1,
+            })
+            .to(mainTitleSplit.chars, {
+              opacity: 1,
+              y: 0,
+              rotationY: 0,
+              scale: 1,
+              duration: 0.6,
+              stagger: {
+                amount: 1.5,
+                from: "start",
+                ease: "power2.out",
+              },
+              ease: "back.out(1.2)",
+            })
+            .to(
+              mainTitleSplit.words,
+              {
+                rotationX: 0,
+                duration: 0.4,
+                stagger: 0.1,
+              },
+              "-=1"
+            ),
+        });
+
+        /* About Description */
+        const descriptionSplit = new SplitText(".main-description", {
+          type: "words,lines",
+>>>>>>> Stashed changes
         });
 
         gsap.set(descriptionSplit.words, { opacity: 0, y: 30, rotationX: 45 });
@@ -72,7 +170,6 @@ export default function AboutSection({
         });
       });
 
-      gsap.set(".title-char", { opacity: 0, y: 100, rotationX: 90 });
       gsap.set(".ampersand", { opacity: 0, scale: 0, rotation: 360 });
       gsap.set(".box-title", {
         opacity: 0,
@@ -82,6 +179,7 @@ export default function AboutSection({
       });
       gsap.set(".main-bird", { opacity: 0, scale: 0, rotation: 180 });
       gsap.set(".bird", { opacity: 0, scale: 0, rotation: 180 });
+<<<<<<< Updated upstream
       gsap.set(".main-title-char", {
         opacity: 0,
         y: 50,
@@ -126,7 +224,16 @@ export default function AboutSection({
             },
             "-=0.5"
           ),
+=======
+
+      gsap.set(".character", {
+        opacity: 0,
+        y: 100,
+        scale: 0.8,
+        rotationY: 15,
+>>>>>>> Stashed changes
       });
+      gsap.set(".floating-box", { opacity: 0, scale: 0, rotation: 0 });
 
       ScrollTrigger.create({
         trigger: ".ampersand",
@@ -196,6 +303,7 @@ export default function AboutSection({
       });
 
       ScrollTrigger.create({
+<<<<<<< Updated upstream
         trigger: ".main-title",
         start: "top 85%",
         end: "bottom 15%",
@@ -231,6 +339,8 @@ export default function AboutSection({
       });
 
       ScrollTrigger.create({
+=======
+>>>>>>> Stashed changes
         trigger: ".character",
         start: "top 80%",
         end: "bottom 15%",

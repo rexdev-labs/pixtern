@@ -28,10 +28,37 @@ export default function DoSection({
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const buttonRef = useRef(null);
   const birdRef = useRef(null);
+<<<<<<< Updated upstream
   const [splitFirst, rest] = splitTextFirst("What We Do?");
 
   useGSAP(
     () => {
+=======
+  const [splitFirst, rest] = splitTextFirst(data.section.title);
+
+  useGSAP(
+    () => {
+      document.fonts.ready.then(() => {
+        const descSplit = new SplitText(descRef.current, {
+          type: "lines,words",
+        });
+
+        gsap.from(descSplit.words, {
+          opacity: 0,
+          y: 20,
+          stagger: 0.01,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: descRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play reverse play reverse",
+          },
+        });
+      });
+
+>>>>>>> Stashed changes
       ScrollTrigger.create({
         trigger: ".title-whatwedo",
         start: "top 85%",
@@ -62,24 +89,6 @@ export default function DoSection({
               },
               "-=0.8"
             );
-        },
-      });
-
-      const descSplit = new SplitText(descRef.current, {
-        type: "lines,words",
-      });
-
-      gsap.from(descSplit.words, {
-        opacity: 0,
-        y: 20,
-        stagger: 0.01,
-        duration: 0.6,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: descRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play reverse play reverse",
         },
       });
 

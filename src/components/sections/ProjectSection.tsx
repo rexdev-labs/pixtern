@@ -19,6 +19,7 @@ export default function ProjectSection({
     [data.section.title]
   );
 
+<<<<<<< Updated upstream
   const projects =
     data.projects.map((t) => ({
       title: t.title,
@@ -37,6 +38,39 @@ export default function ProjectSection({
       gsap.set(".star-project", { opacity: 0, scale: 0.9 });
       gsap.set(".button-project", { opacity: 0, scale: 0.9 });
 
+=======
+  useGSAP(
+    () => {
+      document.fonts.ready.then(() => {
+        const splitDesc = new SplitText(".text-desc .split-paragraph", {
+          type: "lines",
+        });
+
+        gsap.set(splitDesc.lines, { opacity: 0, y: 20 });
+        ScrollTrigger.create({
+          trigger: ".text-desc",
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+          animation: gsap.to(splitDesc.lines, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+          }),
+        });
+      });
+
+      gsap.set(".scramble-our", { text: "" });
+      gsap.set(".scramble-project", { text: "" });
+      gsap.set(".subtitle-project-main", { opacity: 0, y: 50 });
+      gsap.set(".underline-project", { opacity: 0, y: 50 });
+      gsap.set(".card-project-main", { opacity: 0, x: -50, scale: 0.9 });
+      gsap.set(".card-list", { opacity: 0, y: -50, scale: 0.9 });
+      gsap.set(".star-project", { opacity: 0, scale: 0.9 });
+      gsap.set(".button-project", { opacity: 0, scale: 0.9 });
+
+>>>>>>> Stashed changes
       ScrollTrigger.create({
         trigger: ".title-project",
         start: "top 85%",
@@ -77,6 +111,7 @@ export default function ProjectSection({
           ),
       });
 
+<<<<<<< Updated upstream
       const splitDesc = new SplitText(".text-desc .split-paragraph", {
         type: "lines",
       });
@@ -95,6 +130,8 @@ export default function ProjectSection({
         }),
       });
 
+=======
+>>>>>>> Stashed changes
       ScrollTrigger.create({
         trigger: ".subtitle-project-year",
         start: "top 85%",
@@ -263,9 +300,15 @@ export default function ProjectSection({
           direction={{ base: "column", md: "column", lg: "row" }}
           gap={{ base: 6, md: 8 }}
         >
+<<<<<<< Updated upstream
           {projects.slice(0, 1).map((project, index) => (
             <Box
               key={index}
+=======
+          {data.projects.slice(0, 1).map((project) => (
+            <Box
+              key={project.id}
+>>>>>>> Stashed changes
               className="card-project-main"
               bg="brand.bg.white"
               w={{ base: "full", md: "full", lg: "1/2" }}
@@ -281,7 +324,11 @@ export default function ProjectSection({
                 overflow="hidden"
               >
                 <Image
+<<<<<<< Updated upstream
                   src={project.preview}
+=======
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}${project.preview.url}`}
+>>>>>>> Stashed changes
                   objectFit="cover"
                   w="100%"
                   h="100%"
@@ -316,9 +363,15 @@ export default function ProjectSection({
             flexDirection="column"
             gap={6}
           >
+<<<<<<< Updated upstream
             {projects.slice(1, 3).map((project, index) => (
               <Flex
                 key={index}
+=======
+            {data.projects.slice(1, 3).map((project) => (
+              <Flex
+                key={project.id}
+>>>>>>> Stashed changes
                 className="card-list"
                 bg="brand.bg.white"
                 w="full"
@@ -336,7 +389,11 @@ export default function ProjectSection({
                   overflow="hidden"
                 >
                   <Image
+<<<<<<< Updated upstream
                     src={project.preview}
+=======
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${project.preview.url}`}
+>>>>>>> Stashed changes
                     objectFit="cover"
                     w="100%"
                     h="100%"
