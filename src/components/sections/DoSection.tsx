@@ -122,7 +122,6 @@ export default function DoSection({
           start: "top 20%",
           end: "bottom 80%",
           toggleActions: "play reverse play reverse",
-          markers: true
         },
       });
 

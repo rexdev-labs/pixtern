@@ -19,15 +19,28 @@ export default function ProjectSection({
     [data.section.title]
   );
 
-  const projects =
-    data.projects.map((t) => ({
-      title: t.title,
-      description: t.description,
-      preview: `${process.env.NEXT_PUBLIC_BASE_URL}${t.preview.url}`,
-    })) ?? [];
-
   useGSAP(
     () => {
+      document.fonts.ready.then(() => {
+        const splitDesc = new SplitText(".text-desc .split-paragraph", {
+          type: "lines",
+        });
+
+        gsap.set(splitDesc.lines, { opacity: 0, y: 20 });
+        ScrollTrigger.create({
+          trigger: ".text-desc",
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+          animation: gsap.to(splitDesc.lines, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+          }),
+        });
+      });
+
       gsap.set(".scramble-our", { text: "" });
       gsap.set(".scramble-project", { text: "" });
       gsap.set(".subtitle-project-main", { opacity: 0, y: 50 });
@@ -75,27 +88,6 @@ export default function ProjectSection({
             },
             "-=0.8"
           ),
-      });
-
-      document.fonts.ready.then(() => {
-        const splitDesc = new SplitText(".text-desc .split-paragraph", {
-          type: "lines",
-        });
-
-        gsap.set(splitDesc.lines, { opacity: 0, y: 20 });
-
-        ScrollTrigger.create({
-          trigger: ".text-desc",
-          start: "top 90%",
-          toggleActions: "play reverse play reverse",
-          animation: gsap.to(splitDesc.lines, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "power2.out",
-          }),
-        });
       });
 
       ScrollTrigger.create({
@@ -266,9 +258,9 @@ export default function ProjectSection({
           direction={{ base: "column", md: "column", lg: "row" }}
           gap={{ base: 6, md: 8 }}
         >
-          {projects.slice(0, 1).map((project, index) => (
+          {data.projects.slice(0, 1).map((project) => (
             <Box
-              key={index}
+              key={project.id}
               className="card-project-main"
               bg="brand.bg.white"
               w={{ base: "full", md: "full", lg: "1/2" }}
@@ -284,7 +276,7 @@ export default function ProjectSection({
                 overflow="hidden"
               >
                 <Image
-                  src={project.preview}
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}${project.preview.url}`}
                   objectFit="cover"
                   w="100%"
                   h="100%"
@@ -311,7 +303,8 @@ export default function ProjectSection({
                 {project.description}
               </Text>
             </Box>
-          ))}
+          ))
+          }
 
           <Box
             w={{ base: "full", md: "full", lg: "1/2" }}
@@ -319,9 +312,9 @@ export default function ProjectSection({
             flexDirection="column"
             gap={6}
           >
-            {projects.slice(1, 3).map((project, index) => (
+            {data.projects.slice(1, 3).map((project) => (
               <Flex
-                key={index}
+                key={project.id}
                 className="card-list"
                 bg="brand.bg.white"
                 w="full"
@@ -339,7 +332,7 @@ export default function ProjectSection({
                   overflow="hidden"
                 >
                   <Image
-                    src={project.preview}
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${project.preview.url}`}
                     objectFit="cover"
                     w="100%"
                     h="100%"
@@ -367,9 +360,10 @@ export default function ProjectSection({
                   </Text>
                 </Box>
               </Flex>
-            ))}
-          </Box>
-        </Flex>
+            ))
+            }
+          </Box >
+        </Flex >
 
         <Image
           className="star-project"
@@ -402,7 +396,7 @@ export default function ProjectSection({
             </Text>
           </Box>
         </Center>
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   );
 }

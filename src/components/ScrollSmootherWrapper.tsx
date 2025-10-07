@@ -7,20 +7,22 @@ import { SplitText } from "gsap/SplitText";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { TextPlugin } from "gsap/TextPlugin";
 
 gsap.registerPlugin(
   useGSAP,
   ScrollTrigger,
   ScrollSmoother,
   SplitText,
-  ScrambleTextPlugin
+  ScrambleTextPlugin,
+  TextPlugin
 );
 
 export default function ScrollSmootherWrapper({
   children,
-}: {
+}: Readonly<{
   children: ReactNode;
-}) {
+}>) {
   const smoothWrapperRef = useRef<HTMLDivElement | null>(null);
   const smoothContentRef = useRef<HTMLDivElement | null>(null);
   const smoothScrollerRef = useRef<ScrollSmoother | null>(null);
