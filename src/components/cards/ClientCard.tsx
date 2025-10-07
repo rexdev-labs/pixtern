@@ -66,13 +66,13 @@ export const ClientCard = forwardRef<HTMLDivElement, ClientCardProps>(({
 
             <Box flex="1">
                 <Box>
-                    <Text fontFamily="heading" fontWeight="bold" fontSize="xl">{username}</Text>
-                    <Text fontSize="xs" opacity={0.8}>
+                    <Text fontFamily="heading" fontWeight="bold" fontSize={{ base: "sm", md: "md", lg: "xl" }}>{username}</Text>
+                    <Text fontSize={{ base: "8px", md: "md", lg: "xs" }} opacity={0.8}>
                         {date}
                     </Text>
                 </Box>
 
-                <Box mt={2} maxW={{ base: "85%", md: "80%", lg: "80%" }}>
+                <Box mt={2} maxW={{ base: "100%", md: "80%", lg: "80%" }}>
                     <Text
                         fontSize={{ base: "sm", md: "md" }}
                         whiteSpace="normal"
