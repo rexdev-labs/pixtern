@@ -4,88 +4,58 @@ import { Box, Text, Image, Heading } from "@chakra-ui/react";
 import { ClientCard } from "../cards/ClientCard";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const feedbacks = [
+import type { TestimonialSection } from "@/types/api/homepage/testimonialSection";
+
+const feedbackPreset = [
   {
-    username: "Username",
-    date: "01-05-2025",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     color: "brand.bg.yellow.primary",
-    rating: 4,
-    zIndex: 1,
     rotate: 1.9,
     filter: "drop-shadow(-15px -6px 0px rgba(100, 100, 100, 0.6))",
-    outline: "1.5px solid #080427",
     left: { base: "auto", md: "23%", lg: "30%" },
     top: { base: "1%", md: "2%", lg: "2%" },
     position: { base: "relative", md: "absolute" },
   },
   {
-    username: "Username",
-    date: "01-05-2025",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     color: "brand.bg.pink",
-    rating: 3,
-    zIndex: 2,
     rotate: -0.6,
     filter: "drop-shadow(15px -6px 0px rgba(100, 100, 100, 0.6))",
-    outline: "1.5px solid #080427",
     left: { base: "auto", md: "25%", lg: "32%" },
     top: { base: "-4", md: "18%", lg: "18%" },
     position: { base: "relative", md: "absolute" },
   },
   {
-    username: "Username",
-    date: "01-05-2025",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     color: "brand.bg.blue.sky",
-    rating: 5,
-    zIndex: 3,
     rotate: -1.8,
     filter: "drop-shadow(-15px 6px 0px rgba(100, 100, 100, 0.6))",
-    outline: "1.5px solid #080427",
     left: { base: "auto", md: "20%", lg: "29%" },
     top: { base: "-8", md: "34%", lg: "34%" },
     position: { base: "relative", md: "absolute" },
   },
   {
-    username: "Username",
-    date: "01-05-2025",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     color: "brand.bg.green.emelard",
-    rating: 4,
-    zIndex: 4,
     rotate: -2.2,
     filter: "drop-shadow(15px -6px 0px rgba(100, 100, 100, 0.6))",
-    outline: "1.5px solid #080427",
     right: { base: "auto", md: "18%", lg: "25%" },
     top: { base: "-12", md: "50%", lg: "50%" },
     position: { base: "relative", md: "absolute" },
   },
   {
-    username: "Username",
-    date: "01-05-2025",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     color: "#FF6E1D",
-    rating: 2,
-    zIndex: 5,
     rotate: 2,
     filter: "drop-shadow(15px 6px 0px rgba(100, 100, 100, 0.6))",
-    outline: "1.5px solid #080427",
     right: { base: "auto", md: "25%", lg: "31%" },
     bottom: { base: "16", md: "19%", lg: "19%" },
     position: { base: "relative", md: "absolute" },
   },
-];
+]
 
-export default function ClientSection() {
+export default function ClientSection({ data }: Readonly<{ data: TestimonialSection }>) {
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const floatingImagesRef = useRef<(HTMLImageElement | null)[]>([]);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
 
     cardsRef.current.forEach((card, index) => {
       if (card) {
@@ -167,18 +137,6 @@ export default function ClientSection() {
         }
       }
     });
-
-    // Handle resize untuk update animasi
-    const handleResize = () => {
-      ScrollTrigger.refresh();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
   }, []);
 
   return (
@@ -256,13 +214,19 @@ export default function ClientSection() {
         gap={{ base: 5, sm: 6, md: 0, lg: 0 }}
         px={{ base: 4, sm: 4, md: 0, lg: 0 }}
       >
-        {feedbacks.map((fb, idx) => (
+        {data.testimonials.slice(0, feedbackPreset.length).map((testimonial, index) => (
           <ClientCard
-            key={idx}
+            key={testimonial.id}
             ref={(el: HTMLDivElement | null) => {
-              if (el) cardsRef.current[idx] = el;
+              if (el) cardsRef.current[index] = el;
             }}
-            {...fb}
+            username={testimonial.username}
+            date={testimonial.date}
+            review={testimonial.review}
+            rating={testimonial.rating}
+            avatar={testimonial.avatar}
+            zIndex={index}
+            {...feedbackPreset[index]}
           />
         ))}
       </Box>

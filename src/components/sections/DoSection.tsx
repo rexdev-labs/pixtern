@@ -28,6 +28,25 @@ export default function DoSection({
 
   useGSAP(
     () => {
+      document.fonts.ready.then(() => {
+        const descSplit = new SplitText(".desc-text", {
+          type: "lines,words",
+        });
+
+        gsap.from(descSplit.words, {
+          opacity: 0,
+          y: 20,
+          stagger: 0.01,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".desc-text",
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play reverse play reverse",
+          },
+        });
+      })
       gsap.set(".underline-do", { opacity: 0, y: 50 });
 
       ScrollTrigger.create({
@@ -69,24 +88,6 @@ export default function DoSection({
             },
             "-=0.8"
           ),
-      });
-
-      const descSplit = new SplitText(".desc-text", {
-        type: "lines,words",
-      });
-
-      gsap.from(descSplit.words, {
-        opacity: 0,
-        y: 20,
-        stagger: 0.01,
-        duration: 0.6,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".desc-text",
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play reverse play reverse",
-        },
       });
 
       gsap.from(".bird-float", {

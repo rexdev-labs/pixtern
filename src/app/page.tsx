@@ -64,7 +64,13 @@ async function getHomepageData(): Promise<ApiResponse<HomepageResponse>> {
           },
         },
       },
-      testimonialSection: { populate: "*" },
+      testimonialSection: {
+        populate: {
+          testimonials: {
+            populate: "*",
+          },
+        },
+      },
     },
   });
 
@@ -108,7 +114,7 @@ export default async function Home() {
       <ProfileSection data={response.data.profileSection} />
       <DoSection data={response.data.whatWeDoSection} />
       <ProjectSection data={response.data.projectSection} />
-      <ClientSection />
+      <ClientSection data={response.data.testimonialSection} />
       <Footer />
     </ScrollSmootherWrapper>
   );
