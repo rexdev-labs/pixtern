@@ -77,22 +77,25 @@ export default function ProjectSection({
           ),
       });
 
-      const splitDesc = new SplitText(".text-desc .split-paragraph", {
-        type: "lines",
-      });
+      document.fonts.ready.then(() => {
+        const splitDesc = new SplitText(".text-desc .split-paragraph", {
+          type: "lines",
+        });
 
-      gsap.set(splitDesc.lines, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: ".text-desc",
-        start: "top 90%",
-        toggleActions: "play reverse play reverse",
-        animation: gsap.to(splitDesc.lines, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: "power2.out",
-        }),
+        gsap.set(splitDesc.lines, { opacity: 0, y: 20 });
+
+        ScrollTrigger.create({
+          trigger: ".text-desc",
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+          animation: gsap.to(splitDesc.lines, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+          }),
+        });
       });
 
       ScrollTrigger.create({
