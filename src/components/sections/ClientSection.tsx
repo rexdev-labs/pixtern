@@ -168,7 +168,7 @@ export default function ClientSection() {
     }, []);
 
     return (
-        <Box position="relative" py={{ base: 12, md: 20, lg: 20 }} overflow="hidden">
+        <Box position="relative" py={{ base: 12, md: 20, lg: 20 }} overflow="hidden" id="testimoni">
             {/* Background Text */}
             <Text
                 fontFamily="cursive"

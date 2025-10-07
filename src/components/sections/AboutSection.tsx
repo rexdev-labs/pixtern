@@ -14,12 +14,8 @@ export default function AboutSection({
 }: Readonly<{ data: AboutSection }>) {
   const aboutRef = useRef(null);
   const [splitFirst, rest] = splitTextTwo(
-    "What is PIXEL SPACE CREATIVE DIGITAL?"
+    data.title
   );
-
-  useEffect(() => {
-    ScrollTrigger.refresh();
-  });
 
   useGSAP(
     () => {
@@ -576,6 +572,7 @@ export default function AboutSection({
               lineHeight="1.3"
               textAlign="center"
               overflow="hidden"
+              lineClamp={6}
             >
               {data.description}
             </Text>
@@ -590,7 +587,7 @@ export default function AboutSection({
               lg: "10px",
             }}
             top={{
-              base: "340px",
+              base: "300px",
               md: "320px",
               lg: "130px",
             }}
@@ -617,7 +614,7 @@ export default function AboutSection({
               lg: "20px",
             }}
             top={{
-              base: "340px",
+              base: "300px",
               md: "320px",
               lg: "130px",
             }}

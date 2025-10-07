@@ -218,19 +218,19 @@ export default function Navbar() {
 
                 {/* Links mobile */}
                 <VStack align="start" gap={5} mt={6}>
-                  <Link as={NextLink} href="#home" color="white">
+                  <Link as={NextLink} color="white" href="#home">
                     Beranda
                   </Link>
-                  <Link as={NextLink} href="#about" color="white">
+                  <Link as={NextLink} color="white" href="#about">
                     Tentang
                   </Link>
-                  <Link as={NextLink} href="#profil" color="white">
+                  <Link as={NextLink} color="white" href="#profil">
                     Profil
                   </Link>
-                  <Link as={NextLink} href="#projects" color="white">
+                  <Link as={NextLink} color="white" href="#project">
                     Karya & Proyek
                   </Link>
-                  <Link as={NextLink} href="#testimoni" color="white">
+                  <Link as={NextLink} color="white" href="#testimoni">
                     Testimoni
                   </Link>
                 </VStack>
