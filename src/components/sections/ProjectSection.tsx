@@ -176,7 +176,7 @@ export default function ProjectSection({
   );
 
   return (
-    <Box py="10" ref={containerRef}>
+    <Box py="10" ref={containerRef} id="project">
       <Center mt={{ base: "10", md: "20" }} mb="10" className="title-project">
         <Flex gap={4}>
           <Heading
