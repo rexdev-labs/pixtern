@@ -85,6 +85,28 @@ export default function ProfileSection({
           ),
       });
 
+      gsap.from(".bird-float", {
+        opacity: 0,
+        x: -100,
+        rotation: -45,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".bird-float",
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play reverse play reverse",
+        },
+      });
+
+      gsap.to(".bird-float", {
+        y: -15,
+        duration: 2,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+
       ScrollTrigger.create({
         trigger: ".profile-card-right",
         start: "top 85%",
@@ -281,7 +303,7 @@ export default function ProfileSection({
               h={{ base: "16", md: "28", lg: "32" }}
             >
               <Image
-                className="bird-up"
+                className="bird-float"
                 src="/images/float/bird-profile-wing-up.png"
                 w={{ base: "16", md: "20", lg: "24" }}
                 h={{ base: "16", md: "20", lg: "24" }}
