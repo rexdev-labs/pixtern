@@ -33,6 +33,9 @@ async function getGlobalSiteData(): Promise<ApiResponse<GlobalSite>> {
           logo: {
             populate: "*",
           },
+          socialMedia: {
+            populate: "*",
+          },
           groups: {
             populate: "*",
           },
@@ -177,6 +180,40 @@ export default async function Footer() {
                 >
                   {footer.message}
                 </Text>
+              )}
+              {footer.socialMedia && (
+                <HStack
+                  gap={{ base: "3", sm: "3", md: "4" }}
+                  mt={{
+                    base: "6",
+                    sm: "8",
+                    md: "16",
+                    lg: "18",
+                    xl: "20",
+                  }}
+                  display={{ base: "none", md: "flex" }}
+                >
+                  {footer.socialMedia.map((socialMedia) => {
+                    const Icon = socialMediaIcon[socialMedia.platform];
+                    return (
+                      <IconButton
+                        key={socialMedia.platform}
+                        rounded="full"
+                        border="1px solid"
+                        borderColor="brand.text.white"
+                        color="brand.text.white"
+                        bg="transparent"
+                        size={{ base: "sm", sm: "md" }}
+                        _hover={{
+                          bg: "brand.text.white",
+                          color: "brand.bg.green.forest",
+                        }}
+                      >
+                        <Icon />
+                      </IconButton>
+                    );
+                  })}
+                </HStack>
               )}
             </Box>
 
