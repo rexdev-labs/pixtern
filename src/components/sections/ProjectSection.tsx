@@ -258,7 +258,7 @@ export default function ProjectSection({
           direction={{ base: "column", md: "column", lg: "row" }}
           gap={{ base: 6, md: 8 }}
         >
-          {data.projects.slice(0, 1).map((project) => (
+          {data.projects?.slice(0, 1).map((project) => (
             <Box
               key={project.id}
               className="card-project-main"
@@ -312,7 +312,7 @@ export default function ProjectSection({
             flexDirection="column"
             gap={6}
           >
-            {data.projects.slice(1, 3).map((project) => (
+            {data.projects?.slice(1, 3).map((project) => (
               <Flex
                 key={project.id}
                 className="card-list"

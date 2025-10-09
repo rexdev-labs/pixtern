@@ -10,5 +10,5 @@ export interface WhatWeDoSection {
     title: string;
     description: string;
   };
-  jobs: Job[];
+  jobs?: Job[];
 }

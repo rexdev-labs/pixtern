@@ -7,13 +7,13 @@ import ProfileSection from "@/components/sections/ProfileSection";
 import DoSection from "@/components/sections/DoSection";
 import ProjectSection from "@/components/sections/ProjectSection";
 import ClientSection from "@/components/sections/ClientSection";
-import Footer from "@/components/Footer/Footer";
 import RocketParallax from "@/components/animations/RocketParallax";
 
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 
-import type { ApiResponse } from "@/types/api/apiResponse";
-import type { HomepageResponse } from "@/types/api/homepageResponse";
+import type { ApiResponse } from "@/types/api/response/apiResponse";
+import type { HomepageResponse } from "@/types/api/response/homepageResponse";
+import Footer from "@/components/Footer/Footer";
 
 async function getHomepageData(): Promise<ApiResponse<HomepageResponse>> {
   const query = qs.stringify({

@@ -214,7 +214,7 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
         gap={{ base: 5, sm: 6, md: 0, lg: 0 }}
         px={{ base: 4, sm: 4, md: 0, lg: 0 }}
       >
-        {data.testimonials.slice(0, feedbackPreset.length).map((testimonial, index) => (
+        {data.testimonials?.slice(0, feedbackPreset.length).map((testimonial, index) => (
           <ClientCard
             key={testimonial.id}
             ref={(el: HTMLDivElement | null) => {

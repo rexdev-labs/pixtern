@@ -1,13 +1,10 @@
-"use client";
 import { Box, Heading, Link, Stack } from "@chakra-ui/react";
-import React from "react";
 
-interface FootLinkProps {
-  title: string;
-  links: string[];
-}
+import type { FooterGroup } from "@/types/api/footer";
 
-export default function FootLink({ title, links }: FootLinkProps) {
+export function FooterNavigationGroup({
+  group,
+}: Readonly<{ group: FooterGroup }>) {
   return (
     <Box color="brand.text.white" overflow="hidden">
       <Heading
@@ -23,14 +20,14 @@ export default function FootLink({ title, links }: FootLinkProps) {
         fontWeight="medium"
         textAlign="left"
       >
-        {title}
+        {group.title}
       </Heading>
 
       <Stack gap="5" align="flex-end">
-        {links.map((item, i) => (
+        {group.links.map((link) => (
           <Link
-            key={i}
-            href="#"
+            key={link.id}
+            href={link.href}
             color="brand.text.white"
             _hover={{ textDecoration: "underline" }}
             fontWeight="light"
@@ -43,7 +40,7 @@ export default function FootLink({ title, links }: FootLinkProps) {
             }}
             textAlign="right"
           >
-            {item}
+            {link.title}
           </Link>
         ))}
       </Stack>

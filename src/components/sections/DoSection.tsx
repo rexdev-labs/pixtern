@@ -2,7 +2,6 @@
 import {
   Box,
   Button,
-  Card,
   Center,
   Container,
   Flex,
@@ -11,11 +10,12 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { splitTextFirst } from "@/utils/splitText";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { WhatWeDoCard } from "../cards/WhatWeDoCard";
 import gsap from "gsap";
 
 import type { WhatWeDoSection } from "@/types/api/homepage/whatWeDoSection";
@@ -24,7 +24,10 @@ export default function DoSection({
   data,
 }: Readonly<{ data: WhatWeDoSection }>) {
   const doSectionRef = useRef(null);
-  const [splitFirst, rest] = splitTextFirst(data.section.title);
+  const [splitFirst, rest] = useMemo(
+    () => splitTextFirst(data.section.title),
+    [data.section.title]
+  );
 
   useGSAP(
     () => {
@@ -46,7 +49,7 @@ export default function DoSection({
             toggleActions: "play reverse play reverse",
           },
         });
-      })
+      });
       gsap.set(".underline-do", { opacity: 0, y: 50 });
 
       ScrollTrigger.create({
@@ -327,107 +330,10 @@ export default function DoSection({
             maxW="1200px"
             mx="auto"
           >
-            {data.jobs.map((item, index) => {
+            {data.jobs?.map((job, index) => {
               if (index >= 3) return null;
 
-              return (
-                <Card.Root
-                  key={item.id}
-                  className="card-item"
-                  rounded={{ base: "lg", md: "xl" }}
-                  borderWidth={{ base: 2, md: 3 }}
-                  borderColor="brand.bg.black"
-                  width={{
-                    base: "100%",
-                    md: "calc(33.333% - 1rem)",
-                    lg: "360px",
-                  }}
-                  minH={{
-                    base: "auto",
-                    md: "340px",
-                    lg: "420px",
-                    xl: "460px",
-                  }}
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="space-between"
-                  bg="white"
-                  style={{
-                    filter: "drop-shadow(0 0 18px rgba(15, 91, 118, 0.2))",
-                  }}
-                >
-                  <Card.Body
-                    alignItems="center"
-                    textAlign="center"
-                    flex="1"
-                    p={{ base: 4, md: 5, lg: 6 }}
-                  >
-                    <Box
-                      flex="1"
-                      display="flex"
-                      flexDirection="column"
-                      justifyContent="center"
-                      gap={{ base: 3, md: 4, lg: 5 }}
-                      mt={1}
-                    >
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.illustration.url}`}
-                        alt={item.title}
-                        w={{
-                          base: "75%",
-                          md: "80%",
-                          lg: "85%",
-                        }}
-                        maxW="300px"
-                        mx="auto"
-                        display="block"
-                        objectFit="contain"
-                      />
-                      <Card.Title
-                        fontFamily="Inter"
-                        fontWeight="extrabold"
-                        fontSize={{
-                          base: "lg",
-                          sm: "xl",
-                          md: "lg",
-                          lg: "2xl",
-                          xl: "3xl",
-                        }}
-                        lineHeight="shorter"
-                        textAlign="center"
-                        mt={1}
-                      >
-                        {item.title}
-                      </Card.Title>
-
-                      <Card.Description
-                        fontFamily="Inter"
-                        fontWeight="normal"
-                        fontSize={{
-                          base: "2xs",
-                          sm: "xs",
-                          md: "2xs",
-                          lg: "xs",
-                          xl: "xs",
-                        }}
-                        lineHeight="short"
-                        textAlign="center"
-                        px={{
-                          base: 6,
-                          sm: 4,
-                          md: 6,
-                          lg: 8,
-                        }}
-                        mt={1}
-                        color="gray.600"
-                        lineClamp={5}
-                      >
-                        {item.description}
-                      </Card.Description>
-                    </Box>
-                  </Card.Body>
-                </Card.Root>
-              );
+              return <WhatWeDoCard key={job.id} job={job} />;
             })}
           </Stack>
         </Box>
@@ -451,7 +357,12 @@ export default function DoSection({
           </Center>
         </Box>
       </Box>
-      <Flex className="do-bird" justifyContent="end" mr="40" display={{ base: "none", lg: "flex" }}>
+      <Flex
+        className="do-bird"
+        justifyContent="end"
+        mr="40"
+        display={{ base: "none", lg: "flex" }}
+      >
         <Image
           src="/images/float/doBird.png"
           alt="bird"

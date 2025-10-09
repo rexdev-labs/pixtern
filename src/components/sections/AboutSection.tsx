@@ -4,7 +4,7 @@ import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { splitTextTwo } from "@/utils/splitText";
 
 import type { AboutSection } from "@/types/api/homepage/aboutSection";
@@ -13,7 +13,7 @@ export default function AboutSection({
   data,
 }: Readonly<{ data: AboutSection }>) {
   const aboutRef = useRef(null);
-  const [splitFirst, rest] = splitTextTwo(data.title);
+  const [splitFirst, rest] = useMemo(() => splitTextTwo(data.title), [data.title]);
 
   useGSAP(
     () => {

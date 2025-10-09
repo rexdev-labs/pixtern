@@ -10,5 +10,5 @@ export interface ProjectSection {
     title: string;
     description: string;
   };
-  projects: Project[];
+  projects?: Project[];
 }

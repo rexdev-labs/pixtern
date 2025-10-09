@@ -10,5 +10,5 @@ export interface Testimonial {
 }
 
 export interface TestimonialSection {
-  testimonials: Testimonial[];
+  testimonials?: Testimonial[];
 }

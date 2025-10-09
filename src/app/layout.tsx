@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
 import "../styles/globals.css";
-import ProvidersWrapper from "./providers-wrapper";
+import { Provider } from "@/components/ui/provider"
 import Navbar from "@/components/Navbar/NavBar";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pixtern",
@@ -12,12 +13,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <ProvidersWrapper>
+        <Provider>
           <Navbar />
           {children}
-        </ProvidersWrapper>
+        </Provider>
       </body>
     </html>
   );

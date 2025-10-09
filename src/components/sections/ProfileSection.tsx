@@ -29,11 +29,13 @@ export default function ProfileSection({
     [data.title]
   );
 
-  const [splitTeam, restTeam] = splitTextTwo(
-    data.teamSection.section.title ?? ""
+  const [splitTeam, restTeam] = useMemo(
+    () => splitTextTwo(data.teamSection.section.title ?? ""),
+    [data.teamSection.section.title]
   );
-  const [splitIntern, restIntern] = splitTextTwo(
-    data.internSection.section.title ?? ""
+  const [splitIntern, restIntern] = useMemo(
+    () => splitTextTwo(data.internSection.section.title ?? ""),
+    [data.internSection.section.title]
   );
 
   useGSAP(

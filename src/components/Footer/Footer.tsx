@@ -1,20 +1,77 @@
-"use client";
 import {
   Box,
   Container,
   Flex,
   HStack,
   IconButton,
-  Image,
   Stack,
   Text,
+  Image,
 } from "@chakra-ui/react";
-import React from "react";
-import FootLink from "./FootLink";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaYoutube,
+  FaLinkedin,
+  FaGithub,
+  FaTelegram,
+} from "react-icons/fa";
+import { FooterNavigationGroup } from "./FooterNavigationGroup";
+import qs from "qs";
 import IlustrationImage from "./IlustrationImage";
 
-export default function Footer() {
+import type { GlobalSite } from "@/types/api/global";
+import type { SocialMedia } from "@/types/api/socialMedia";
+import type { IconType } from "react-icons";
+import type { ApiResponse } from "@/types/api/response/apiResponse";
+
+async function getGlobalSiteData(): Promise<ApiResponse<GlobalSite>> {
+  const query = qs.stringify({
+    populate: {
+      footer: {
+        populate: {
+          logo: {
+            populate: "*",
+          },
+          groups: {
+            populate: "*",
+          },
+        },
+      },
+    },
+  });
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/global?${query}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+type SocialMediaIcon = {
+  [key in SocialMedia["platform"]]: IconType;
+};
+
+const socialMediaIcon: SocialMediaIcon = {
+  youtube: FaYoutube,
+  facebook: FaFacebookF,
+  instagram: FaInstagram,
+  github: FaGithub,
+  telegram: FaTelegram,
+  linkedin: FaLinkedin,
+};
+
+export default async function Footer() {
+  const response = await getGlobalSiteData();
+  const footer = response.data.footer;
+
   return (
     <>
       <IlustrationImage />
@@ -87,7 +144,7 @@ export default function Footer() {
               spaceY="14"
             >
               <Image
-                src="/images/logo/pixel.png"
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${footer.logo.url}`}
                 alt="Pixel Space"
                 w={{
                   base: "28",
@@ -97,227 +154,107 @@ export default function Footer() {
                   xl: "40",
                 }}
               />
-              <Text
-                fontSize={{ base: "xs", sm: "xs", md: "sm" }}
-                fontWeight="normal"
-                fontFamily="heading"
-                lineHeight="1.6"
-                pr={{
-                  base: "0",
-                  sm: "4",
-                  md: "12",
-                  lg: "16",
-                  xl: "20",
-                }}
-                pb={{
-                  base: "6",
-                  sm: "8",
-                  md: "20",
-                  lg: "24",
-                  xl: "28",
-                }}
-              >
-                We are creative development with creative people ready to create
-                something.
-              </Text>
-              <HStack
-                gap={{ base: "3", sm: "3", md: "4" }}
-                mt={{
-                  base: "6",
-                  sm: "8",
-                  md: "16",
-                  lg: "18",
-                  xl: "20",
-                }}
-                display={{ base: "none", md: "flex" }}
-              >
-                <IconButton
-                  aria-label="Facebook"
-                  rounded="full"
-                  border="1px solid"
-                  borderColor="brand.text.white"
-                  color="brand.text.white"
-                  bg="transparent"
-                  size={{ base: "sm", sm: "md", md: "md" }}
-                  _hover={{
-                    bg: "brand.text.white",
-                    color: "brand.bg.green.forest",
+              {footer.message && (
+                <Text
+                  fontSize={{ base: "xs", sm: "xs", md: "sm" }}
+                  fontWeight="normal"
+                  fontFamily="heading"
+                  lineHeight="1.6"
+                  pr={{
+                    base: "0",
+                    sm: "4",
+                    md: "12",
+                    lg: "16",
+                    xl: "20",
+                  }}
+                  pb={{
+                    base: "6",
+                    sm: "8",
+                    md: "20",
+                    lg: "24",
+                    xl: "28",
                   }}
                 >
-                  <FaFacebookF />
-                </IconButton>
-                <IconButton
-                  aria-label="Instagram"
-                  rounded="full"
-                  border="1px solid"
-                  borderColor="brand.text.white"
-                  color="brand.text.white"
-                  bg="transparent"
-                  size={{ base: "sm", sm: "md", md: "md" }}
-                  _hover={{
-                    bg: "brand.text.white",
-                    color: "brand.bg.green.forest",
-                  }}
-                >
-                  <FaInstagram />
-                </IconButton>
-                <IconButton
-                  aria-label="YouTube"
-                  rounded="full"
-                  border="1px solid"
-                  borderColor="brand.text.white"
-                  color="brand.text.white"
-                  bg="transparent"
-                  size={{ base: "sm", sm: "md", md: "md" }}
-                  _hover={{
-                    bg: "brand.text.white",
-                    color: "brand.bg.green.forest",
-                  }}
-                >
-                  <FaYoutube />
-                </IconButton>
-              </HStack>
+                  {footer.message}
+                </Text>
+              )}
             </Box>
-            <Flex
-              direction="row"
-              gap={{
-                base: "4",
-                sm: "5",
-                md: "6",
-                lg: "7",
-                xl: "8",
-              }}
-              align="flex-start"
-              flexWrap={{ base: "wrap", md: "nowrap" }}
-            >
-              <FootLink
-                title="Lorem Ipsum"
-                links={[
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                ]}
-              />
 
-              <Box
-                w="0.5px"
-                h="auto"
-                ml={{
+            {footer.groups && (
+              <Flex
+                direction="row"
+                gap={{
                   base: "4",
-                  sm: "0",
-                  md: "0",
-                  lg: "6",
-                  xl: "14",
-                  "2xl": "32",
+                  sm: "5",
+                  md: "6",
+                  lg: "7",
+                  xl: "8",
                 }}
-                mb={{
-                  base: "0",
-                  sm: "0",
-                  md: "-8",
-                  lg: "-9",
-                  xl: "-10",
-                }}
-                bg="brand.text.white"
-                alignSelf="stretch"
-              />
+                align="flex-start"
+                flexWrap={{ base: "wrap", md: "nowrap" }}
+              >
+                {footer.groups.map((group, index) => (
+                  <Flex key={group.id}>
+                    <FooterNavigationGroup group={group} />
 
-              <FootLink
-                title="Lorem Ipsum"
-                links={[
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                ]}
-              />
-
-              <Box
-                w="0.5px"
-                h="auto"
-                ml={{
-                  base: "4",
-                  sm: "0",
-                  md: "0",
-                  lg: "6",
-                  xl: "14",
-                  "2xl": "32",
-                }}
-                mb={{
-                  base: "0",
-                  sm: "0",
-                  md: "-8",
-                  lg: "-9",
-                  xl: "-10",
-                }}
-                bg="brand.text.white"
-                alignSelf="stretch"
-              />
-
-              <FootLink
-                title="Lorem Ipsum"
-                links={[
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                  "Lorem Ipsum",
-                ]}
-              />
-            </Flex>
+                    {index + 1 !== footer.groups?.length && (
+                      <Box
+                        w="0.5px"
+                        h="auto"
+                        ml={{
+                          base: "4",
+                          sm: "0",
+                          md: "0",
+                          lg: "6",
+                          xl: "14",
+                          "2xl": "32",
+                        }}
+                        mb={{
+                          base: "0",
+                          sm: "0",
+                          md: "-8",
+                          lg: "-9",
+                          xl: "-10",
+                        }}
+                        bg="brand.text.white"
+                        alignSelf="stretch"
+                      />
+                    )}
+                  </Flex>
+                ))}
+              </Flex>
+            )}
           </Stack>
 
-          <HStack
-            gap={{ base: "3", sm: "3" }}
-            mt={{ base: "8", sm: "10" }}
-            justify="flex-start"
-            display={{ base: "flex", md: "none" }}
-          >
-            <IconButton
-              aria-label="Facebook"
-              rounded="full"
-              border="1px solid"
-              borderColor="brand.text.white"
-              color="brand.text.white"
-              bg="transparent"
-              size={{ base: "sm", sm: "md" }}
-              _hover={{
-                bg: "brand.text.white",
-                color: "brand.bg.green.forest",
-              }}
+          {footer.socialMedia && (
+            <HStack
+              gap={{ base: "3", sm: "3" }}
+              mt={{ base: "8", sm: "10" }}
+              justify="flex-start"
+              display={{ base: "flex", md: "none" }}
             >
-              <FaFacebookF />
-            </IconButton>
-            <IconButton
-              aria-label="Instagram"
-              rounded="full"
-              border="1px solid"
-              borderColor="brand.text.white"
-              color="brand.text.white"
-              bg="transparent"
-              size={{ base: "sm", sm: "md" }}
-              _hover={{
-                bg: "brand.text.white",
-                color: "brand.bg.green.forest",
-              }}
-            >
-              <FaInstagram />
-            </IconButton>
-            <IconButton
-              aria-label="YouTube"
-              rounded="full"
-              border="1px solid"
-              borderColor="brand.text.white"
-              color="brand.text.white"
-              bg="transparent"
-              size={{ base: "sm", sm: "md" }}
-              _hover={{
-                bg: "brand.text.white",
-                color: "brand.bg.green.forest",
-              }}
-            >
-              <FaYoutube />
-            </IconButton>
-          </HStack>
+              {footer.socialMedia.map((socialMedia) => {
+                const Icon = socialMediaIcon[socialMedia.platform];
+                return (
+                  <IconButton
+                    key={socialMedia.platform}
+                    rounded="full"
+                    border="1px solid"
+                    borderColor="brand.text.white"
+                    color="brand.text.white"
+                    bg="transparent"
+                    size={{ base: "sm", sm: "md" }}
+                    _hover={{
+                      bg: "brand.text.white",
+                      color: "brand.bg.green.forest",
+                    }}
+                  >
+                    <Icon />
+                  </IconButton>
+                );
+              })}
+            </HStack>
+          )}
         </Container>
       </Box>
     </>
