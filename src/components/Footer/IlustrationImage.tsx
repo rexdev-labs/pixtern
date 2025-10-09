@@ -3,7 +3,7 @@ import React from "react";
 
 export default function IlustrationImage() {
   return (
-    <Box position="relative" mt="20">
+    <Box position="relative" mt="24">
       {/* Blur */}
       <Box zIndex={1} position="absolute" bottom="0.5" w="100%">
         <Image
@@ -15,7 +15,7 @@ export default function IlustrationImage() {
         />
       </Box>
 
-      <Box position="relative" w="100%">
+      <Box position="relative" w="100%" overflow="hidden">
         {/* background ilustrasion */}
         <Box position="relative" zIndex={3}>
           <Image

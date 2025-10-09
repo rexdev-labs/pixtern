@@ -7,6 +7,8 @@ import {
   Stack,
   Text,
   Image,
+  Separator,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
 import {
   FaFacebookF,
@@ -16,6 +18,7 @@ import {
   FaGithub,
   FaTelegram,
 } from "react-icons/fa";
+import Link from "next/link";
 import { FooterNavigationGroup } from "./FooterNavigationGroup";
 import qs from "qs";
 import IlustrationImage from "./IlustrationImage";
@@ -130,7 +133,7 @@ export default async function Footer() {
         >
           <Stack
             direction={{ base: "column", md: "row" }}
-            justify="space-around"
+            justify="space-evenly"
             mb={{ base: "6", sm: "7", md: "8", lg: "9", xl: "10" }}
             gap={{
               base: "6",
@@ -164,9 +167,9 @@ export default async function Footer() {
                   fontFamily="heading"
                   lineHeight="1.6"
                   pr={{
-                    base: "0",
-                    sm: "4",
-                    md: "12",
+                    base: "20",
+                    sm: "16",
+                    md: "28",
                     lg: "16",
                     xl: "20",
                   }}
@@ -196,21 +199,30 @@ export default async function Footer() {
                   {footer.socialMedia.map((socialMedia) => {
                     const Icon = socialMediaIcon[socialMedia.platform];
                     return (
-                      <IconButton
+                      <ChakraLink
                         key={socialMedia.platform}
-                        rounded="full"
-                        border="1px solid"
-                        borderColor="brand.text.white"
-                        color="brand.text.white"
-                        bg="transparent"
-                        size={{ base: "sm", sm: "md" }}
-                        _hover={{
-                          bg: "brand.text.white",
-                          color: "brand.bg.green.forest",
-                        }}
+                        as="a"
+                        href={socialMedia.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        _hover={{ textDecoration: "none" }}
                       >
-                        <Icon />
-                      </IconButton>
+                        <IconButton
+                          rounded="full"
+                          border="1px solid"
+                          borderColor="brand.text.white"
+                          color="brand.text.white"
+                          bg="transparent"
+                          size={{ base: "sm", sm: "md" }}
+                          _hover={{
+                            bg: "brand.text.white",
+                            color: "brand.bg.green.forest",
+                          }}
+                          aria-label={`Follow us on ${socialMedia.platform}`}
+                        >
+                          <Icon />
+                        </IconButton>
+                      </ChakraLink>
                     );
                   })}
                 </HStack>
@@ -235,14 +247,15 @@ export default async function Footer() {
                     <FooterNavigationGroup group={group} />
 
                     {index + 1 !== footer.groups?.length && (
-                      <Box
+                      <Separator
+                        orientation="vertical"
                         w="0.5px"
                         h="auto"
                         ml={{
                           base: "4",
-                          sm: "0",
-                          md: "0",
-                          lg: "6",
+                          sm: "8",
+                          md: "10",
+                          lg: "10",
                           xl: "14",
                           "2xl": "32",
                         }}
@@ -273,21 +286,30 @@ export default async function Footer() {
               {footer.socialMedia.map((socialMedia) => {
                 const Icon = socialMediaIcon[socialMedia.platform];
                 return (
-                  <IconButton
+                  <ChakraLink
                     key={socialMedia.platform}
-                    rounded="full"
-                    border="1px solid"
-                    borderColor="brand.text.white"
-                    color="brand.text.white"
-                    bg="transparent"
-                    size={{ base: "sm", sm: "md" }}
-                    _hover={{
-                      bg: "brand.text.white",
-                      color: "brand.bg.green.forest",
-                    }}
+                    as="a"
+                    href={socialMedia.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    _hover={{ textDecoration: "none" }}
                   >
-                    <Icon />
-                  </IconButton>
+                    <IconButton
+                      rounded="full"
+                      border="1px solid"
+                      borderColor="brand.text.white"
+                      color="brand.text.white"
+                      bg="transparent"
+                      size={{ base: "sm", sm: "md" }}
+                      _hover={{
+                        bg: "brand.text.white",
+                        color: "brand.bg.green.forest",
+                      }}
+                      aria-label={`Follow us on ${socialMedia.platform}`}
+                    >
+                      <Icon />
+                    </IconButton>
+                  </ChakraLink>
                 );
               })}
             </HStack>

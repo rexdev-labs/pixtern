@@ -237,7 +237,7 @@ export default function DoSection({
               md: "container.md",
               lg: "container.lg",
             }}
-            px={{ base: "4", md: "6" }}
+            px={{ base: "4", md: "6", }}
           >
             <Flex
               justify="center"
@@ -299,7 +299,7 @@ export default function DoSection({
         <Box
           my={{ base: 8, md: 12, lg: 14 }}
           position="relative"
-          px={{ base: 10, sm: 24, md: 8, lg: 12 }}
+          px={{ base: 16, sm: 24, md: 8, lg: 12 }}
         >
           <Box
             position="absolute"

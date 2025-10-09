@@ -16,7 +16,7 @@ export function FooterNavigationGroup({
           xl: "xl",
           "2xl": "2xl",
         }}
-        mb="12"
+        mb={{ base: "4", md: "12"}}
         fontWeight="medium"
         textAlign="left"
       >
