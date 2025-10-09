@@ -45,6 +45,8 @@ export default function ProfileSection({
       gsap.set(".profile-card-right", { opacity: 0, x: 20, scale: 0.9 });
       gsap.set(".profile-card-left", { opacity: 0, x: -20, scale: 0.9 });
       gsap.set(".underline-profile", { opacity: 0, y: 50 });
+      gsap.set(".container-ballon", { opacity: 0, x: 20 });
+      gsap.set(".cloud", { opacity: 0, x: -20 });
 
       ScrollTrigger.create({
         trigger: ".title-profile",
@@ -217,29 +219,47 @@ export default function ProfileSection({
       gsap.set(".heading-left", { opacity: 0, y: 20 });
       gsap.set(".heading-right", { opacity: 0, y: 20 });
 
-      gsap.to(".ballon", {
-        y: -10,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
+      ScrollTrigger.create({
+        trigger: ".container-ballon",
+        start: "top 90%",
+        toggleActions: "play reverse play reverse",
+        animation: gsap
+          .timeline()
+          .to(".container-ballon", {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "sine.out",
+          })
+          .to(".container-ballon", {
+            y: -10,
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          })
       });
 
-      gsap.to(".cloud1", {
-        y: -10,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(".cloud2", {
-        y: 10,
-        x: -15,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
+      ScrollTrigger.create({
+        trigger: ".cloud",
+        start: "top 90%",
+        toggleActions: "play reverse play reverse",
+        animation: gsap
+          .timeline()
+          .to(".cloud", {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "sine.out",
+          })
+          .to(".cloud", {
+            y: 10,
+            x: -15,
+            duration: 4,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          }),
       });
     },
     {
@@ -484,9 +504,8 @@ export default function ProfileSection({
         px={{ base: "4", md: "10", lg: "20" }}
         mt={{ base: "4", md: "10", lg: "20" }}
       >
-        <Box ms={{ base: "14", md: "20", lg: "24" }}>
+        <Box ms={{ base: "14", md: "20", lg: "24" }} className="cloud">
           <Image
-            className="cloud2"
             src="/images/cloud/cloud2-profile.png"
             objectFit="cover"
             overflow="visible"
@@ -496,12 +515,12 @@ export default function ProfileSection({
         </Box>
 
         <Box
+          className="container-ballon"
           position="relative"
           w={{ base: "32", md: "40", lg: "48" }}
           h={{ base: "32", md: "40", lg: "48" }}
         >
           <Image
-            className="ballon"
             src="/images/float/ballon-profile.png"
             w={{ base: "32", md: "40", lg: "48" }}
             alt="ballon"
@@ -513,7 +532,6 @@ export default function ProfileSection({
           />
 
           <Image
-            className="cloud1"
             src="/images/cloud/cloud1-profile.png"
             w={{ base: "28", md: "32", lg: "40" }}
             alt="cloud1"
