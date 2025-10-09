@@ -47,7 +47,7 @@ export default function ProjectSection({
       gsap.set(".underline-project", { opacity: 0, y: 50 });
       gsap.set(".card-project-main", { opacity: 0, x: -50, scale: 0.9 });
       gsap.set(".card-list", { opacity: 0, y: -50, scale: 0.9 });
-      gsap.set(".star-project", { opacity: 0, scale: 0.9 });
+      gsap.set(".star-project", { opacity: 0, scale: 0.9, rotation: 0 });
       gsap.set(".button-project", { opacity: 0, scale: 0.9 });
 
       ScrollTrigger.create({
@@ -150,6 +150,14 @@ export default function ProjectSection({
               scale: 1,
               duration: 0.8,
               ease: "sine.out",
+              onComplete: () => {
+                gsap.to(".star-project", {
+                  rotation: 360,
+                  repeat: -1,
+                  duration: 8,
+                  ease: "linear",
+                });
+              },
             },
             "-=0.3"
           )
