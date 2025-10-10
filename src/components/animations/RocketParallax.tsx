@@ -28,7 +28,7 @@ export default function RocketParallax() {
         });
 
         tl.fromTo(".group1", { y: 100 }, { y: -1150, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 380 }, { y: -800, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 980 }, { y: -2000, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -45,14 +45,14 @@ export default function RocketParallax() {
           scrollTrigger: {
             trigger: parallaxRef.current,
             start: "top bottom",
-            end: "=+1000",
+            end: "bottom top",
             scrub: true,
             // markers: true,
           },
         });
 
-        tl.fromTo(".group1", { y: 2480 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 1650 }, { y: 800, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 480 }, { y: -1345, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 950 }, { y: -1900, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -75,8 +75,8 @@ export default function RocketParallax() {
           },
         });
 
-        tl.fromTo(".group1", { y: 1528 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 1100 }, { y: 700, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 728 }, { y: -545, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 700 }, { y: -100, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 12,
@@ -353,11 +353,11 @@ export default function RocketParallax() {
         position="absolute"
         top={{
           base: "70.5%",
-          sm: "68.5%",
-          md: "66%",
-          lg: "65%",
-          xl: "70%",
-          "2xl": "60%",
+          sm: "70.5%",
+          md: "40%",
+          lg: "30%",
+          xl: "30%",
+          "2xl": "30%",
         }}
         left={{
           base: "24%",
