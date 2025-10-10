@@ -266,7 +266,6 @@ export default function AboutSection({
     <Box
       id="about"
       py={{ base: 12, md: 20 }}
-      mt={{ base: 200, xl: 0 }}
       position="relative"
       overflow="hidden"
     >

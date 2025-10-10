@@ -22,14 +22,14 @@ export default function RocketParallax() {
           scrollTrigger: {
             trigger: parallaxRef.current,
             start: "top bottom",
-            end: "+=1700",
+            end: "bottom top",
             scrub: true,
             // markers: true,
           },
         });
 
-        tl.fromTo(".group1", { y: 3200 }, { y: -150, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 2380 }, { y: 600, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 100 }, { y: -1150, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 980 }, { y: -2000, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -46,14 +46,14 @@ export default function RocketParallax() {
           scrollTrigger: {
             trigger: parallaxRef.current,
             start: "top bottom",
-            end: "=+1000",
+            end: "bottom top",
             scrub: true,
             // markers: true,
           },
         });
 
-        tl.fromTo(".group1", { y: 2480 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 1650 }, { y: 800, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 480 }, { y: -1345, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 950 }, { y: -1900, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -76,8 +76,8 @@ export default function RocketParallax() {
           },
         });
 
-        tl.fromTo(".group1", { y: 1528 }, { y: 145, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 1100 }, { y: 700, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 728 }, { y: -545, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 700 }, { y: -100, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 12,
@@ -259,22 +259,21 @@ export default function RocketParallax() {
     <Box
       ref={parallaxRef}
       id="rocket-parallax"
-      position="absolute"
+      position="relative"
       top="0"
       left={0}
       w="100%"
-      h={{
-        base: "150vh",
-        sm: "150vh",
-        md: "160vh",
-        lg: "220vh",
-        xl: "220vh",
-        "2xl": "300vh",
-      }}
+      // h={{
+      //   base: "150vh",
+      //   sm: "150vh",
+      //   md: "160vh",
+      //   lg: "220vh",
+      //   xl: "220vh",
+      //   "2xl": "300vh",
+      // }}
       bg="transparent"
       pointerEvents="none"
       zIndex={20}
-      overflow="hidden"
     >
       {/* Group Cloud + Rocket */}
       <Box className="group1" position="absolute" top="0" w="100%">
@@ -355,11 +354,11 @@ export default function RocketParallax() {
         position="absolute"
         top={{
           base: "70.5%",
-          sm: "68.5%",
-          md: "66%",
-          lg: "65%",
-          xl: "70%",
-          "2xl": "60%",
+          sm: "70.5%",
+          md: "40%",
+          lg: "30%",
+          xl: "30%",
+          "2xl": "30%",
         }}
         left={{
           base: "24%",
