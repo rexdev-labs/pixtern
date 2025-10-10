@@ -6,7 +6,6 @@ import {
   Container,
   Flex,
   Heading,
-  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -16,6 +15,7 @@ import { splitTextFirst } from "@/utils/splitText";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { WhatWeDoCard } from "../cards/WhatWeDoCard";
+import { Image } from "@/components/Image";
 import gsap from "gsap";
 
 import type { WhatWeDoSection } from "@/types/api/homepage/whatWeDoSection";

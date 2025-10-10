@@ -13,7 +13,6 @@ export default function RocketParallax() {
 
   useGSAP(
     () => {
-      // ScrollTrigger.refresh();
       let mm = gsap.matchMedia();
 
       // Default
@@ -22,14 +21,14 @@ export default function RocketParallax() {
           scrollTrigger: {
             trigger: parallaxRef.current,
             start: "top bottom",
-            end: "+=1700",
+            end: "bottom top",
             scrub: true,
             // markers: true,
           },
         });
 
-        tl.fromTo(".group1", { y: 3200 }, { y: -150, ease: "none" }, 0);
-        tl.fromTo(".cloud-2", { y: 2380 }, { y: 600, ease: "none" }, 0);
+        tl.fromTo(".group1", { y: 100 }, { y: -1150, ease: "none" }, 0);
+        tl.fromTo(".cloud-2", { y: 380 }, { y: -800, ease: "none" }, 0);
 
         gsap.to(".rocket", {
           y: 15,
@@ -259,22 +258,21 @@ export default function RocketParallax() {
     <Box
       ref={parallaxRef}
       id="rocket-parallax"
-      position="absolute"
+      position="relative"
       top="0"
       left={0}
       w="100%"
-      h={{
-        base: "150vh",
-        sm: "150vh",
-        md: "160vh",
-        lg: "220vh",
-        xl: "220vh",
-        "2xl": "300vh",
-      }}
+      // h={{
+      //   base: "150vh",
+      //   sm: "150vh",
+      //   md: "160vh",
+      //   lg: "220vh",
+      //   xl: "220vh",
+      //   "2xl": "300vh",
+      // }}
       bg="transparent"
       pointerEvents="none"
       zIndex={20}
-      overflow="hidden"
     >
       {/* Group Cloud + Rocket */}
       <Box className="group1" position="absolute" top="0" w="100%">

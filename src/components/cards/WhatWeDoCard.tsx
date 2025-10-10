@@ -1,4 +1,5 @@
-import { Box, Card, Image } from "@chakra-ui/react";
+import { Box, Card } from "@chakra-ui/react";
+import { Image } from "@/components/Image";
 import type { Job } from "@/types/api/homepage/whatWeDoSection";
 
 export function WhatWeDoCard({ job }: Readonly<{ job: Job }>) {

@@ -1,9 +1,10 @@
 "use client";
 
-import { Box, Button, Container, Image, Flex } from "@chakra-ui/react";
+import { Box, Button, Container, Flex } from "@chakra-ui/react";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Image } from "../Image";
 import gsap from "gsap";
 
 import type { HeroSection } from "@/types/api/homepage/heroSection";
@@ -26,7 +27,7 @@ export default function HeroSection({ data }: Readonly<{ data: HeroSection }>) {
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: () => containerRef.current!.offsetHeight + "px bottom",
-      end: `+=200`,
+      end: `bottom`,
       pin: true,
       pinSpacing: false,
       anticipatePin: 1,
