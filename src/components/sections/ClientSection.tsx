@@ -1,8 +1,9 @@
 "use client";
 
-import { Box, Text, Image, Heading } from "@chakra-ui/react";
+import { Box, Text, Heading } from "@chakra-ui/react";
 import { ClientCard } from "../cards/ClientCard";
 import { useEffect, useRef } from "react";
+import { Image } from "../Image";
 import { gsap } from "gsap";
 
 import type { TestimonialSection } from "@/types/api/homepage/testimonialSection";

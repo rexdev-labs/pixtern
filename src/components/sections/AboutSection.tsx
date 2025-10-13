@@ -1,11 +1,12 @@
 "use client";
 
-import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
+import { Box, Container, Flex, Text } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
 import { useMemo, useRef } from "react";
 import { splitTextTwo } from "@/utils/splitText";
+import { Image } from "@/components/Image";
 
 import type { AboutSection } from "@/types/api/homepage/aboutSection";
 
@@ -266,7 +267,6 @@ export default function AboutSection({
     <Box
       id="about"
       py={{ base: 12, md: 20 }}
-      mt={{ base: 200, xl: 0 }}
       position="relative"
       overflow="hidden"
     >

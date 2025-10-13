@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import qs from "qs";
 
 import HeroSection from "@/components/sections/HeroSection";
@@ -93,22 +92,8 @@ export default async function Home() {
 
   return (
     <ScrollSmootherWrapper>
-      <Box
-        bg="brand.bg.black"
-        position="relative"
-        minH={{
-          base: "130vh",
-          sm: "130vh",
-          md: "135vh",
-          lg: "180vh",
-          xl: "210vh",
-          "2xl": "290vh",
-        }}
-        overflow="visible"
-      >
-        <HeroSection data={response.data.heroSection} />
-        <RocketParallax />
-      </Box>
+      <HeroSection data={response.data.heroSection} />
+      <RocketParallax />
 
       <AboutSection data={response.data.aboutSection} />
       <ProfileSection data={response.data.profileSection} />
