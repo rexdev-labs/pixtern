@@ -1,10 +1,11 @@
 "use client";
 
 import { splitTextFirst } from "@/utils/splitText";
-import { Box, Center, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { useMemo, useRef } from "react";
+import { Image } from "@/components/Image";
 import gsap from "gsap";
 
 import type { ProjectSection } from "@/types/api/homepage/projectSection";

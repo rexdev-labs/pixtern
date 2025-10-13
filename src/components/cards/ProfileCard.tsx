@@ -1,15 +1,16 @@
 "use client";
 
-import { Box, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Text, VStack } from "@chakra-ui/react";
 import { useRef } from "react";
+import { Image } from "@/components/Image";
 import gsap from "gsap";
 
 interface ProfileCardProps {
   name: string;
   charImage: string;
-  realImage?: string;
+  realImage: string;
   bg: string;
-  bgImage?: string;
+  bgImage: string;
   className?: string;
 }
 

@@ -1,3 +1,4 @@
+
 import "../styles/globals.css";
 import { Provider } from "@/components/ui/provider"
 import Navbar from "@/components/Navbar/NavBar";

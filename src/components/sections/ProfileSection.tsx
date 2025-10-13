@@ -6,7 +6,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -14,6 +13,7 @@ import { useMemo, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { splitTextFirst, splitTextTwo } from "@/utils/splitText";
+import { Image } from "@/components/Image";
 import ProfileCard from "../cards/ProfileCard";
 import gsap from "gsap";
 
