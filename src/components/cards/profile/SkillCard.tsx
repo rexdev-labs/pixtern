@@ -55,6 +55,7 @@ export default function SkillCard({ skillImage }: SkillCardProps) {
     <Box ref={containerRef}>
       <Box className="container-skill">
         <Heading
+          className="title-skill"
           mt="6"
           ms="4"
           mb="2"
