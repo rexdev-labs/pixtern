@@ -125,6 +125,6 @@ export default function IlustrationImage() {
           />
         </Box>
       </Box>
-    </Box>
-  );
+    </Box>
+  );
 }

@@ -61,6 +61,7 @@ const config = defineConfig({
                         blue: { value: "#0781E6" },
                         orange: { value: "#FF6E1D" },
                         green: { value: "#085029" },
+                        navy: { value: "#180930" },
                     },
                     btn: {
                         primary: { value: "#FFBF1C" },
