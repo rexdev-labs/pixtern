@@ -11,6 +11,7 @@ import {
   Box,
   Input,
   Popover,
+  Image,
 } from "@chakra-ui/react";
 import { MdSearch, MdMenu, MdClose } from "react-icons/md";
 import NextLink from "next/link";
@@ -56,8 +57,8 @@ export default function Navbar() {
     <HStack
       as="nav"
       w="100%"
-      px={6}
-      py={3}
+      px={{ base: "6" , md: "16"}}
+      py={{ base: "3" , md: "6"}}
       justify="space-between"
       align="center"
       position="fixed"
@@ -68,10 +69,10 @@ export default function Navbar() {
       bg={scrolled ? "rgba(0,0,0,0.4)" : "transparent"}
       backdropFilter={scrolled ? "blur(12px)" : "none"}
       borderBottom={scrolled ? "1px solid rgba(255,255,255,0.06)" : "none"}
-    >
+    > 
       {/* Logo */}
       <Link as={NextLink} href="/" maxW="120px" display="block">
-        <img src="/images/logo/pixel.png" alt="Pixel Logo" />
+        <Image src="/images/logo/pixel.png" alt="Pixel Logo" />
       </Link>
 
       {/* Menu desktop */}
