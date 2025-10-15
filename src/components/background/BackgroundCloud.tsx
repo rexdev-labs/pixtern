@@ -14,7 +14,7 @@ export default function BackgroundCloud({ children }: BackgroundCloudProps) {
         src="/images/cloud/cloudss.svg"
         alt="Cloud Left"
         position="absolute"
-        top={{ base: "20%", md: "15%", lg: "8%" }}
+        top={{ base: "40%", md: "15%", lg: "14%" }}
         left="0"
         w="100%"
         h="auto"

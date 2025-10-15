@@ -85,12 +85,10 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
       }
     });
 
-    // Animasi untuk floating images
     floatingImagesRef.current.forEach((img, index) => {
       if (img) {
-        const isQuote = index === 2 || index === 5; // Quote dan Quote2
+        const isQuote = index === 2 || index === 5; 
 
-        // Animasi muncul saat scroll
         gsap.fromTo(
           img,
           {
@@ -114,9 +112,7 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
           }
         );
 
-        // Animasi floating dan rotasi continuous (hanya untuk non-quote)
         if (!isQuote) {
-          // Animasi floating continuous
           gsap.to(img, {
             y: isMobile ? (index % 2 === 0 ? -8 : -10) : (index % 2 === 0 ? -15 : -20),
             duration: isMobile ? 1.5 + index * 0.2 : 2 + index * 0.3,
@@ -126,7 +122,6 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
             delay: index * 0.2,
           });
 
-          // Animasi rotasi continuous
           gsap.to(img, {
             rotation: isMobile ? (index % 2 === 0 ? 5 : -5) : (index % 2 === 0 ? 10 : -10),
             duration: isMobile ? 2.5 + index * 0.15 : 3 + index * 0.2,
