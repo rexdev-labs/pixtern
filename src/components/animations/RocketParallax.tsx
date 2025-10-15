@@ -262,14 +262,6 @@ export default function RocketParallax() {
       top="0"
       left={0}
       w="100%"
-      // h={{
-      //   base: "150vh",
-      //   sm: "150vh",
-      //   md: "160vh",
-      //   lg: "220vh",
-      //   xl: "220vh",
-      //   "2xl": "300vh",
-      // }}
       bg="transparent"
       pointerEvents="none"
       zIndex={20}

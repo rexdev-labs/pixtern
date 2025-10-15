@@ -5,11 +5,10 @@ export default function IlustrationImage() {
   return (
     <Box position="relative" mt="24">
       {/* Blur */}
-      <Box zIndex={1} position="absolute" bottom="0.5" w="100%">
+      <Box zIndex={1} position="absolute" bottom="-24%" w="100%" >
         <Image
           src="/images/ilust/blur.png"
           alt="Ilustration"
-          objectFit="cover"
           w="100%"
           h="auto"
         />
