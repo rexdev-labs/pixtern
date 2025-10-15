@@ -9,7 +9,11 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
-export default function QoutesCard() {
+interface QoutesCardProps {
+    quote: string,
+}
+
+export default function QoutesCard({ quote }: QoutesCardProps) {
     const quotesRef = useRef(null)
 
     useGSAP(() => {
@@ -92,6 +96,7 @@ export default function QoutesCard() {
         });
     },{ scope: quotesRef }
     );
+
     return (
         <Container ref={quotesRef} zIndex={30} maxW={{ md: "xl" }} px="8" my="20" position="relative">
             <Center>
