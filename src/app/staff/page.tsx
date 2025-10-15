@@ -65,6 +65,28 @@ export default function StaffPage() {
                         "-=0.8"
                     )
             });
+
+            // Animasi bird masuk dari kiri
+            gsap.utils.toArray<HTMLElement>(".bird-float").forEach((bird) => {
+                gsap.fromTo(
+                    bird,
+                    {
+                        x: -200,
+                        opacity: 0,
+                    },
+                    {
+                        x: 0,
+                        opacity: 1,
+                        duration: 1.5,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: bird,
+                            start: "top 90%",
+                            toggleActions: "play none none reverse",
+                        },
+                    }
+                );
+            });
         },
         {
             scope: containerRef,
@@ -159,9 +181,9 @@ export default function StaffPage() {
         },
     ];
 
-    return (    
+    return (
         <Box ref={containerRef} minH="120vh" display="flex" flexDirection="column">
-            
+
             <Box as="main" flex="1">
                 <Box
                     bgGradient="linear(to-br, blue.50, purple.50)"
