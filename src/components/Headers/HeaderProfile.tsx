@@ -8,6 +8,7 @@ import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin);
 
@@ -78,15 +79,17 @@ export default function HeaderProfile() {
       gap={{ base: 4, lg: 0 }}
     >
       <GridItem justifySelf="start">
-        <Icon
-          as={FaArrowLeft}
-          boxSize={8}
-          cursor="pointer"
-          className="button-back"
-        />
+        <Link href="/">
+          <Icon
+            as={FaArrowLeft}
+            boxSize={8}
+            cursor="pointer"
+            className="button-back"
+          />
+        </Link>
       </GridItem>
 
-      <GridItem justifySelf={{ base: "start", lg: "center" }}>
+      <GridItem justifySelf={{ base: "start", md: "center" }}>
         <Flex
           gap={2}
           justify="center"
@@ -97,14 +100,14 @@ export default function HeaderProfile() {
           <Heading
             className="scramble-first"
             fontFamily="bestime"
-            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+            fontSize={{ base: "xl", md: "3xl", lg: "4xl" }}
             fontWeight="light"
             color="brand.text.navy"
           />
           <Heading
             className="scramble-rest"
             fontFamily="bestime"
-            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+            fontSize={{ base: "xl", md: "3xl", lg: "4xl" }}
             fontWeight="light"
             color="brand.text.orange"
           />

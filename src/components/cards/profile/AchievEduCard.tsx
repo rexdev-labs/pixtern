@@ -8,14 +8,21 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function AchievEduCard() {
+interface AchievEduCardProps {
+  data: {
+    year: string;
+    institution: string;
+    detail?: string;
+  }[];
+}
+
+export default function AchievEduCard({ data }: AchievEduCardProps) {
   const containerRef = useRef(null);
 
   useGSAP(
     () => {
       gsap.set(".title-achiev", { opacity: 0, y: -50 });
-      gsap.set(".card-first", { opacity: 0, y: -50 });
-      gsap.set(".card-second", { opacity: 0, y: -50 });
+      gsap.set(".card-item", { opacity: 0, y: -50 });
 
       ScrollTrigger.create({
         trigger: ".card-achiev-card",
@@ -30,80 +37,42 @@ export default function AchievEduCard() {
             ease: "sine.out",
           })
           .to(
-            ".card-first",
+            ".card-item",
             {
               opacity: 1,
               y: 0,
               scale: 1,
               duration: 0.8,
               ease: "sine.out",
-            },
-            "-=0.3"
-          )
-          .to(
-            ".card-second",
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.8,
-              ease: "sine.out",
+              stagger: 0.2,
             },
             "-=0.3"
           ),
       });
     },
-    {
-      scope: containerRef,
-    }
+    { scope: containerRef }
   );
 
   return (
-    <>
-      <Box ref={containerRef}>
-        <Box className="card-achiev-card">
-          <Heading
-            className="title-achiev"
-            mx="2"
-            mb="3"
-            fontFamily="bestime"
-            fontWeight="lighter"
-            color="brand.text.navy"
-            fontSize="md"
-          >
-            Education / Achievement
-          </Heading>
-          <Flex direction="column" gap={3} w="full">
-            <Flex
-              className="card-first"
-              px="6"
-              py="4"
-              bg="white"
-              w="full"
-              alignItems="flex-start"
-              border="2.5px solid"
-              borderColor="brand.text.navy"
-              rounded="xl"
-              gap={8}
-              flexWrap="wrap"
-            >
-              <Text fontFamily="inter" fontWeight="bold" minW="fit-content">
-                2017
-              </Text>
-              <Text
-                fontFamily="inter"
-                fontWeight="bold"
-                display={{ base: "none", md: "block" }}
-              >
-                -
-              </Text>
-              <Text fontFamily="inter" fontWeight="bold">
-                SMA TRUNOYOYO 17 JAKARTA
-              </Text>
-            </Flex>
+    <Box ref={containerRef}>
+      <Box className="card-achiev-card">
+        <Heading
+          className="title-achiev"
+          mx="2"
+          mb="3"
+          fontFamily="bestime"
+          fontWeight="lighter"
+          color="brand.text.navy"
+          fontSize="md"
+        >
+          Education / Achievement
+        </Heading>
 
+        <Flex direction="column" gap={3} w="full">
+          {data.map((item, index) => (
             <Flex
-              className="card-second"
+              key={index}
+              className="card-item"
               px="6"
               py="4"
               bg="white"
@@ -112,12 +81,13 @@ export default function AchievEduCard() {
               border="2.5px solid"
               borderColor="brand.text.navy"
               rounded="xl"
-              gap={8}
-              flexWrap="wrap"
+              gap={{ base: 6, md: 8 }}
+              flexWrap="nowrap"
             >
               <Text fontFamily="inter" fontWeight="bold" minW="fit-content">
-                2021
+                {item.year}
               </Text>
+
               <Text
                 fontFamily="inter"
                 fontWeight="bold"
@@ -125,18 +95,21 @@ export default function AchievEduCard() {
               >
                 -
               </Text>
+
               <Box>
                 <Text fontFamily="inter" fontWeight="bold">
-                  UNIVERSITAS GADJAH MADA
+                  {item.institution}
                 </Text>
-                <Text fontFamily="inter" fontWeight="reguler" fontSize="sm">
-                  S1 Psikologi
-                </Text>
+                {item.detail && (
+                  <Text fontFamily="inter" fontWeight="regular" fontSize="sm">
+                    {item.detail}
+                  </Text>
+                )}
               </Box>
             </Flex>
-          </Flex>
-        </Box>
+          ))}
+        </Flex>
       </Box>
-    </>
+    </Box>
   );
 }

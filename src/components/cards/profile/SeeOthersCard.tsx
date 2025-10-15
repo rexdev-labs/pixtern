@@ -35,156 +35,135 @@ export default function SeeOthersCard() {
             x: 0,
             scale: 1,
             duration: 0.8,
-            stagger: {
-              amount: 0.8,
-              from: "start",
-            },
+            stagger: { amount: 0.8, from: "start" },
             ease: "back.out",
           }),
       });
     },
-    {
-      scope: containerRef,
-    }
+    { scope: containerRef }
   );
 
   return (
-    <>
-      <Box ref={containerRef}>
-        <Box className="container-others" my="20" px={{ base: "8", lg: "20" }} position="relative">
-          <Heading
-            className="title-others"
-            my="4"
-            ms="4"
-            fontFamily="bestime"
-            fontSize={{ base: "sm", md: "md", lg: "md" }}
-            fontWeight="light"
-            color="brand.text.navy"
+    <Box ref={containerRef} w="full" position="relative">
+      <Image
+        src="/images/float/BirdPurplePageProfile.png"
+        alt="Bird Purple"
+        position="absolute"
+        top="120%"
+        left="30%"
+        w={{ base: 10, sm: 12, md: 16, lg: 20, xl: 24 }}
+        h="auto"
+        zIndex={20}
+        display={{ base: "none", md: "block" }}
+      />
+
+      <Image
+        src="/images/float/BirdGreenPageProfile.png"
+        alt="Bird Green"
+        position="absolute"
+        top="120%"
+        right="30%"
+        w={{ base: 8, sm: 10, md: 12, lg: 16, xl: 20 }}
+        h="auto"
+        zIndex={20}
+        display={{ base: "none", md: "block" }}
+      />
+
+      <Box className="container-others" my="20" px={{ base: "8", lg: "20" }}>
+        <Heading
+          className="title-others"
+          my="4"
+          ms="4"
+          fontFamily="bestime"
+          fontSize={{ base: "sm", md: "md", lg: "md" }}
+          fontWeight="light"
+          color="brand.text.navy"
+        >
+          See Others
+        </Heading>
+
+        <Box overflowX="auto" overflowY="hidden">
+          <Flex
+            alignItems="center"
+            gap={{ base: 4, md: 8 }}
+            py="2"
+            className="cards-wrapper"
           >
-            See Others
-          </Heading>
-
-          <Box maxW="9xl" overflowX="auto" overflowY="hidden">
-            <Flex alignItems="center" gap={{ base: 4, md: 8 }} py="2">
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-              <ProfileCardSection
-                className="card-others"
-                name="Rexsi"
-                charImage="/images/char/rexsi.png"
-                realImage="/images/char/rexsiReal.png"
-                bg="0781E6"
-                bgImage="/images/char/bgRexsi.png"
-              />
-            </Flex>
-          </Box>
-        <Image
-          src="/images/float/BirdPurplePageProfile.png"
-          alt="Bird"
-          position="absolute"
-          w={{
-            base: 10,
-            sm: 12,
-            md: 16,
-            lg: 20,
-            xl: 24,
-          }}
-          h="auto"
-          top="120%"
-          left="30%"
-          zIndex={10}
-          display={{ base: "none", md: "flex" }}
-        />
-
-        <Image
-          src="/images/float/BirdGreenPageProfile.png"
-          alt="Bird"
-          position="absolute"
-          w={{
-            base: 8,
-            sm: 10,
-            md: 12,
-            lg: 16,
-            xl: 20,
-          }}
-          h="auto"
-          top="120%"
-          right="30%"
-          zIndex={10}
-          display={{ base: "none", md: "flex" }}
-        />
-      </Box>
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+            <ProfileCardSection
+              className="card-others"
+              name="Rexsi"
+              charImage="/images/char/rexsi.png"
+              realImage="/images/char/rexsiReal.png"
+              bg="0781E6"
+              bgImage="/images/char/bgRexsi.png"
+            />
+          </Flex>
         </Box>
-    </>
+      </Box>
+    </Box>
   );
 }

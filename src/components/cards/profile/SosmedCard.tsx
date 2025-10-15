@@ -22,7 +22,7 @@ export default function SosmedCard({
   useGSAP(
     () => {
       gsap.set(".title-sosmed", { opacity: 0, y: 50 });
-      gsap.set(".card-sosmed", { opacity: 0, x: 50, scale: 0.9 });
+      gsap.set(".card-sosmed", { opacity: 0, x: 20, scale: 0.9 });
 
       ScrollTrigger.create({
         trigger: ".container-sosmed",
@@ -80,7 +80,7 @@ export default function SosmedCard({
             className="card-sosmed"
           >
             <Box
-              px={{ base: "8", md: "6", lg: "8" }}
+              px={{ base: "3", md: "6", lg: "8" }}
               py="2"
               bg="white"
               border="2.5px solid"

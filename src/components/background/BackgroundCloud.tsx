@@ -9,7 +9,7 @@ interface BackgroundCloudProps {
 
 export default function BackgroundCloud({ children }: BackgroundCloudProps) {
   return (
-    <Box position="relative" w="100%">
+    <Box position="relative" w="full">
       <Image
         src="/images/cloud/cloudss.svg"
         alt="Cloud Left"

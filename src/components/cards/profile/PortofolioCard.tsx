@@ -20,7 +20,7 @@ export default function PortofolioCard({
   useGSAP(
     () => {
       gsap.set(".title-porto", { opacity: 0, y: 50 });
-      gsap.set(".card-porto", { opacity: 0, x: 50, scale: 0.9 });
+      gsap.set(".card-porto", { opacity: 0, x: 20, scale: 0.9 });
 
       ScrollTrigger.create({
         trigger: ".container-porto",
@@ -54,7 +54,7 @@ export default function PortofolioCard({
   );
 
   return (
-    <Box ref={containerRef}>
+    <Box ref={containerRef} w="full">
       <Box className="container-porto">
         <Heading
           className="title-porto"
@@ -68,13 +68,13 @@ export default function PortofolioCard({
           Mini Portofolio
         </Heading>
 
-        <Flex alignItems="center" gap={2} maxW="100%">
+        <Flex alignItems="center" gap={2} flexWrap="wrap">
           {portfolioImage.map((image, index) => (
             <Box
               key={index}
               className="card-porto"
-              w={{ base: "32", md: "35%", lg: "32%" }}
-              h={{ base: "24", md: "32", lg: "52" }}
+              w="31%"
+              h={{ base: "24", md: "28", lg: "52" }}
               bg="white"
               border="2.5px solid"
               borderColor="brand.text.navy"

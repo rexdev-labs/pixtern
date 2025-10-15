@@ -61,7 +61,7 @@ export default function ProfileCard({
   );
 
   return (
-    <Box ref={containerRef}>
+    <Box ref={containerRef} w="full">
       <Box
         className="card-profile-image"
         p="2"

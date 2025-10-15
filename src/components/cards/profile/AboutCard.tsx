@@ -10,7 +10,16 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin, SplitText);
 
-export default function () {
+interface AboutCardProps {
+  name: string,
+  fullName: string,
+  job: string,
+  desc: string,
+  ornamenFirst: string,
+  ornamenSecond: string
+}
+
+export default function AboutCard({ name, fullName, job, desc, ornamenFirst, ornamenSecond }: AboutCardProps) {
   const containerRef = useRef(null);
 
   useGSAP(
@@ -38,7 +47,7 @@ export default function () {
               {
                 duration: 1.2,
                 scrambleText: {
-                  text: "Jelita (Nama Lengkap)",
+                  text: `${name} (${fullName})`,
                   chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ()",
                   revealDelay: 0.4,
                   speed: 0.4,
@@ -118,15 +127,15 @@ export default function () {
               fontWeight="light"
               color="brand.text.navy"
             >
-              Jelita (Nama Lengkap)
+              {name} ({fullName})
             </Heading>
             <Text
               className="jobs"
               fontFamily="inter"
-              fontWeight="reguler"
+              fontWeight="normal"
               fontSize="sm"
             >
-              Illustrator, Employee
+              {job}
             </Text>
           </Box>
 
@@ -147,7 +156,7 @@ export default function () {
               mb="2"
               color="brand.text.navy"
             >
-              About Jelita
+              About {name}
             </Heading>
             <Box className="text-desc">
               <Text
@@ -156,19 +165,13 @@ export default function () {
                 fontWeight="medium"
                 fontSize="sm"
               >
-                Hai! I'm Jelita. Lorem Ipsum is simply dummy text of the
-                printing and typesetting industry. Lorem Ipsum has been the
-                industry&apos;s standard dummy text ever since the 1500s, when
-                an unknown printer took a galley of type and scrambled it to
-                make a type specimen book. It has survived not only five
-                centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged.
+                {desc}
               </Text>
             </Box>
 
             <Image
               className="ornamen-first"
-              src="/images/float/starYellow-profile.png"
+              src={ornamenFirst}
               objectFit="cover"
               w="14"
               position="absolute"
@@ -179,7 +182,7 @@ export default function () {
             />
             <Image
               className="ornamen-second"
-              src="/images/float/ornamen-profile.png"
+              src={ornamenSecond}
               objectFit="cover"
               w="16"
               position="absolute"

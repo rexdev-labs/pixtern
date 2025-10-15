@@ -1,6 +1,10 @@
 import { Box, Center, Container, Text } from "@chakra-ui/react";
 
-export default function QoutesCard() {
+interface QoutesCardProps {
+    quote: string,
+}
+
+export default function QoutesCard({ quote }: QoutesCardProps) {
     return (
         <Container zIndex={30} maxW={{ md: "xl"}} px="8" position="relative">
             <Center>
@@ -23,7 +27,7 @@ export default function QoutesCard() {
                     <Text
                         fontFamily="inter"
                     >
-                        "Kode tidak berbohong, komentar terkadang iya." 
+                        "{quote}"
                     </Text>
                 </Box>
                 <Box position="absolute" top="-12%" right="0">

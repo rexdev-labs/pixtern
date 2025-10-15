@@ -1,55 +1,31 @@
+import { notFound } from "next/navigation";
+import { profiles } from "@/data/profileData";
 import PortofolioCard from "@/components/cards/profile/PortofolioCard";
 import ProfileCard from "@/components/cards/profile/ProfileCard";
 import SkillCard from "@/components/cards/profile/SkillCard";
 import SosmedCard from "@/components/cards/profile/SosmedCard";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import HeaderProfile from "@/components/Headers/HeaderProfile";
 import AboutCard from "@/components/cards/profile/AboutCard";
 import AchievEduCard from "@/components/cards/profile/AchievEduCard";
-import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 import SeeOthersCard from "@/components/cards/profile/SeeOthersCard";
+import BackgroundCloud from "@/components/background/BackgroundCloud";
+import QoutesCard from "@/components/cards/QoutesCard";
 
-export default function Profile() {
-  const profileImage = {
-    realImage: "/images/char/JelitaReal.jpg",
-    charImage: "/images/char/lita.png",
-    charPosition: "left",
-    ornamenImage: "/images/float/starProfile.png",
-    ornamenPosition: "right",
-  };
+interface ProfilePageProps {
+  params: { slug: string };
+}
 
-  const sosmedImage = [
-    "/images/logo/instagram.png",
-    "/images/logo/facebook.png",
-    "/images/logo/discord.png",
-    "/images/logo/linkedin.png",
-  ];
+export default function ProfilePage({ params }: ProfilePageProps) {
+  const profile = profiles.find((p) => p.slug === params.slug);
 
-  const sosmedLink = [
-    "https://www.instagram.com/username",
-    "https://www.facebook.com/username",
-    "https://discord.gg/example",
-    "https://www.linkedin.com/in/username",
-  ];
-
-  const skillImage = [
-    "/images/logo/instagram.png",
-    "/images/logo/facebook.png",
-    "/images/logo/discord.png",
-    "/images/logo/linkedin.png",
-  ];
-
-  const portofolioImage = [
-    "/images/char/bgArya.png",
-    "/images/char/bgNabil.png",
-    "/images/char/bgFarel.png",
-  ];
+  if (!profile) return notFound();
 
   return (
-    // <ScrollSmootherWrapper>
-    <>
+    <BackgroundCloud>
       <HeaderProfile />
+
       <Container maxW="100%" px={{ base: "8", md: "8", lg: "20" }}>
         <Grid
           templateColumns={{ base: "1fr", md: "1fr 1fr", lg: "2fr 3fr" }}
@@ -57,29 +33,44 @@ export default function Profile() {
           rowGap={{ base: 8, md: 10, lg: 12 }}
         >
           <GridItem>
-            <ProfileCard {...profileImage} />
+            <ProfileCard
+              realImage={profile.realImage}
+              charImage={profile.charImage}
+              charPosition={profile.charPosition}
+              ornamenImage={profile.ornamenImage}
+              ornamenPosition={profile.ornamenPosition}
+            />
           </GridItem>
 
           <GridItem>
-            <AboutCard />
-            <SosmedCard sosmedImage={sosmedImage} sosmedLink={sosmedLink} />
+            <AboutCard
+              name={profile.name}
+              fullName={profile.fullName}
+              job={profile.job}
+              desc={profile.desc}
+              ornamenFirst={profile.ornamenFirst}
+              ornamenSecond={profile.ornamenSecond}
+            />
+            <SosmedCard
+              sosmedImage={profile.sosmedImage}
+              sosmedLink={profile.sosmedLink}
+            />
           </GridItem>
 
           <GridItem>
-            <AchievEduCard />
+            <AchievEduCard data={profile.achievEdu} />
           </GridItem>
 
           <GridItem>
-            <PortofolioCard portfolioImage={portofolioImage} />
-            <SkillCard skillImage={skillImage} />
+            <PortofolioCard portfolioImage={profile.portofolioImage} />
+            <SkillCard skillImage={profile.skillImage} />
           </GridItem>
         </Grid>
       </Container>
 
-      <SeeOthersCard/>
-
-      <Footer />
-    {/* </ScrollSmootherWrapper> */}
-      </>
+      <QoutesCard quote={profile.quote} />
+      <SeeOthersCard />
+      {/* <Footer /> */}
+    </BackgroundCloud>
   );
 }

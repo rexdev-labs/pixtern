@@ -18,7 +18,7 @@ export default function SkillCard({ skillImage }: SkillCardProps) {
   useGSAP(
     () => {
       gsap.set(".title-skill", { opacity: 0, y: 50 });
-      gsap.set(".card-skill", { opacity: 0, x: 50, scale: 0.9 });
+      gsap.set(".card-skill", { opacity: 0, x: 20, scale: 0.9 });
 
       ScrollTrigger.create({
         trigger: ".container-skill",
@@ -52,7 +52,7 @@ export default function SkillCard({ skillImage }: SkillCardProps) {
   );
 
   return (
-    <Box ref={containerRef}>
+    <Box ref={containerRef} w="full" mb="32">
       <Box className="container-skill">
         <Heading
           className="title-skill"
@@ -72,7 +72,7 @@ export default function SkillCard({ skillImage }: SkillCardProps) {
             <Box
               key={index}
               className="card-skill"
-              px={{ base: "8", md: "6", lg: "8" }}
+              px={{ base: "3", md: "6", lg: "8" }}
               py="2"
               bg="white"
               border="2.5px solid"
