@@ -1,4 +1,4 @@
-import type { SocialMedia } from "../socialMedia";
+import type { SocialMedia } from "@/types/api/socialMedia";
 
 export interface AboutPageResponse {
   about: string;

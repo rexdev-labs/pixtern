@@ -7,7 +7,7 @@ import Bird from "@/components/Bird";
 import PersonCard from "@/components/cards/PersonCard";
 
 import type { InternsData } from "@/types/api/response/staffPageResponse";
-import type { Intern } from "@/types/api/intern";
+import type { Intern } from "@/types/api/person/intern";
 
 function InternCards({ interns }: { interns: Intern[] }) {
   const internChunks = useMemo(

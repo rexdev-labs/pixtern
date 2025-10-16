@@ -1,12 +1,11 @@
 import type { StrapiImage } from "@/types/api/strapiImage";
 
-export interface Team {
-  id: number;
-  name: string;
-  fullName: string;
-  slug: string;
+export interface Detail {
+  aboutMe?: string;
+  role: string;
   backgroundColor: string;
   avatarImage: StrapiImage;
   profileImage: StrapiImage;
   profileBackground: StrapiImage;
+  portofolio: StrapiImage[];
 }

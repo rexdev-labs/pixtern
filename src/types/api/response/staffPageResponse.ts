@@ -1,6 +1,6 @@
-import type { Team } from "../team";
-import type { Intern } from "../intern";
-import type { Quotes } from "../quotes";
+import type { Team } from "@/types/api/person/team";
+import type { Intern } from "@/types/api/person/intern";
+import type { Quotes } from "@/types/api/quotes";
 
 export interface InternsData {
   id: number;

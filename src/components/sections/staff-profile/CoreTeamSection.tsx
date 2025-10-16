@@ -6,7 +6,7 @@ import PersonCard from "@/components/cards/PersonCard";
 import SubHeader from "@/components/header/SubHeader";
 import Bird from "@/components/Bird";
 
-import type { Team } from "@/types/api/team";
+import type { Team } from "@/types/api/person/team";
 import type { TeamData } from "@/types/api/response/staffPageResponse";
 
 function TeamCards({ teams }: Readonly<{ teams: Team[] }>) {

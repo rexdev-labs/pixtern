@@ -1,5 +1,5 @@
-import type { Intern } from "../intern";
-import type { Team } from "../team";
+import type { Intern } from "@/types/api/person/intern";
+import type { Team } from "@/types/api/person/team";
 
 export interface TeamSection {
   section: {
