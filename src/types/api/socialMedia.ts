@@ -1,4 +1,8 @@
+import type { StrapiImage } from "./strapiImage";
+
 export interface SocialMedia {
-    platform: 'youtube' | 'linkedin' | 'instagram' | 'telegram' | 'facebook' | 'github';
-    url: string;
+  id: string;
+  platform: string;
+  url: string;
+  icon: StrapiImage;
 }

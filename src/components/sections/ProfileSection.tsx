@@ -14,7 +14,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { splitTextFirst, splitTextTwo } from "@/utils/splitText";
 import { Image } from "@/components/Image";
-import ProfileCard from "../cards/ProfileCard";
+import PersonCard from "../cards/PersonCard";
 import gsap from "gsap";
 
 import type { ProfileSection } from "@/types/api/homepage/profileSection";
@@ -237,7 +237,7 @@ export default function ProfileSection({
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut",
-          })
+          }),
       });
 
       ScrollTrigger.create({
@@ -382,13 +382,13 @@ export default function ProfileSection({
                 justify="center"
               >
                 {data.teamSection.teams.slice(0, 2).map((character) => (
-                  <ProfileCard
+                  <PersonCard
                     key={character.id}
                     name={character.name}
-                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
-                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
-                    bg={character.backgroundColor}
-                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
+                    backgroundColor={character.backgroundColor}
+                    avatarImage={character.avatarImage}
+                    profileImage={character.profileImage}
+                    profileBackground={character.profileBackground}
                     className="profile-card-right"
                   />
                 ))}
@@ -399,13 +399,13 @@ export default function ProfileSection({
                 justify="center"
               >
                 {data.teamSection.teams.slice(2, 5).map((character) => (
-                  <ProfileCard
+                  <PersonCard
                     key={character.id}
                     name={character.name}
-                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
-                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
-                    bg={character.backgroundColor}
-                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
+                    backgroundColor={character.backgroundColor}
+                    avatarImage={character.avatarImage}
+                    profileImage={character.profileImage}
+                    profileBackground={character.profileBackground}
                     className="profile-card-right"
                   />
                 ))}
@@ -428,13 +428,13 @@ export default function ProfileSection({
                 justify="center"
               >
                 {data.internSection.interns.slice(0, 3).map((character) => (
-                  <ProfileCard
+                  <PersonCard
                     key={character.id}
                     name={character.name}
-                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
-                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
-                    bg={character.backgroundColor}
-                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
+                    backgroundColor={character.backgroundColor}
+                    avatarImage={character.avatarImage}
+                    profileImage={character.profileImage}
+                    profileBackground={character.profileBackground}
                     className="profile-card-left"
                   />
                 ))}
@@ -445,13 +445,13 @@ export default function ProfileSection({
                 justify="center"
               >
                 {data.internSection.interns.slice(3, 5).map((character) => (
-                  <ProfileCard
+                  <PersonCard
                     key={character.id}
                     name={character.name}
-                    charImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.avatarImage.url}`}
-                    realImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileImage.url}`}
-                    bg={character.backgroundColor}
-                    bgImage={`${process.env.NEXT_PUBLIC_BASE_URL}${character.profileBackground.url}`}
+                    backgroundColor={character.backgroundColor}
+                    avatarImage={character.avatarImage}
+                    profileImage={character.profileImage}
+                    profileBackground={character.profileBackground}
                     className="profile-card-left"
                   />
                 ))}

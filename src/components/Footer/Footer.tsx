@@ -10,22 +10,11 @@ import {
   Separator,
   Link as ChakraLink,
 } from "@chakra-ui/react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaYoutube,
-  FaLinkedin,
-  FaGithub,
-  FaTelegram,
-} from "react-icons/fa";
-import Link from "next/link";
 import { FooterNavigationGroup } from "./FooterNavigationGroup";
-import qs from "qs";
 import IlustrationImage from "./IlustrationImage";
+import qs from "qs";
 
 import type { GlobalSite } from "@/types/api/global";
-import type { SocialMedia } from "@/types/api/socialMedia";
-import type { IconType } from "react-icons";
 import type { ApiResponse } from "@/types/api/response/apiResponse";
 
 async function getGlobalSiteData(): Promise<ApiResponse<GlobalSite>> {
@@ -60,19 +49,6 @@ async function getGlobalSiteData(): Promise<ApiResponse<GlobalSite>> {
 
   return res.json();
 }
-
-type SocialMediaIcon = {
-  [key in SocialMedia["platform"]]: IconType;
-};
-
-const socialMediaIcon: SocialMediaIcon = {
-  youtube: FaYoutube,
-  facebook: FaFacebookF,
-  instagram: FaInstagram,
-  github: FaGithub,
-  telegram: FaTelegram,
-  linkedin: FaLinkedin,
-};
 
 export default async function Footer() {
   const response = await getGlobalSiteData();
@@ -197,7 +173,6 @@ export default async function Footer() {
                   display={{ base: "none", md: "flex" }}
                 >
                   {footer.socialMedia.map((socialMedia) => {
-                    const Icon = socialMediaIcon[socialMedia.platform];
                     return (
                       <ChakraLink
                         key={socialMedia.platform}
@@ -220,7 +195,6 @@ export default async function Footer() {
                           }}
                           aria-label={`Follow us on ${socialMedia.platform}`}
                         >
-                          <Icon />
                         </IconButton>
                       </ChakraLink>
                     );
@@ -284,7 +258,6 @@ export default async function Footer() {
               display={{ base: "flex", md: "none" }}
             >
               {footer.socialMedia.map((socialMedia) => {
-                const Icon = socialMediaIcon[socialMedia.platform];
                 return (
                   <ChakraLink
                     key={socialMedia.platform}
@@ -307,7 +280,6 @@ export default async function Footer() {
                       }}
                       aria-label={`Follow us on ${socialMedia.platform}`}
                     >
-                      <Icon />
                     </IconButton>
                   </ChakraLink>
                 );

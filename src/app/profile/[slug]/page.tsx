@@ -3,15 +3,15 @@ import { profiles } from "@/data/profileData";
 import PortofolioCard from "@/components/cards/profile/PortofolioCard";
 import ProfileCard from "@/components/cards/profile/ProfileCard";
 import SkillCard from "@/components/cards/profile/SkillCard";
-import SosmedCard from "@/components/cards/profile/SosmedCard";
+import SosmedCard from "@/components/cards/profile/SocialMediaCard";
 import Footer from "@/components/Footer/Footer";
-import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
-import HeaderProfile from "@/components/Headers/HeaderProfile";
+import { Container, Grid, GridItem } from "@chakra-ui/react";
+import HeaderProfile from "@/components/header/HeaderProfile";
 import AboutCard from "@/components/cards/profile/AboutCard";
 import AchievEduCard from "@/components/cards/profile/AchievEduCard";
 import SeeOthersCard from "@/components/cards/profile/SeeOthersCard";
 import BackgroundCloud from "@/components/background/BackgroundCloud";
-import QoutesCard from "@/components/cards/QoutesCard";
+import { QuotesCard } from "@/components/cards/QuotesCard";
 
 interface ProfilePageProps {
   params: { slug: string };
@@ -68,9 +68,9 @@ export default function ProfilePage({ params }: ProfilePageProps) {
         </Grid>
       </Container>
 
-      <QoutesCard quote={profile.quote} />
+      <QuotesCard quote={profile.quote} />
       <SeeOthersCard />
-      {/* <Footer /> */}
+      <Footer />
     </BackgroundCloud>
   );
 }

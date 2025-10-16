@@ -1,3 +1,5 @@
+"use client"
+
 import { Image as ChakraImage, type ImageProps } from "@chakra-ui/react";
 import type { RefAttributes } from "react";
 

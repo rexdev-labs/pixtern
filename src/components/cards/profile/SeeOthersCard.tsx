@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Flex, Heading, Image } from "@chakra-ui/react";
-import ProfileCardSection from "@/components/cards/ProfileCard";
+import ProfileCardSection from "@/components/cards/PersonCard";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";

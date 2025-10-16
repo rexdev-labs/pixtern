@@ -1,48 +1,48 @@
 "use client";
 
 import { Box, Text, VStack } from "@chakra-ui/react";
-import { useRef } from "react";
+import { HTMLAttributes, useRef } from "react";
 import { Image } from "@/components/Image";
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+
+import type { StrapiImage } from "@/types/api/strapiImage";
 
 interface ProfileCardProps {
   name: string;
-  charImage: string;
-  realImage: string;
-  bg: string;
-  bgImage: string;
-  className?: string;
-}
+  backgroundColor: string;
+  avatarImage: StrapiImage;
+  profileImage: StrapiImage;
+  profileBackground: StrapiImage;
+};
 
-export default function ProfileCard({
+export default function PersonCard({
   name,
-  charImage,
-  realImage,
-  bg,
-  bgImage,
+  backgroundColor,
+  avatarImage,
+  profileImage,
+  profileBackground,
   className,
-}: Readonly<ProfileCardProps>) {
+}: Readonly<ProfileCardProps & HTMLAttributes<HTMLDivElement>>) {
   const cardContainerRef = useRef(null);
 
-  const handleEnter = () => {
-    if (cardContainerRef.current) {
+  const { contextSafe } = useGSAP({}, { scope: cardContainerRef.current! });
+
+  const handleEnter = contextSafe(() => {
       gsap.to(cardContainerRef.current, {
         rotateY: 180,
         duration: 0.8,
         ease: "power2.inOut",
       });
-    }
-  };
+  });
 
-  const handleLeave = () => {
-    if (cardContainerRef.current) {
+  const handleLeave = contextSafe(() => {
       gsap.to(cardContainerRef.current, {
         rotateY: 0,
         duration: 0.8,
         ease: "power2.inOut",
       });
-    }
-  };
+  });
 
   return (
     <Box
@@ -71,7 +71,7 @@ export default function ProfileCard({
           style={{ backfaceVisibility: "hidden" }}
         >
           <VStack
-            bg={bg}
+            bg={backgroundColor}
             rounded={{ base: "xl", md: "2xl", lg: "2xl" }}
             shadow="md"
             border="2px solid"
@@ -83,7 +83,7 @@ export default function ProfileCard({
             alignItems="center"
           >
             <Image
-              src={charImage}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${avatarImage.url}`}
               alt={`${name} char`}
               boxSize={{ base: "126px", sm: "145px", md: "173px", lg: "250px" }}
               objectFit="cover"
@@ -125,7 +125,7 @@ export default function ProfileCard({
           }}
         >
           <VStack
-            backgroundImage={`url(${bgImage})`}
+            backgroundImage={`url(${process.env.NEXT_PUBLIC_BASE_URL}${profileBackground.url})`}
             backgroundSize={{ base: "107%", lg: "102%" }}
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
@@ -140,7 +140,7 @@ export default function ProfileCard({
             alignItems="center"
           >
             <Image
-              src={realImage}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${profileImage.url}`}
               alt={`${name} char`}
               boxSize={{ base: "107px", sm: "122px", md: "143px", lg: "211px" }}
               objectFit="cover"

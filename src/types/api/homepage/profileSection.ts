@@ -1,18 +1,12 @@
-export interface TeamOrIntern {
-  id: number;
-  name: string;
-  backgroundColor: string;
-  avatarImage: { url: string };
-  profileImage: { url: string };
-  profileBackground: { url: string };
-}
+import type { Intern } from "../intern";
+import type { Team } from "../team";
 
 export interface TeamSection {
   section: {
     title: string;
     description: string;
   };
-  teams: TeamOrIntern[];
+  teams: Team[];
 }
 
 export interface InternSection {
@@ -20,7 +14,7 @@ export interface InternSection {
     title: string;
     description: string;
   };
-  interns: TeamOrIntern[];
+  interns: Intern[];
 }
 
 export interface ProfileSection {
