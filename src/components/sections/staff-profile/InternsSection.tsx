@@ -25,10 +25,10 @@ function InternCards({ interns }: { interns: Intern[] }) {
         <PersonCard
           key={intern.id}
           name={intern.name}
-          backgroundColor={intern.backgroundColor}
-          avatarImage={intern.avatarImage}
-          profileImage={intern.profileImage}
-          profileBackground={intern.profileBackground}
+          backgroundColor={intern.detail!.backgroundColor}
+          avatarImage={intern.detail!.avatarImage}
+          profileImage={intern.detail!.profileImage}
+          profileBackground={intern.detail!.profileBackground}
         />
       ))}
     </Flex>

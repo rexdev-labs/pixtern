@@ -1,3 +1,4 @@
+import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import BackgroundCloud from "@/components/background/BackgroundCloud";
 import Footer from "@/components/Footer/Footer";
 import HeaderPixel from "@/components/header/HeaderPixel";
@@ -6,7 +7,6 @@ import ProfilePixel from "@/components/cards/pixel/ProfilePixel";
 import BirdPixel from "@/components/cards/pixel/BirdPixel";
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 import SocialMediaCard from "@/components/cards/profile/SocialMediaCard";
-import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import qs from "qs";
 
 import type { ApiResponse } from "@/types/api/response/apiResponse";

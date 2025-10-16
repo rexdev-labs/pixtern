@@ -1,5 +1,3 @@
-"use server";
-
 import { Box, Container, VStack } from "@chakra-ui/react";
 import CoreTeamSection from "@/components/sections/staff-profile/CoreTeamSection";
 import InternsSection from "@/components/sections/staff-profile/InternsSection";
@@ -17,14 +15,14 @@ async function getStaffData(): Promise<ApiResponse<StaffPageResponse>> {
       team: {
         populate: {
           teams: {
-            populate: "*",
+            populate: "detail",
           },
         },
       },
       interns: {
         populate: {
           interns: {
-            populate: "*",
+            populate: "detail",
           },
         },
       },
@@ -67,7 +65,7 @@ export default async function StaffPage() {
         </Box>
 
         {/* Core Team Section */}
-        {data.data.team && <CoreTeamSection teamData={data.data.team} />}
+        <CoreTeamSection teams={data.data.teams} />
 
         {/* Internship Team Section */}
         <VStack gap={12} alignItems="stretch">

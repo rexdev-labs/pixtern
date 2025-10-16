@@ -8,14 +8,9 @@ export interface InternsData {
   interns: Intern[];
 }
 
-export interface TeamData {
-  title: string;
-  teams?: Team[]
-}
-
 export interface StaffPageResponse {
   title: string;
-  team?: TeamData;
+  teams: Team[];
   interns: InternsData[];
   quotes?: Quotes;
 }

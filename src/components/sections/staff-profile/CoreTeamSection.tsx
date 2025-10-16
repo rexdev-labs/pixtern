@@ -7,7 +7,6 @@ import SubHeader from "@/components/header/SubHeader";
 import Bird from "@/components/Bird";
 
 import type { Team } from "@/types/api/person/team";
-import type { TeamData } from "@/types/api/response/staffPageResponse";
 
 function TeamCards({ teams }: Readonly<{ teams: Team[] }>) {
   const teamChunks = useMemo(
@@ -25,10 +24,10 @@ function TeamCards({ teams }: Readonly<{ teams: Team[] }>) {
         <PersonCard
           key={team.id}
           name={team.name}
-          backgroundColor={team.backgroundColor}
-          avatarImage={team.avatarImage}
-          profileImage={team.profileImage}
-          profileBackground={team.profileBackground}
+          backgroundColor={team.detail!.backgroundColor}
+          avatarImage={team.detail!.avatarImage}
+          profileImage={team.detail!.profileImage}
+          profileBackground={team.detail!.profileBackground}
         />
       ))}
     </Flex>
@@ -36,11 +35,11 @@ function TeamCards({ teams }: Readonly<{ teams: Team[] }>) {
 }
 
 export default function CoreTeamSection({
-  teamData,
-}: Readonly<{ teamData: TeamData }>) {
+  teams,
+}: Readonly<{ teams: Team[] }>) {
   return (
     <VStack py={{ base: 12, md: 16 }} px={4} gap={12} position="relative">
-      <SubHeader text={teamData.title} enableUnderline={true} />
+      <SubHeader text="Our Core Team" enableUnderline={true} />
 
       <Bird
         facing="right"
@@ -51,11 +50,9 @@ export default function CoreTeamSection({
         top="50%"
         left="10%"
       />
-      {teamData.teams && (
-        <VStack gap={{ base: 4, md: 6, lg: 8 }}>
-          <TeamCards teams={teamData.teams} />
-        </VStack>
-      )}
+      <VStack gap={{ base: 4, md: 6, lg: 8 }}>
+        <TeamCards teams={teams} />
+      </VStack>
     </VStack>
   );
 }

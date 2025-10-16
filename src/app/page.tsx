@@ -1,5 +1,3 @@
-import qs from "qs";
-
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import ProfileSection from "@/components/sections/ProfileSection";
@@ -7,8 +5,8 @@ import DoSection from "@/components/sections/DoSection";
 import ProjectSection from "@/components/sections/ProjectSection";
 import ClientSection from "@/components/sections/ClientSection";
 import RocketParallax from "@/components/animations/RocketParallax";
-
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
+import qs from "qs";
 
 import type { ApiResponse } from "@/types/api/response/apiResponse";
 import type { HomepageResponse } from "@/types/api/response/homepageResponse";
