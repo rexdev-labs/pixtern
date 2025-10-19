@@ -50,42 +50,43 @@ export default async function AboutPage() {
   const data = await getAboutPageData();
 
   return (
-    <ScrollSmootherWrapper>
-      <BackgroundCloud>
-        <Navbar />
+    <>
+      <Navbar />
+      <ScrollSmootherWrapper>
+        <BackgroundCloud>
+          <Box
+            position="relative"
+            pt={{ base: "80px", md: "100px" }}
+            pb="60px"
+            overflow="hidden"
+            zIndex={1}
+          >
+            <Container maxW="9xl" px="8" position="relative" zIndex={1}>
+              <Header
+                text="Tagline Pixel Space"
+                variant="single"
+                color="brand.text.blue"
+              />
+              <Grid
+                templateColumns={{ base: "1fr", md: "1fr 1fr", lg: "2fr 3fr" }}
+                gap="8"
+              >
+                <GridItem>
+                  <ProfilePixel />
+                </GridItem>
 
-        <Box
-          position="relative"
-          pt={{ base: "80px", md: "100px" }}
-          pb="60px"
-          overflow="hidden"
-          zIndex={1}
-        >
-          <Container maxW="9xl" px="8" position="relative" zIndex={1}>
-            <Header
-              text="Tagline Pixel Space"
-              variant="single"
-              color="brand.text.blue"
-            />
-            <Grid
-              templateColumns={{ base: "1fr", md: "1fr 1fr", lg: "2fr 3fr" }}
-              gap="8"
-            >
-              <GridItem>
-                <ProfilePixel />
-              </GridItem>
+                <GridItem>
+                  <AboutPixel />
+                  <SocialMediaCard socialMedia={data.data.socialMedia || []} />
+                </GridItem>
+              </Grid>
 
-              <GridItem>
-                <AboutPixel />
-                <SocialMediaCard socialMedia={data.data.socialMedia || []} />
-              </GridItem>
-            </Grid>
-
-            <BirdPixel />
-          </Container>
-        </Box>
-      </BackgroundCloud>
-      <Footer />
-    </ScrollSmootherWrapper>
+              <BirdPixel />
+            </Container>
+          </Box>
+        </BackgroundCloud>
+        <Footer />
+      </ScrollSmootherWrapper>
+    </>
   );
 }

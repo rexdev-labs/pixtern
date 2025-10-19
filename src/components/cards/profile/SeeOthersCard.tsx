@@ -52,7 +52,7 @@ export default function SeeOthersCard({
       <Bird
         variant="Purple"
         facing="right"
-        top="120%"
+        bottom="-100%"
         left="30%"
         w={{ base: 10, sm: 12, md: 16, lg: 20, xl: 24 }}
         h="auto"
@@ -65,7 +65,7 @@ export default function SeeOthersCard({
         variant="Green"
         facing="right"
         position="absolute"
-        top="120%"
+        bottom="-100%"
         right="30%"
         w={{ base: 8, sm: 10, md: 12, lg: 16, xl: 20 }}
         h="auto"

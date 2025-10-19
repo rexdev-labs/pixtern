@@ -41,18 +41,19 @@ export default async function Home() {
   const response = await getHomepageData();
 
   return (
-    <ScrollSmootherWrapper>
+    <>
       <Navbar />
+      <ScrollSmootherWrapper>
+        <HeroSection data={response.data.heroSection} />
+        <RocketParallax />
 
-      <HeroSection data={response.data.heroSection} />
-      <RocketParallax />
-
-      <AboutSection data={response.data.aboutSection} />
-      <ProfileSection data={response.data.profileSection} />
-      <DoSection data={response.data.whatWeDoSection} />
-      <ProjectSection data={response.data.projectSection} />
-      <ClientSection data={response.data.testimonialSection} />
-      <Footer />
-    </ScrollSmootherWrapper>
+        <AboutSection data={response.data.aboutSection} />
+        <ProfileSection data={response.data.profileSection} />
+        <DoSection data={response.data.whatWeDoSection} />
+        <ProjectSection data={response.data.projectSection} />
+        <ClientSection data={response.data.testimonialSection} />
+        <Footer />
+      </ScrollSmootherWrapper>
+    </>
   );
 }

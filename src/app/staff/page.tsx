@@ -38,34 +38,35 @@ export default async function StaffPage() {
   const data = await getStaffData();
 
   return (
-    <ScrollSmootherWrapper>
-      <Container as="main">
-        <Navbar />
+    <>
+      <Navbar />
+      <ScrollSmootherWrapper>
+        <Container as="main">
+          <Box
+            bgGradient="linear(to-br, blue.50, purple.50)"
+            py={{ base: 12, md: 20 }}
+            px={4}
+          >
+            <Header
+              text="Meet Our Creative Team"
+              variant="double"
+              color="brand.text.blue"
+            />
+          </Box>
 
-        <Box
-          bgGradient="linear(to-br, blue.50, purple.50)"
-          py={{ base: 12, md: 20 }}
-          px={4}
-        >
-          <Header
-            text="Meet Our Creative Team"
-            variant="double"
-            color="brand.text.blue"
-          />
-        </Box>
+          {/* Core Team Section */}
+          <CoreTeamSection teams={data.data.teams} />
 
-        {/* Core Team Section */}
-        <CoreTeamSection teams={data.data.teams} />
+          {/* Internship Team Section */}
+          <VStack gap={12} alignItems="stretch">
+            {data.data.interns.map((internData) => (
+              <InternsSection key={internData.id} internData={internData} />
+            ))}
+          </VStack>
+        </Container>
 
-        {/* Internship Team Section */}
-        <VStack gap={12} alignItems="stretch">
-          {data.data.interns.map((internData) => (
-            <InternsSection key={internData.id} internData={internData} />
-          ))}
-        </VStack>
-      </Container>
-
-      <Footer />
-    </ScrollSmootherWrapper>
+        <Footer />
+      </ScrollSmootherWrapper>
+    </>
   );
 }
