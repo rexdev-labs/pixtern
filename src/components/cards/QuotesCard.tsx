@@ -6,11 +6,9 @@ import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
-interface QoutesCardProps {
-  quote: string;
-}
+import type { Quotes } from "@/types/api/quotes";
 
-export function QuotesCard({ quote }: QoutesCardProps) {
+export default function QuotesCard({ quotes }: Readonly<{ quotes: Quotes }>) {
   const quotesRef = useRef(null);
 
   useGSAP(
@@ -125,7 +123,7 @@ export function QuotesCard({ quote }: QoutesCardProps) {
           }}
         >
           <Text className="heading-quotes" fontFamily="inter">
-            {quote}
+            {quotes.quotes}
           </Text>
         </Box>
         <Box position="absolute" top="-12%" right="0">
@@ -146,7 +144,7 @@ export function QuotesCard({ quote }: QoutesCardProps) {
             rounded="full"
             textAlign="center"
           >
-            <Text fontFamily="cursive">2025</Text>
+            <Text fontFamily="cursive">{quotes.year}</Text>
           </Box>
 
           <Box

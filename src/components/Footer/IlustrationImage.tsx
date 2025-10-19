@@ -1,11 +1,11 @@
-import { Box, Image } from "@chakra-ui/react";
-import React from "react";
+import { Box } from "@chakra-ui/react";
+import { Image } from "@/components/Image";
 
 export default function IlustrationImage() {
   return (
     <Box position="relative" mt="24">
       {/* Blur */}
-      <Box zIndex={1} position="absolute" bottom="-24%" w="100%" >
+      <Box zIndex={1} position="absolute" bottom="-24%" w="100%">
         <Image
           src="/images/ilust/blur.png"
           alt="Ilustration"
@@ -124,6 +124,6 @@ export default function IlustrationImage() {
           />
         </Box>
       </Box>
-    </Box>
-  );
+    </Box>
+  );
 }

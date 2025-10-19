@@ -7,6 +7,7 @@ import { SplitText, ScrollTrigger } from "gsap/all";
 import { useMemo, useRef } from "react";
 import { splitTextTwo } from "@/utils/splitText";
 import { Image } from "@/components/Image";
+import Bird from "@/components/Bird";
 
 import type { AboutSection } from "@/types/api/homepage/aboutSection";
 
@@ -14,126 +15,135 @@ export default function AboutSection({
   data,
 }: Readonly<{ data: AboutSection }>) {
   const aboutRef = useRef(null);
-  const [splitFirst, rest] = useMemo(() => splitTextTwo(data.title), [data.title]);
+  const [splitFirst, rest] = useMemo(
+    () => splitTextTwo(data.title),
+    [data.title]
+  );
 
   useGSAP(
-    () => {
-      document.fonts.ready.then(() => {
-        const titleSplit = new SplitText(".title", {
-          type: "chars,words",
-        });
+    (context, contextSafe) => {
+      document.fonts.ready.then(
+        contextSafe!(() => {
+          const titleSplit = new SplitText(".title", {
+            type: "chars,words",
+          });
 
-        gsap.set(titleSplit.chars, { opacity: 0, y: 100, rotationX: 90 });
+          gsap.set(titleSplit.chars, { opacity: 0, y: 100, rotationX: 90 });
 
-        ScrollTrigger.create({
-          trigger: ".title",
-          start: "top 75%",
-          end: "bottom top",
-          toggleActions: "play reverse play reverse",
-          animation: gsap
-            .timeline()
-            .to(titleSplit.chars, {
-              opacity: 1,
-              y: 0,
-              rotationX: 0,
-              duration: 0.8,
-              stagger: {
-                amount: 1.2,
-                from: "center",
-                ease: "back.out(2)",
-              },
-              ease: "back.out(1.7)",
-            })
-            .to(
-              titleSplit.words,
-              {
+          ScrollTrigger.create({
+            trigger: ".title",
+            start: "top 75%",
+            end: "bottom top",
+            toggleActions: "play reverse play reverse",
+            animation: gsap
+              .timeline()
+              .to(titleSplit.chars, {
+                opacity: 1,
+                y: 0,
                 rotationX: 0,
+                duration: 0.8,
+                stagger: {
+                  amount: 1.2,
+                  from: "center",
+                  ease: "back.out(2)",
+                },
+                ease: "back.out(1.7)",
+              })
+              .to(
+                titleSplit.words,
+                {
+                  rotationX: 0,
+                  duration: 0.6,
+                  stagger: 0.1,
+                  ease: "power2.out",
+                },
+                "-=0.5"
+              ),
+          });
+
+          const mainTitleSplit = new SplitText(".main-title", {
+            type: "chars,words,lines",
+          });
+
+          gsap.set(mainTitleSplit.chars, {
+            opacity: 0,
+            y: 50,
+            rotationY: 90,
+            scale: 0.5,
+          });
+
+          ScrollTrigger.create({
+            trigger: ".main-title",
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play reverse play reverse",
+            animation: gsap
+              .timeline()
+              .to(mainTitleSplit.lines, {
+                opacity: 1,
+                duration: 0.1,
+              })
+              .to(mainTitleSplit.chars, {
+                opacity: 1,
+                y: 0,
+                rotationY: 0,
+                scale: 1,
                 duration: 0.6,
-                stagger: 0.1,
-                ease: "power2.out",
-              },
-              "-=0.5"
-            ),
-        });
+                stagger: {
+                  amount: 1.5,
+                  from: "start",
+                  ease: "power2.out",
+                },
+                ease: "back.out(1.2)",
+              })
+              .to(
+                mainTitleSplit.words,
+                {
+                  rotationX: 0,
+                  duration: 0.4,
+                  stagger: 0.1,
+                },
+                "-=1"
+              ),
+          });
 
-        const mainTitleSplit = new SplitText(".main-title", {
-          type: "chars,words,lines",
-        });
+          /* About Description */
+          const descriptionSplit = new SplitText(".main-description", {
+            type: "words,lines",
+          });
 
-        gsap.set(mainTitleSplit.chars, {
-          opacity: 0,
-          y: 50,
-          rotationY: 90,
-          scale: 0.5,
-        });
+          gsap.set(descriptionSplit.words, {
+            opacity: 0,
+            y: 30,
+            rotationX: 45,
+          });
 
-        ScrollTrigger.create({
-          trigger: ".main-title",
-          start: "top 85%",
-          end: "bottom 15%",
-          toggleActions: "play reverse play reverse",
-          animation: gsap
-            .timeline()
-            .to(mainTitleSplit.lines, {
-              opacity: 1,
-              duration: 0.1,
-            })
-            .to(mainTitleSplit.chars, {
-              opacity: 1,
-              y: 0,
-              rotationY: 0,
-              scale: 1,
-              duration: 0.6,
-              stagger: {
-                amount: 1.5,
-                from: "start",
-                ease: "power2.out",
-              },
-              ease: "back.out(1.2)",
-            })
-            .to(
-              mainTitleSplit.words,
-              {
+          ScrollTrigger.create({
+            trigger: ".main-description",
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play reverse play reverse",
+            animation: gsap
+              .timeline()
+              .to(descriptionSplit.lines, {
+                opacity: 1,
+                duration: 0.1,
+              })
+              .to(descriptionSplit.words, {
+                opacity: 1,
+                y: 0,
                 rotationX: 0,
                 duration: 0.4,
-                stagger: 0.1,
-              },
-              "-=1"
-            ),
-        });
-
-        /* About Description */
-        const descriptionSplit = new SplitText(".main-description", {
-          type: "words,lines",
-        });
-
-        gsap.set(descriptionSplit.words, { opacity: 0, y: 30, rotationX: 45 });
-
-        ScrollTrigger.create({
-          trigger: ".main-description",
-          start: "top 85%",
-          end: "bottom 15%",
-          toggleActions: "play reverse play reverse",
-          animation: gsap
-            .timeline()
-            .to(descriptionSplit.lines, {
-              opacity: 1,
-              duration: 0.1,
-            })
-            .to(descriptionSplit.words, {
-              opacity: 1,
-              y: 0,
-              rotationX: 0,
-              duration: 0.4,
-              stagger: {
-                amount: 2,
-                from: "start",
-                ease: "power1.out",
-              },
-              ease: "power2.out",
-            }),
-        });
-      });
+                stagger: {
+                  amount: 2,
+                  from: "start",
+                  ease: "power1.out",
+                },
+                ease: "power2.out",
+              }),
+          });
+        })
+      );
 
       gsap.set(".ampersand", { opacity: 0, scale: 0, rotation: 360 });
       gsap.set(".box-title", {
@@ -142,8 +152,6 @@ export default function AboutSection({
         rotationY: 45,
         scale: 0.8,
       });
-      gsap.set(".main-bird", { opacity: 0, scale: 0, rotation: 180 });
-      gsap.set(".bird", { opacity: 0, scale: 0, rotation: 180 });
 
       gsap.set(".character", {
         opacity: 0,
@@ -187,36 +195,6 @@ export default function AboutSection({
           duration: 1,
           stagger: 0.3,
           ease: "back.out(1.7)",
-        }),
-      });
-
-      ScrollTrigger.create({
-        trigger: ".bird",
-        start: "top 80%",
-        end: "bottom 15%",
-        toggleActions: "play reverse play reverse",
-        animation: gsap.to(".bird", {
-          opacity: 1,
-          scale: 1,
-          rotation: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: "back.out(2)",
-        }),
-      });
-
-      ScrollTrigger.create({
-        trigger: ".main-bird",
-        start: "top 80%",
-        end: "bottom 15%",
-        toggleActions: "play reverse play reverse",
-        animation: gsap.to(".main-bird", {
-          opacity: 1,
-          scale: 1,
-          rotation: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: "back.out(2)",
         }),
       });
 
@@ -291,8 +269,17 @@ export default function AboutSection({
         </Flex>
 
         <Flex justify="center" alignItems="center" mt={6} position="relative">
-          <Box
-            className="bird"
+          <Bird
+            facing="left"
+            variant="Green"
+            animation="popup"
+            w={{
+              base: "46px",
+              sm: "60px",
+              md: "80px",
+              lg: "100px",
+            }}
+            h="auto"
             position="absolute"
             right={{ base: "4%", md: "8%", lg: "15%" }}
             bottom={{
@@ -301,21 +288,11 @@ export default function AboutSection({
               lg: "50%",
             }}
             zIndex={20}
-          >
-            <Image
-              src="/images/float/BirdGreen.png"
-              alt="Bird"
-              w={{
-                base: "46px",
-                sm: "60px",
-                md: "80px",
-                lg: "100px",
-              }}
-              h="auto"
-            />
-          </Box>
-          <Box
-            className="bird"
+          />
+          <Bird
+            facing="right"
+            variant="Purple"
+            animation="popup"
             position="absolute"
             left={{
               base: "2%",
@@ -324,19 +301,14 @@ export default function AboutSection({
             }}
             bottom="83%"
             zIndex={20}
-          >
-            <Image
-              src="/images/float/BirdPurple.png"
-              alt="Bird"
-              w={{
-                base: "46px",
-                sm: "60px",
-                md: "80px",
-                lg: "100px",
-              }}
-              h="auto"
-            />
-          </Box>
+            w={{
+              base: "46px",
+              sm: "60px",
+              md: "80px",
+              lg: "100px",
+            }}
+            h="auto"
+          />
 
           <Text
             className="ampersand"
@@ -424,24 +396,21 @@ export default function AboutSection({
           position="relative"
           h={{ base: "80px", md: "120px" }}
         >
-          <Box
-            className="main-bird"
+          <Bird
+            facing="left"
+            variant="Purple"
+            animation="popup"
             position="absolute"
             right="34%"
             bottom="10%"
-          >
-            <Image
-              src="/images/float/BirdPurple2.png"
-              alt="Bird"
-              w={{
-                base: "40px",
-                sm: "55px",
-                md: "70px",
-                lg: "75px",
-              }}
-              h="auto"
-            />
-          </Box>
+            w={{
+              base: "40px",
+              sm: "55px",
+              md: "70px",
+              lg: "75px",
+            }}
+            h="auto"
+          />
         </Flex>
 
         <Flex

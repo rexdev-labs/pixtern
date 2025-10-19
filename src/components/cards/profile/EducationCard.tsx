@@ -2,26 +2,21 @@
 
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { useRef } from "react";
-import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger);
+import type { Education } from "@/types/api/person/education";
 
-interface AchievEduCardProps {
-  data: {
-    year: string;
-    institution: string;
-    detail?: string;
-  }[];
-}
-
-export default function AchievEduCard({ data }: AchievEduCardProps) {
+export default function AchievEduCard({
+  educations,
+}: Readonly<{ educations: Education[] }>) {
   const containerRef = useRef(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   useGSAP(
     () => {
-      gsap.set(".title-achiev", { opacity: 0, y: -50 });
+      gsap.set(titleRef.current, { opacity: 0, y: -50 });
       gsap.set(".card-item", { opacity: 0, y: -50 });
 
       ScrollTrigger.create({
@@ -30,7 +25,7 @@ export default function AchievEduCard({ data }: AchievEduCardProps) {
         toggleActions: "play reverse play reverse",
         animation: gsap
           .timeline()
-          .to(".title-achiev", {
+          .to(titleRef.current, {
             opacity: 1,
             y: 0,
             duration: 0.8,
@@ -57,7 +52,7 @@ export default function AchievEduCard({ data }: AchievEduCardProps) {
     <Box ref={containerRef}>
       <Box className="card-achiev-card">
         <Heading
-          className="title-achiev"
+          ref={titleRef}
           mx="2"
           mb="3"
           fontFamily="bestime"
@@ -69,7 +64,7 @@ export default function AchievEduCard({ data }: AchievEduCardProps) {
         </Heading>
 
         <Flex direction="column" gap={3} w="full">
-          {data.map((item, index) => (
+          {educations.map((education, index) => (
             <Flex
               key={index}
               className="card-item"
@@ -85,7 +80,7 @@ export default function AchievEduCard({ data }: AchievEduCardProps) {
               flexWrap="nowrap"
             >
               <Text fontFamily="inter" fontWeight="bold" minW="fit-content">
-                {item.year}
+                {education.startYear}
               </Text>
 
               <Text
@@ -98,13 +93,11 @@ export default function AchievEduCard({ data }: AchievEduCardProps) {
 
               <Box>
                 <Text fontFamily="inter" fontWeight="bold">
-                  {item.institution}
+                  {education.insitutionName}
                 </Text>
-                {item.detail && (
-                  <Text fontFamily="inter" fontWeight="regular" fontSize="sm">
-                    {item.detail}
-                  </Text>
-                )}
+                <Text fontFamily="inter" fontWeight="regular" fontSize="sm">
+                  {education.fieldOfStudy}
+                </Text>
               </Box>
             </Flex>
           ))}

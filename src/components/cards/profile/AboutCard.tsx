@@ -1,29 +1,35 @@
 "use client";
 
 import { Box, Heading, Image, Text } from "@chakra-ui/react";
-import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin, SplitText);
+import type { StrapiImage } from "@/types/api/strapiImage";
 
 interface AboutCardProps {
-  name: string,
-  fullName: string,
-  job: string,
-  desc: string,
-  ornamenFirst: string,
-  ornamenSecond: string
+  name: string;
+  fullName: string;
+  aboutMe: string;
+  role: string;
+  aboutUsFirstOrnament?: StrapiImage;
+  aboutUsSecondOrnament?: StrapiImage;
 }
 
-export default function AboutCard({ name, fullName, job, desc, ornamenFirst, ornamenSecond }: AboutCardProps) {
+export default function AboutCard({
+  name,
+  fullName,
+  aboutMe,
+  role,
+  aboutUsFirstOrnament,
+  aboutUsSecondOrnament,
+}: Readonly<AboutCardProps>) {
   const containerRef = useRef(null);
 
   useGSAP(
-    () => {
+    (context, contextSafe) => {
       const splitDesc = new SplitText(".text-desc .split-paragraph", {
         type: "lines",
       });
@@ -35,81 +41,83 @@ export default function AboutCard({ name, fullName, job, desc, ornamenFirst, orn
       gsap.set(".ornamen-first", { opacity: 0, y: 50, scale: 0.9 });
       gsap.set(".ornamen-second", { opacity: 0, y: 50, scale: 0.9 });
 
-      document.fonts?.ready?.then(() => {
-        ScrollTrigger.create({
-          trigger: ".card-about-team",
-          start: "top 95%",
-          toggleActions: "play reverse play reverse",
-          animation: gsap
-            .timeline()
-            .to(
-              ".scramble-name",
-              {
-                duration: 1.2,
-                scrambleText: {
-                  text: `${name} (${fullName})`,
-                  chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ()",
-                  revealDelay: 0.4,
-                  speed: 0.4,
+      document.fonts?.ready?.then(
+        contextSafe!(() => {
+          ScrollTrigger.create({
+            trigger: ".card-about-team",
+            start: "top 95%",
+            toggleActions: "play reverse play reverse",
+            animation: gsap
+              .timeline()
+              .to(
+                ".scramble-name",
+                {
+                  duration: 1.2,
+                  scrambleText: {
+                    text: `${name} (${fullName})`,
+                    chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ()",
+                    revealDelay: 0.4,
+                    speed: 0.4,
+                  },
                 },
-              },
-              "-=0.4"
-            )
-            .to(
-              ".jobs",
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "sine.out",
-              },
-              "-=0.4"
-            )
-            .to(
-              ".text-about",
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "sine.out",
-              },
-              "-=0.4"
-            )
-            .to(
-              splitDesc.lines,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: "power2.out",
-              },
-              "-=0.4"
-            )
-            .to(
-              ".ornamen-first",
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.8,
-                ease: "sine.out",
-              },
-              "-=0.4"
-            )
-            .to(
-              ".ornamen-second",
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.8,
-                ease: "sine.out",
-              },
-              "-=0.4"
-            ),
-        });
-      });
+                "-=0.4"
+              )
+              .to(
+                ".jobs",
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.8,
+                  ease: "sine.out",
+                },
+                "-=0.4"
+              )
+              .to(
+                ".text-about",
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.8,
+                  ease: "sine.out",
+                },
+                "-=0.4"
+              )
+              .to(
+                splitDesc.lines,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.5,
+                  stagger: 0.1,
+                  ease: "power2.out",
+                },
+                "-=0.4"
+              )
+              .to(
+                ".ornamen-first",
+                {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.8,
+                  ease: "sine.out",
+                },
+                "-=0.4"
+              )
+              .to(
+                ".ornamen-second",
+                {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.8,
+                  ease: "sine.out",
+                },
+                "-=0.4"
+              ),
+          });
+        })
+      );
     },
     {
       scope: containerRef,
@@ -135,7 +143,7 @@ export default function AboutCard({ name, fullName, job, desc, ornamenFirst, orn
               fontWeight="normal"
               fontSize="sm"
             >
-              {job}
+              {role}
             </Text>
           </Box>
 
@@ -165,32 +173,37 @@ export default function AboutCard({ name, fullName, job, desc, ornamenFirst, orn
                 fontWeight="medium"
                 fontSize="sm"
               >
-                {desc}
+                {aboutMe}
               </Text>
             </Box>
 
-            <Image
-              className="ornamen-first"
-              src={ornamenFirst}
-              objectFit="cover"
-              w="14"
-              position="absolute"
-              bottom="20%"
-              left={{ base: "-6%", lg: "-5%" }}
-              overflow="visible"
-              zIndex="-10"
-            />
-            <Image
-              className="ornamen-second"
-              src={ornamenSecond}
-              objectFit="cover"
-              w="16"
-              position="absolute"
-              top="-7%"
-              right={{ base: "-8%", lg: "-5%" }}
-              overflow="visible"
-              zIndex="10"
-            />
+            {aboutUsFirstOrnament && (
+              <Image
+                className="ornamen-first"
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${aboutUsFirstOrnament.url}`}
+                objectFit="cover"
+                w="14"
+                position="absolute"
+                bottom="20%"
+                left={{ base: "-6%", lg: "-5%" }}
+                overflow="visible"
+                zIndex="-10"
+              />
+            )}
+
+            {aboutUsSecondOrnament && (
+              <Image
+                className="ornamen-second"
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${aboutUsSecondOrnament.url}`}
+                objectFit="cover"
+                w="16"
+                position="absolute"
+                top="-7%"
+                right={{ base: "-8%", lg: "-5%" }}
+                overflow="visible"
+                zIndex="10"
+              />
+            )}
           </Box>
         </Box>
       </Box>

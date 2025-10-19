@@ -5,7 +5,6 @@ import {
   VStack,
   IconButton,
   Link,
-  Button,
   Portal,
   Drawer,
   Box,
@@ -14,24 +13,51 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { MdSearch, MdMenu, MdClose } from "react-icons/md";
-import NextLink from "next/link";
-import { useState } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useState, useRef } from "react";
+import NextLink from "next/link";
+import gsap from "gsap";
+
+interface Route {
+  title: string;
+  href: string;
+}
+
+const routes: Route[] = [
+  {
+    title: "Beranda",
+    href: "/",
+  },
+  {
+    title: "Tentang",
+    href: "/about",
+  },
+  {
+    title: "Profil",
+    href: "/staff",
+  },
+  {
+    title: "Karya & Proyek",
+    href: "#",
+  },
+  {
+    title: "Testimoni",
+    href: "#",
+  },
+];
 
 export default function Navbar() {
+  const navbarRef = useRef<HTMLDivElement | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
   useGSAP(() => {
     let idleTimeout: gsap.core.Tween | null = null;
 
-    const nav = document.querySelector("nav") as HTMLElement;
-
     const handleScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 0);
 
-      gsap.to(nav, { y: -100, opacity: 0, duration: 0.3 });
+      gsap.to(navbarRef.current, { y: -100, opacity: 0, duration: 0.3 });
 
       if (idleTimeout) idleTimeout.kill();
 
@@ -40,7 +66,7 @@ export default function Navbar() {
         {
           duration: 0.8,
           onComplete: () => {
-            gsap.to(nav, { y: 0, opacity: 1, duration: 0.4 });
+            gsap.to(navbarRef.current, { y: 0, opacity: 1, duration: 0.4 });
           },
         }
       );
@@ -55,10 +81,11 @@ export default function Navbar() {
 
   return (
     <HStack
+      ref={navbarRef}
       as="nav"
       w="100%"
-      px={{ base: "6" , md: "16"}}
-      py={{ base: "3" , md: "6"}}
+      px={{ base: "6", md: "16" }}
+      py={{ base: "3", md: "6" }}
       justify="space-between"
       align="center"
       position="fixed"
@@ -69,7 +96,7 @@ export default function Navbar() {
       bg={scrolled ? "rgba(0,0,0,0.4)" : "transparent"}
       backdropFilter={scrolled ? "blur(12px)" : "none"}
       borderBottom={scrolled ? "1px solid rgba(255,255,255,0.06)" : "none"}
-    > 
+    >
       {/* Logo */}
       <Link as={NextLink} href="/" maxW="120px" display="block">
         <Image src="/images/logo/pixel.png" alt="Pixel Logo" />
@@ -82,26 +109,15 @@ export default function Navbar() {
         fontWeight="medium"
         display={{ base: "none", md: "none", lg: "flex" }}
       >
-        <Link as={NextLink} color="white" href="#home">
-          Beranda
-        </Link>
-        <Link as={NextLink} color="white" href="#about">
-          Tentang
-        </Link>
-        <Link as={NextLink} color="white" href="#profil">
-          Profil
-        </Link>
-        <Link as={NextLink} color="white" href="#project">
-          Karya & Proyek
-        </Link>
-        <Link as={NextLink} color="white" href="#testimoni">
-          Testimoni
-        </Link>
+        {routes.map((route) => (
+          <Link key={route.title} as={NextLink} color="white" href={route.href}>
+            {route.title}
+          </Link>
+        ))}
       </HStack>
 
       {/* Right side */}
       <HStack gap={3}>
-        {/* Search popover */}
         <Popover.Root>
           <Popover.Trigger asChild>
             <IconButton
@@ -148,18 +164,6 @@ export default function Navbar() {
             </Popover.Positioner>
           </Portal>
         </Popover.Root>
-
-        {/* Login button */}
-        <Button
-          bg="brand.btn.primary"
-          size="md"
-          maxH="8"
-          maxW="32"
-          color="black"
-          rounded="full"
-        >
-          Login
-        </Button>
 
         {/* Mobile drawer */}
         <Drawer.Root>
@@ -219,21 +223,16 @@ export default function Navbar() {
 
                 {/* Links mobile */}
                 <VStack align="start" gap={5} mt={6}>
-                  <Link as={NextLink} color="white" href="#home">
-                    Beranda
-                  </Link>
-                  <Link as={NextLink} color="white" href="#about">
-                    Tentang
-                  </Link>
-                  <Link as={NextLink} color="white" href="#profil">
-                    Profil
-                  </Link>
-                  <Link as={NextLink} color="white" href="#project">
-                    Karya & Proyek
-                  </Link>
-                  <Link as={NextLink} color="white" href="#testimoni">
-                    Testimoni
-                  </Link>
+                  {routes.map((route) => (
+                    <Link
+                      key={route.title}
+                      as={NextLink}
+                      color="white"
+                      href={route.href}
+                    >
+                      {route.title}
+                    </Link>
+                  ))}
                 </VStack>
               </Drawer.Content>
             </Drawer.Positioner>

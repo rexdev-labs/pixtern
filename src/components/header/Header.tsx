@@ -34,17 +34,27 @@ export default function Header({
 
   const [firstText, rest] = useMemo(() => processor[variant](text), [text]);
 
-  useGSAP(
-    () => {
-      gsap.set([scrambleFirstRef.current, scrambleRestRef.current], {
-        text: "",
-      });
-      gsap.set(buttonBackRef.current, { opacity: 0, x: -50 });
+  useGSAP((context, contextSafe) => {
+    gsap.set([scrambleFirstRef.current, scrambleRestRef.current], {
+      text: "",
+    });
+    gsap.set(buttonBackRef.current, { opacity: 0, x: -50 });
 
-      const triggers: ScrollTrigger[] = [];
+    ScrollTrigger.create({
+      trigger: buttonBackRef.current,
+      start: "top 95%",
+      toggleActions: "play none none none",
+      animation: gsap.to(buttonBackRef.current, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: "sine.out",
+      }),
+    });
 
-      document.fonts?.ready?.then(() => {
-        const trigger1 = ScrollTrigger.create({
+    document.fonts?.ready?.then(
+      contextSafe!(() => {
+        ScrollTrigger.create({
           trigger: titleProfileRef.current,
           start: "top 95%",
           toggleActions: "play reverse play reverse",
@@ -73,30 +83,9 @@ export default function Header({
               "-=0.8"
             ),
         });
-        triggers.push(trigger1);
-      });
-
-      const trigger2 = ScrollTrigger.create({
-        trigger: buttonBackRef.current,
-        start: "top 95%",
-        toggleActions: "play none none none",
-        animation: gsap.to(buttonBackRef.current, {
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: "sine.out",
-        }),
-      });
-      triggers.push(trigger2);
-
-      return () => {
-        for (const trigger of triggers) {
-          trigger.kill();
-        }
-      };
-    },
-    { dependencies: [firstText, rest] }
-  );
+      })
+    );
+  });
 
   return (
     <Grid

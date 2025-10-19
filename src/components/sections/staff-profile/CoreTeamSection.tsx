@@ -8,7 +8,9 @@ import Bird from "@/components/Bird";
 
 import type { Team } from "@/types/api/person/team";
 
-function TeamCards({ teams }: Readonly<{ teams: Team[] }>) {
+export default function CoreTeamSection({
+  teams,
+}: Readonly<{ teams: Team[] }>) {
   const teamChunks = useMemo(
     () =>
       teams.reduce<Team[][]>(
@@ -18,25 +20,6 @@ function TeamCards({ teams }: Readonly<{ teams: Team[] }>) {
     [teams]
   );
 
-  return teamChunks.map((chunk, index) => (
-    <Flex key={index} gap={{ base: 4, md: 6, lg: 8 }} justifyContent="center">
-      {chunk.map((team) => (
-        <PersonCard
-          key={team.id}
-          name={team.name}
-          backgroundColor={team.detail!.backgroundColor}
-          avatarImage={team.detail!.avatarImage}
-          profileImage={team.detail!.profileImage}
-          profileBackground={team.detail!.profileBackground}
-        />
-      ))}
-    </Flex>
-  ));
-}
-
-export default function CoreTeamSection({
-  teams,
-}: Readonly<{ teams: Team[] }>) {
   return (
     <VStack py={{ base: 12, md: 16 }} px={4} gap={12} position="relative">
       <SubHeader text="Our Core Team" enableUnderline={true} />
@@ -51,7 +34,25 @@ export default function CoreTeamSection({
         left="10%"
       />
       <VStack gap={{ base: 4, md: 6, lg: 8 }}>
-        <TeamCards teams={teams} />
+        {teamChunks.map((chunk, index) => (
+          <Flex
+            key={index}
+            gap={{ base: 4, md: 6, lg: 8 }}
+            justifyContent="center"
+          >
+            {chunk.map((team) => (
+              <PersonCard
+                key={team.id}
+                href={`/teams/${team.slug}`}
+                name={team.name}
+                backgroundColor={team.detail!.backgroundColor}
+                avatarImage={team.detail!.avatarImage}
+                personImage={team.detail!.personImage}
+                backgroundImage={team.detail!.backgroundImage}
+              />
+            ))}
+          </Flex>
+        ))}
       </VStack>
     </VStack>
   );

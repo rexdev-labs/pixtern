@@ -6,83 +6,19 @@ import ProjectSection from "@/components/sections/ProjectSection";
 import ClientSection from "@/components/sections/ClientSection";
 import RocketParallax from "@/components/animations/RocketParallax";
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
-import qs from "qs";
-
-import type { ApiResponse } from "@/types/api/response/apiResponse";
-import type { HomepageResponse } from "@/types/api/response/homepageResponse";
+import Navbar from "@/components/Navbar/NavBar";
 import Footer from "@/components/Footer/Footer";
+import { fetchData } from "@/utils/fetchData";
 
-async function getHomepageData(): Promise<ApiResponse<HomepageResponse>> {
-  const query = qs.stringify({
-    populate: {
-      heroSection: { populate: "*" },
-      aboutSection: { populate: "*" },
-      profileSection: {
-        populate: {
-          teamSection: {
-            populate: {
-              section: {
-                populate: "*",
-              },
-              teams: {
-                populate: "*",
-              },
-            },
-          },
-          internSection: {
-            populate: {
-              section: {
-                populate: "*",
-              },
-              interns: {
-                populate: "*",
-              },
-            },
-          },
-        },
-      },
-      whatWeDoSection: {
-        populate: {
-          section: {
-            populate: "*",
-          },
-          jobs: {
-            populate: "*",
-          },
-        },
-      },
-      projectSection: {
-        populate: {
-          section: {
-            populate: "*",
-          },
-          projects: {
-            populate: "*",
-          },
-        },
-      },
-      testimonialSection: {
-        populate: {
-          testimonials: {
-            populate: "*",
-          },
-        },
-      },
-    },
-  });
+import type { HomepageResponse } from "@/types/api/response/homepageResponse";
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/homepage?${query}`,
+async function getHomepageData() {
+  return await fetchData<HomepageResponse>(
+    `${process.env.NEXT_PUBLIC_API_URL}/homepage`,
     {
       next: { revalidate: 60 },
     }
   );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
 }
 
 export default async function Home() {
@@ -90,6 +26,8 @@ export default async function Home() {
 
   return (
     <ScrollSmootherWrapper>
+      <Navbar />
+
       <HeroSection data={response.data.heroSection} />
       <RocketParallax />
 

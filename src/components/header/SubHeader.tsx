@@ -17,16 +17,14 @@ export default function SubHeader({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
 
-  useGSAP(
-    () => {
-      gsap.set(headingRef.current, {
-        text: "",
-      });
+  useGSAP((context, contextSafe) => {
+    gsap.set(headingRef.current, {
+      text: "",
+    });
 
-      const triggers: ScrollTrigger[] = [];
-
-      document.fonts?.ready?.then(() => {
-        const trigger = ScrollTrigger.create({
+    document.fonts.ready.then(
+      contextSafe!(() => {
+        ScrollTrigger.create({
           trigger: containerRef.current,
           start: "top 95%",
           toggleActions: "play reverse play reverse",
@@ -44,17 +42,9 @@ export default function SubHeader({
             "0"
           ),
         });
-        triggers.push(trigger);
-      });
-
-      return () => {
-        for (const trigger of triggers) {
-          trigger.kill();
-        }
-      };
-    },
-    { dependencies: [text] }
-  );
+      })
+    );
+  });
 
   return (
     <Box position="relative" ref={containerRef}>

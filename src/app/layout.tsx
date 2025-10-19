@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import { Provider } from "@/components/ui/provider"
-import Navbar from "@/components/Navbar/NavBar";
 
 import type { Metadata } from "next";
 
@@ -16,7 +15,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <Provider>
-          <Navbar />
           {children}
         </Provider>
       </body>

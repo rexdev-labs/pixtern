@@ -1,15 +1,19 @@
 "use client";
 
-import { Box, Flex, Heading, Image } from "@chakra-ui/react";
-import ProfileCardSection from "@/components/cards/PersonCard";
-import gsap from "gsap";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import Bird from "@/components/Bird";
+import PersonCard from "@/components/cards/PersonCard";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger);
+import type { Intern } from "@/types/api/person/intern";
+import type { Team } from "@/types/api/person/team";
 
-export default function SeeOthersCard() {
+export default function SeeOthersCard({
+  others,
+}: Readonly<{ others: Intern[] | Team[] }>) {
   const containerRef = useRef(null);
 
   useGSAP(
@@ -45,21 +49,21 @@ export default function SeeOthersCard() {
 
   return (
     <Box ref={containerRef} w="full" position="relative">
-      <Image
-        src="/images/float/BirdPurplePageProfile.png"
-        alt="Bird Purple"
-        position="absolute"
+      <Bird
+        variant="Purple"
+        facing="right"
         top="120%"
         left="30%"
         w={{ base: 10, sm: 12, md: 16, lg: 20, xl: 24 }}
         h="auto"
         zIndex={20}
+        position="absolute"
         display={{ base: "none", md: "block" }}
       />
 
-      <Image
-        src="/images/float/BirdGreenPageProfile.png"
-        alt="Bird Green"
+      <Bird
+        variant="Green"
+        facing="right"
         position="absolute"
         top="120%"
         right="30%"
@@ -89,78 +93,16 @@ export default function SeeOthersCard() {
             py="2"
             className="cards-wrapper"
           >
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
-            <ProfileCardSection
-              className="card-others"
-              name="Rexsi"
-              charImage="/images/char/rexsi.png"
-              realImage="/images/char/rexsiReal.png"
-              bg="0781E6"
-              bgImage="/images/char/bgRexsi.png"
-            />
+            {others.map((person) => (
+              <PersonCard
+                key={person.id}
+                name={person.name}
+                backgroundColor={person.detail!.backgroundColor}
+                avatarImage={person.detail!.avatarImage}
+                personImage={person.detail!.personImage}
+                backgroundImage={person.detail!.backgroundImage}
+              />
+            ))}
           </Flex>
         </Box>
       </Box>

@@ -1,18 +1,17 @@
 "use client";
 
-import { Box, Flex, Heading, Image } from "@chakra-ui/react";
-import gsap from "gsap";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Image } from "@/components/Image";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger);
+import type { StrapiImage } from "@/types/api/strapiImage";
 
-interface SkillCardProps {
-  skillImage: string[];
-}
-
-export default function SkillCard({ skillImage }: SkillCardProps) {
+export default function SkillCard({
+  skills,
+}: Readonly<{ skills: StrapiImage[] }>) {
   const containerRef = useRef(null);
 
   useGSAP(
@@ -68,9 +67,9 @@ export default function SkillCard({ skillImage }: SkillCardProps) {
         </Heading>
 
         <Flex alignItems="center" gap={4} flexWrap="wrap">
-          {skillImage.map((image, index) => (
+          {skills.map((image) => (
             <Box
-              key={index}
+              key={image.id}
               className="card-skill"
               px={{ base: "3", md: "6", lg: "8" }}
               py="2"
@@ -81,7 +80,7 @@ export default function SkillCard({ skillImage }: SkillCardProps) {
               _hover={{ transform: "scale(1.05)" }}
               transition="all 0.2s"
             >
-              <Image src={image} w="10" />
+              <Image src={`${process.env.NEXT_PUBLIC_BASE_API}${image.url}`} w="10" alt="Skill" />
             </Box>
           ))}
         </Flex>

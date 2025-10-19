@@ -11,8 +11,8 @@ export interface Intern {
   slug: string;
   year: number;
   decoration?: Decoration;
-  detail?: Detail
-  education?: Education;
-  socialMedia?: SocialMedia[]
-  quotes?: Quotes
+  detail?: Detail;
+  educations?: Education[];
+  socialMedia?: SocialMedia[];
+  quotes?: Quotes;
 }

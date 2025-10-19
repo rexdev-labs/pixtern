@@ -1,20 +1,18 @@
 "use client";
 
 import { Box, Flex, Heading, Image } from "@chakra-ui/react";
-import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import gsap from "gsap";
 
-gsap.registerPlugin(ScrollTrigger);
-
-interface PortofolioCardProps {
-  portfolioImage: string[];
-}
+import type { StrapiImage } from "@/types/api/strapiImage";
 
 export default function PortofolioCard({
-  portfolioImage,
-}: PortofolioCardProps) {
+  portofolio,
+}: Readonly<{
+  portofolio: StrapiImage[];
+}>) {
   const containerRef = useRef(null);
 
   useGSAP(
@@ -69,9 +67,9 @@ export default function PortofolioCard({
         </Heading>
 
         <Flex alignItems="center" gap={2} flexWrap="wrap">
-          {portfolioImage.map((image, index) => (
+          {portofolio.map((image, index) => (
             <Box
-              key={index}
+              key={image.id}
               className="card-porto"
               w="31%"
               h={{ base: "24", md: "28", lg: "52" }}
@@ -82,7 +80,7 @@ export default function PortofolioCard({
               overflow="hidden"
             >
               <Image
-                src={image}
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${image.url}`}
                 alt={`Portfolio ${index + 1}`}
                 w="full"
                 h="full"

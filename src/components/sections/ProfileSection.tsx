@@ -12,110 +12,59 @@ import {
 import { useMemo, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, SplitText } from "gsap/all";
-import { splitTextFirst, splitTextTwo } from "@/utils/splitText";
+import { splitTextTwo } from "@/utils/splitText";
 import { Image } from "@/components/Image";
-import PersonCard from "../cards/PersonCard";
+import Bird from "@/components/Bird";
+import PersonCard from "@/components/cards/PersonCard";
+import Title from "@/components/text/section/Title";
 import gsap from "gsap";
 
 import type { ProfileSection } from "@/types/api/homepage/profileSection";
+import type { Team } from "@/types/api/person/team";
+import type { Intern } from "@/types/api/person/intern";
+import type { Section } from "@/types/api/section";
 
-export default function ProfileSection({
+function Section({
+  section,
   data,
-}: Readonly<{ data: ProfileSection }>) {
-  const containerRef = useRef(null);
+  personType,
+  flipPosition = false,
+}: {
+  section: Section;
+  data: Team[] | Intern[];
+  personType: "teams" | "interns",
+  flipPosition?: boolean;
+}) {
+  const sectionContainerRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const sectionTitleRef = useRef<HTMLDivElement | null>(null);
+  const sectionDescriptionRef = useRef<HTMLDivElement | null>(null);
 
-  const [splitFirst, rest] = useMemo(
-    () => splitTextFirst(data.title ?? ""),
-    [data.title]
+  const [firstText, restText] = useMemo(
+    () => splitTextTwo(section.title),
+    [section.title]
   );
 
-  const [splitTeam, restTeam] = useMemo(
-    () => splitTextTwo(data.teamSection.section.title ?? ""),
-    [data.teamSection.section.title]
-  );
-  const [splitIntern, restIntern] = useMemo(
-    () => splitTextTwo(data.internSection.section.title ?? ""),
-    [data.internSection.section.title]
+  const chunks = useMemo(
+    () =>
+      data.reduce<Team[][] | Intern[][]>(
+        (acc, _, i, array) => (i % 3 ? acc : [...acc, array.slice(i, i + 3)]),
+        []
+      ),
+    [data]
   );
 
   useGSAP(
-    () => {
-      gsap.set(".scramble-who", { text: "" });
-      gsap.set(".scramble-we-are", { text: "" });
-      gsap.set(".profile-card-right", { opacity: 0, x: 20, scale: 0.9 });
-      gsap.set(".profile-card-left", { opacity: 0, x: -20, scale: 0.9 });
-      gsap.set(".underline-profile", { opacity: 0, y: 50 });
-      gsap.set(".container-ballon", { opacity: 0, x: 20 });
-      gsap.set(".cloud", { opacity: 0, x: -20 });
+    (context, contextSafe) => {
+      const selector = gsap.utils.selector(sectionContainerRef);
+
+      gsap.set(selector(".person-cards"), { opacity: 0, x: 20, scale: 0.9 });
 
       ScrollTrigger.create({
-        trigger: ".title-profile",
-        start: "top 85%",
-        end: "bottom top",
-        toggleActions: "play reverse play reverse",
-        animation: gsap
-          .timeline()
-          .to(".scramble-who", {
-            duration: 1.2,
-            scrambleText: {
-              text: splitFirst,
-              chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-              revealDelay: 0.5,
-              speed: 0.4,
-            },
-          })
-          .to(
-            ".scramble-we-are",
-            {
-              duration: 1.5,
-              scrambleText: {
-                text: rest,
-                chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ?",
-                revealDelay: 0.5,
-                speed: 0.4,
-              },
-            },
-            "-=0.8"
-          )
-          .to(
-            ".underline-profile",
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "sine.out",
-            },
-            "-=0.8"
-          ),
-      });
-
-      gsap.from(".bird-float", {
-        opacity: 0,
-        x: -100,
-        rotation: -45,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".bird-float",
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play reverse play reverse",
-        },
-      });
-
-      gsap.to(".bird-float", {
-        y: -15,
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-
-      ScrollTrigger.create({
-        trigger: ".profile-card-right",
+        trigger: selector(".person-cards"),
         start: "top 85%",
         toggleActions: "play reverse play reverse",
-        animation: gsap.to(".profile-card-right", {
+        animation: gsap.to(selector(".person-cards"), {
           opacity: 1,
           x: 0,
           scale: 1,
@@ -128,96 +77,135 @@ export default function ProfileSection({
         }),
       });
 
-      ScrollTrigger.create({
-        trigger: ".profile-card-left",
-        start: "top 85%",
-        toggleActions: "play reverse play reverse",
-        animation: gsap.to(".profile-card-left", {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 0.8,
-          stagger: function (index) {
-            const customOrder = [2, 1, 0, 4, 3];
-            const position = customOrder.indexOf(index);
-            return position * (0.8 / 4);
-          },
-          ease: "back.out",
-        }),
-      });
+      document.fonts.ready.then(
+        contextSafe!(() => {
+          const sectionDescription = new SplitText(
+            sectionDescriptionRef.current,
+            {
+              type: "lines",
+            }
+          );
 
-      document.fonts.ready.then(() => {
-        const teamSectionText = new SplitText(
-          ".text-section-left .split-paragraph",
-          {
-            type: "lines",
-          }
-        );
+          gsap.set(sectionDescription.lines, { opacity: 0, y: 20 });
 
-        gsap.set(teamSectionText.lines, { opacity: 0, y: 20 });
-
-        ScrollTrigger.create({
-          trigger: ".text-section-left",
-          start: "top 90%",
-          toggleActions: "play reverse play reverse",
-          animation: gsap
-            .timeline()
-            .to(".heading-left", {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "back.out(1.2)",
-            })
-            .to(
-              teamSectionText.lines,
-              {
+          ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: "top 90%",
+            toggleActions: "play reverse play reverse",
+            animation: gsap
+              .timeline()
+              .to(sectionTitleRef.current, {
                 opacity: 1,
                 y: 0,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: "power2.out",
-              },
-              "-=0.3"
-            ),
-        });
+                duration: 0.8,
+                ease: "back.out(1.2)",
+              })
+              .to(
+                sectionDescription.lines,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.5,
+                  stagger: 0.1,
+                  ease: "power2.out",
+                },
+                "-=0.3"
+              ),
+          });
+        })
+      );
 
-        const internSectionText = new SplitText(
-          ".text-section-right .split-paragraph",
-          {
-            type: "lines",
-          }
-        );
+      gsap.set(sectionTitleRef.current, { opacity: 0, y: 20 });
+    },
+    { scope: sectionContainerRef }
+  );
 
-        gsap.set(internSectionText.lines, { opacity: 0, y: 20 });
+  return (
+    <Flex
+      gap={{ base: 8, md: 16, lg: 20 }}
+      align="center"
+      mx={{ base: "4", md: "20", lg: "20" }}
+      direction={{
+        base: "column",
+        lg: flipPosition ? "row-reverse" : "row",
+      }}
+      ref={sectionContainerRef}
+    >
+      <Flex flex="1" justify="center" order={{ base: 1, lg: 1 }}>
+        <VStack gap={{ base: 4, md: 6 }}>
+          {chunks.map((persons, index) => (
+            <HStack
+              key={index}
+              gap={{ base: 3, md: 4, lg: 6 }}
+              flexWrap={{ base: "wrap", md: "nowrap" }}
+              justify="center"
+            >
+              {persons.map((person) => (
+                <PersonCard
+                  key={person.id}
+                  href={`${personType}/${person.slug}`}
+                  name={person.name}
+                  backgroundColor={person.detail!.backgroundColor}
+                  avatarImage={person.detail!.avatarImage}
+                  personImage={person.detail!.personImage}
+                  backgroundImage={person.detail!.backgroundImage}
+                  className="person-cards"
+                />
+              ))}
+            </HStack>
+          ))}
+        </VStack>
+      </Flex>
 
-        ScrollTrigger.create({
-          trigger: ".text-section-right",
-          start: "top 90%",
-          toggleActions: "play reverse play reverse",
-          animation: gsap
-            .timeline()
-            .to(".heading-right", {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "back.out(1.2)",
-            })
-            .to(
-              internSectionText.lines,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: "power2.out",
-              },
-              "-=0.3"
-            ),
-        });
-      });
+      <VStack
+        ref={sectionRef}
+        textAlign={{ base: "center", lg: "end" }}
+        flex="1"
+        gap={6}
+        maxW={{ base: "full", lg: "2/5" }}
+        align={{ base: "center", lg: "flex-end" }}
+        mb={6}
+        order={{ base: 2, lg: 2 }}
+      >
+        <Heading
+          ref={sectionTitleRef}
+          fontFamily="bestime"
+          fontWeight="light"
+          fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+          lineHeight={1}
+          color="brand.text.black"
+          maxW={{ base: "full", md: "70%", xl: "full" }}
+        >
+          <Text as="span" color="brand.text.orange">
+            {firstText}
+          </Text>{" "}
+          {restText}
+        </Heading>
+        <Text
+          ref={sectionDescriptionRef}
+          fontSize={{ base: "xs", md: "md" }}
+          lineHeight="1.6"
+          color="brand.text.gray"
+          fontFamily="Inter"
+          maxW={{ base: "full", lg: "none" }}
+          mx={{ base: "6", lg: "0" }}
+        >
+          {section.description}
+        </Text>
+      </VStack>
+    </Flex>
+  );
+}
 
-      gsap.set(".heading-left", { opacity: 0, y: 20 });
-      gsap.set(".heading-right", { opacity: 0, y: 20 });
+export default function ProfileSection({
+  data,
+}: Readonly<{ data: ProfileSection }>) {
+  const containerRef = useRef(null);
+
+  useGSAP(
+    () => {
+      gsap.set(".container-ballon", { opacity: 0, x: 20 });
+      gsap.set(".cloud", { opacity: 0, x: -20 });
 
       ScrollTrigger.create({
         trigger: ".container-ballon",
@@ -268,234 +256,35 @@ export default function ProfileSection({
   );
 
   return (
-    <Box ref={containerRef}>
-      <Center my={{ base: "10", md: "20" }} className="title-profile">
-        <Flex gap={2} className="title">
-          <Heading
-            className="scramble-who"
-            fontFamily="bestime"
-            fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
-            fontWeight="light"
-            color="brand.text.black"
-          >
-            {splitFirst}
-          </Heading>
-          <Box display="flex" flexDirection="column" alignItems="center">
-            <Heading
-              className="scramble-we-are"
-              fontFamily="bestime"
-              fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
-              color="brand.text.blue"
-              fontWeight="light"
-            >
-              {rest}
-            </Heading>
-            <Image
-              className="underline-profile"
-              src="/images/bg/underline-profile.png"
-              w={{ base: "28", md: "40" }}
-              mt={{ base: "-1.5", md: "0" }}
-              alt="underline"
-              zIndex={2}
-            />
-          </Box>
-        </Flex>
+    <Box ref={containerRef} id="profil">
+      <Center my={{ base: "10", md: "20" }}>
+        <Title text={data.title} variant="single" color="brand.text.blue" />
       </Center>
 
-      <VStack gap={{ base: 16, md: 24, lg: 32 }}>
-        <Flex
-          id="profil"
-          gap={{ base: 4, md: 12, lg: 20 }}
-          align="center"
-          mx={{ base: "4", md: "20", lg: "20" }}
-          direction={{ base: "column", lg: "row" }}
-        >
-          <Box
-            flex="1"
-            maxW={{ base: "full", lg: "2/5" }}
-            position="relative"
-            order={{ base: 2, lg: 1 }}
-          >
-            <Box
-              position="absolute"
-              top={{ md: "-220%", lg: "-65%" }}
-              left={{ md: "0", lg: "10%" }}
-              display={{ base: "none", md: "block" }}
-              w={{ base: "16", md: "28", lg: "32" }}
-              h={{ base: "16", md: "28", lg: "32" }}
-            >
-              <Image
-                className="bird-float"
-                src="/images/float/bird-profile-wing-up.png"
-                w={{ base: "16", md: "20", lg: "24" }}
-                h={{ base: "16", md: "20", lg: "24" }}
-                position="absolute"
-                top="0"
-                left="0"
-                alt="bird-wing-up"
-                objectFit="contain"
-              />
-            </Box>
+      <VStack gap={{ base: 16, md: 24, lg: 32 }} position="relative">
+        <Bird
+          facing="right"
+          w={{ base: "16", md: "20", lg: "24" }}
+          h={{ base: "16", md: "20", lg: "24" }}
+          position="absolute"
+          objectFit="contain"
+          left="20%"
+          tweenVars={{ xPercent: -50, left: "20%" }}
+          display={{ base: "none", md: "block" }}
+        />
 
-            <VStack
-              className="text-section-left"
-              align={{ base: "center", lg: "flex-start" }}
-              gap={6}
-              justify="center"
-              minH="100%"
-              mt={6}
-              textAlign={{ base: "center", lg: "left" }}
-            >
-              <Heading
-                className="heading-left"
-                fontFamily="bestime"
-                fontWeight="light"
-                fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-                lineHeight={1}
-                color="brand.text.black"
-                maxW={{ base: "full", md: "70%", xl: "full" }}
-              >
-                <Text as="span" color="brand.text.blue">
-                  {splitTeam}
-                </Text>{" "}
-                <Text as="span"> {restTeam}</Text>
-              </Heading>
-              <Text
-                className="split-paragraph"
-                fontSize={{ base: "xs", md: "md" }}
-                lineHeight="1.6"
-                color="brand.text.gray"
-                fontFamily="Inter"
-                maxW={{ base: "full", lg: "none" }}
-                mx={{ base: "6", lg: "0" }}
-              >
-                {data.teamSection.section.description}
-              </Text>
-            </VStack>
-          </Box>
+        <Section
+          section={data.teamSection.section}
+          data={data.teamSection.teams}
+          flipPosition={true}
+          personType="teams"
+        />
 
-          <Flex flex="1" justify="center" order={{ base: 1, lg: 2 }}>
-            <VStack gap={{ base: 4, md: 6 }}>
-              <HStack
-                gap={{ base: 3, md: 4, lg: 6 }}
-                flexWrap={{ base: "wrap", sm: "nowrap" }}
-                justify="center"
-              >
-                {data.teamSection.teams.slice(0, 2).map((character) => (
-                  <PersonCard
-                    key={character.id}
-                    name={character.name}
-                    backgroundColor={character.backgroundColor}
-                    avatarImage={character.avatarImage}
-                    profileImage={character.profileImage}
-                    profileBackground={character.profileBackground}
-                    className="profile-card-right"
-                  />
-                ))}
-              </HStack>
-              <HStack
-                gap={{ base: 3, md: 4, lg: 6 }}
-                flexWrap={{ base: "wrap", md: "nowrap" }}
-                justify="center"
-              >
-                {data.teamSection.teams.slice(2, 5).map((character) => (
-                  <PersonCard
-                    key={character.id}
-                    name={character.name}
-                    backgroundColor={character.backgroundColor}
-                    avatarImage={character.avatarImage}
-                    profileImage={character.profileImage}
-                    profileBackground={character.profileBackground}
-                    className="profile-card-right"
-                  />
-                ))}
-              </HStack>
-            </VStack>
-          </Flex>
-        </Flex>
-
-        <Flex
-          gap={{ base: 8, md: 16, lg: 20 }}
-          align="center"
-          mx={{ base: "4", md: "20", lg: "20" }}
-          direction={{ base: "column", lg: "row" }}
-        >
-          <Flex flex="1" justify="center" order={{ base: 1, lg: 1 }}>
-            <VStack gap={{ base: 4, md: 6 }}>
-              <HStack
-                gap={{ base: 3, md: 4, lg: 6 }}
-                flexWrap={{ base: "wrap", md: "nowrap" }}
-                justify="center"
-              >
-                {data.internSection.interns.slice(0, 3).map((character) => (
-                  <PersonCard
-                    key={character.id}
-                    name={character.name}
-                    backgroundColor={character.backgroundColor}
-                    avatarImage={character.avatarImage}
-                    profileImage={character.profileImage}
-                    profileBackground={character.profileBackground}
-                    className="profile-card-left"
-                  />
-                ))}
-              </HStack>
-              <HStack
-                gap={{ base: 3, md: 4, lg: 6 }}
-                flexWrap={{ base: "wrap", sm: "nowrap" }}
-                justify="center"
-              >
-                {data.internSection.interns.slice(3, 5).map((character) => (
-                  <PersonCard
-                    key={character.id}
-                    name={character.name}
-                    backgroundColor={character.backgroundColor}
-                    avatarImage={character.avatarImage}
-                    profileImage={character.profileImage}
-                    profileBackground={character.profileBackground}
-                    className="profile-card-left"
-                  />
-                ))}
-              </HStack>
-            </VStack>
-          </Flex>
-
-          <VStack
-            className="text-section-right"
-            textAlign={{ base: "center", lg: "end" }}
-            flex="1"
-            gap={6}
-            maxW={{ base: "full", lg: "2/5" }}
-            align={{ base: "center", lg: "flex-end" }}
-            mb={6}
-            order={{ base: 2, lg: 2 }}
-          >
-            <Heading
-              className="heading-right"
-              fontFamily="bestime"
-              fontWeight="light"
-              fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-              lineHeight={1}
-              color="brand.text.black"
-              maxW={{ base: "full", md: "70%", xl: "full" }}
-            >
-              <Text as="span" color="brand.text.orange">
-                {splitIntern}
-              </Text>{" "}
-              {restIntern}
-            </Heading>
-            <Text
-              className="split-paragraph"
-              fontSize={{ base: "xs", md: "md" }}
-              lineHeight="1.6"
-              color="brand.text.gray"
-              fontFamily="Inter"
-              maxW={{ base: "full", lg: "none" }}
-              mx={{ base: "6", lg: "0" }}
-            >
-              {data.internSection.section.description}
-            </Text>
-          </VStack>
-        </Flex>
+        <Section
+          section={data.internSection.section}
+          data={data.internSection.interns}
+          personType="interns"
+        />
       </VStack>
 
       <Flex

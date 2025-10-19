@@ -14,8 +14,9 @@ import { useGSAP } from "@gsap/react";
 import { splitTextFirst } from "@/utils/splitText";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { WhatWeDoCard } from "../cards/WhatWeDoCard";
+import { WhatWeDoCard } from "@/components/cards/WhatWeDoCard";
 import { Image } from "@/components/Image";
+import Bird from "@/components/Bird";
 import gsap from "gsap";
 
 import type { WhatWeDoSection } from "@/types/api/homepage/whatWeDoSection";
@@ -30,26 +31,29 @@ export default function DoSection({
   );
 
   useGSAP(
-    () => {
-      document.fonts.ready.then(() => {
-        const descSplit = new SplitText(".desc-text", {
-          type: "lines,words",
-        });
+    (context, contextSafe) => {
+      document.fonts.ready.then(
+        contextSafe!(() => {
+          const descSplit = new SplitText(".desc-text", {
+            type: "lines,words",
+          });
 
-        gsap.from(descSplit.words, {
-          opacity: 0,
-          y: 20,
-          stagger: 0.01,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".desc-text",
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play reverse play reverse",
-          },
-        });
-      });
+          gsap.from(descSplit.words, {
+            opacity: 0,
+            y: 20,
+            stagger: 0.01,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".desc-text",
+              start: "top 80%",
+              end: "bottom 20%",
+              toggleActions: "play reverse play reverse",
+            },
+          });
+        })
+      );
+
       gsap.set(".underline-do", { opacity: 0, y: 50 });
 
       ScrollTrigger.create({
@@ -91,50 +95,6 @@ export default function DoSection({
             },
             "-=0.8"
           ),
-      });
-
-      gsap.from(".bird-float", {
-        opacity: 0,
-        x: -100,
-        rotation: -45,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".bird-float",
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play reverse play reverse",
-        },
-      });
-
-      gsap.to(".bird-float", {
-        y: -15,
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-
-      gsap.from(".do-bird", {
-        opacity: 0,
-        x: 100,
-        rotation: -45,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".do-bird",
-          start: "top 20%",
-          end: "bottom 80%",
-          toggleActions: "play reverse play reverse",
-        },
-      });
-
-      gsap.to(".do-bird", {
-        y: -15,
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
       });
 
       gsap.utils.toArray(".card-item").forEach((card: any, index: number) => {
@@ -237,7 +197,7 @@ export default function DoSection({
               md: "container.md",
               lg: "container.lg",
             }}
-            px={{ base: "4", md: "6", }}
+            px={{ base: "4", md: "6" }}
           >
             <Flex
               justify="center"
@@ -245,26 +205,22 @@ export default function DoSection({
               position="relative"
               minH={{ base: "60px", md: "80px" }}
             >
-              <Box
-                className="bird-float"
+              <Bird
+                facing="right"
+                variant="Purple"
                 position="absolute"
                 bottom={{ base: "5%", sm: "10%", md: "60%" }}
                 left={{ base: "5%", sm: "8%", md: "8%" }}
-              >
-                <Image
-                  src="/images/float/birdDo.png"
-                  alt="Bird"
-                  w={{
-                    base: 10,
-                    sm: 12,
-                    md: 16,
-                    lg: 20,
-                    xl: 24,
-                  }}
-                  h="auto"
-                  display={{ base: "none", md: "flex" }}
-                />
-              </Box>
+                w={{
+                  base: 10,
+                  sm: 12,
+                  md: 16,
+                  lg: 20,
+                  xl: 24,
+                }}
+                h="auto"
+                display={{ base: "none", md: "block" }}
+              />
 
               <Box
                 maxW={{
@@ -357,20 +313,16 @@ export default function DoSection({
           </Center>
         </Box>
       </Box>
-      <Flex
-        className="do-bird"
-        justifyContent="end"
-        mr="40"
-        display={{ base: "none", lg: "flex" }}
-      >
-        <Image
-          src="/images/float/doBird.png"
-          alt="bird"
-          w="10%"
-          h="auto"
-          right="15%"
-        />
-      </Flex>
+
+      <Bird
+        facing="left"
+        variant="Green"
+        w="10%"
+        h="auto"
+        position="absolute"
+        right="15rem"
+        display={{ base: "none", md: "block" }}
+      />
     </Box>
   );
 }

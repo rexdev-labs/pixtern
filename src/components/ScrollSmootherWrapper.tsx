@@ -38,21 +38,6 @@ export default function ScrollSmootherWrapper({
         ignoreMobileResize: true,
       });
 
-      const links = document.querySelectorAll('a[href^="#"]');
-      links.forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute("href");
-          if (targetId) {
-            smoothScrollerRef.current!.scrollTo(
-              targetId,
-              true,
-              "center center"
-            );
-          }
-        });
-      });
-
       const handleResize = () => {
         if (smoothScrollerRef.current) {
           smoothScrollerRef.current.refresh();

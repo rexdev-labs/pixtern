@@ -1,3 +1,5 @@
+import type { Section } from "@/types/api/section";
+
 export interface Job {
   id: number;
   title: string;
@@ -6,9 +8,6 @@ export interface Job {
 }
 
 export interface WhatWeDoSection {
-  section: {
-    title: string;
-    description: string;
-  };
+  section: Section;
   jobs?: Job[];
 }

@@ -1,7 +1,9 @@
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
+import { fetchData } from "@/utils/fetchData";
 import BackgroundCloud from "@/components/background/BackgroundCloud";
+import Navbar from "@/components/Navbar/NavBar";
 import Footer from "@/components/Footer/Footer";
-import HeaderPixel from "@/components/header/HeaderPixel";
+import Header from "@/components/header/Header";
 import AboutPixel from "@/components/cards/pixel/AboutPixel";
 import ProfilePixel from "@/components/cards/pixel/ProfilePixel";
 import BirdPixel from "@/components/cards/pixel/BirdPixel";
@@ -9,30 +11,23 @@ import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 import SocialMediaCard from "@/components/cards/profile/SocialMediaCard";
 import qs from "qs";
 
-import type { ApiResponse } from "@/types/api/response/apiResponse";
 import type { AboutPageResponse } from "@/types/api/response/aboutPageResponse";
 
-async function getAboutPageData(): Promise<ApiResponse<AboutPageResponse>> {
+async function getAboutPageData() {
   const query = qs.stringify({
     populate: {
       socialMedia: {
-        populate: "*"
-      }
+        populate: "*",
+      },
     },
   });
 
-  const res = await fetch(
+  return await fetchData<AboutPageResponse>(
     `${process.env.NEXT_PUBLIC_API_URL}/company-profile?${query}`,
     {
       next: { revalidate: 60 },
     }
   );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
 }
 
 export default async function AboutPage() {
@@ -41,6 +36,8 @@ export default async function AboutPage() {
   return (
     <ScrollSmootherWrapper>
       <BackgroundCloud>
+        <Navbar />
+
         <Box
           position="relative"
           pt={{ base: "80px", md: "100px" }}
@@ -49,7 +46,11 @@ export default async function AboutPage() {
           zIndex={1}
         >
           <Container maxW="9xl" px="8" position="relative" zIndex={1}>
-            <HeaderPixel />
+            <Header
+              text="Tagline Pixel Space"
+              variant="single"
+              color="brand.text.blue"
+            />
             <Grid
               templateColumns={{ base: "1fr", md: "1fr 1fr", lg: "2fr 3fr" }}
               gap="8"

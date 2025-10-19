@@ -4,8 +4,10 @@ export interface Detail {
   aboutMe?: string;
   role: string;
   backgroundColor: string;
+  originalImage: StrapiImage;
   avatarImage: StrapiImage;
-  profileImage: StrapiImage;
-  profileBackground: StrapiImage;
+  personImage: StrapiImage;
+  backgroundImage: StrapiImage;
   portofolio: StrapiImage[];
+  skills: StrapiImage[];
 }

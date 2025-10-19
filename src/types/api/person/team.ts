@@ -10,8 +10,8 @@ export interface Team {
   fullName: string;
   slug: string;
   decoration?: Decoration;
-  detail?: Detail
-  education?: Education;
-  socialMedia?: SocialMedia[]
-  quotes?: Quotes
+  detail?: Detail;
+  educations?: Education[];
+  socialMedia?: SocialMedia[];
+  quotes?: Quotes;
 }

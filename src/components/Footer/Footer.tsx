@@ -3,21 +3,20 @@ import {
   Container,
   Flex,
   HStack,
-  IconButton,
   Stack,
   Text,
-  Image,
   Separator,
   Link as ChakraLink,
 } from "@chakra-ui/react";
+import { Image } from "@/components/Image";
 import { FooterNavigationGroup } from "./FooterNavigationGroup";
+import { fetchData } from "@/utils/fetchData";
 import IlustrationImage from "./IlustrationImage";
 import qs from "qs";
 
 import type { GlobalSite } from "@/types/api/global";
-import type { ApiResponse } from "@/types/api/response/apiResponse";
 
-async function getGlobalSiteData(): Promise<ApiResponse<GlobalSite>> {
+async function getGlobalSiteData() {
   const query = qs.stringify({
     populate: {
       footer: {
@@ -36,18 +35,12 @@ async function getGlobalSiteData(): Promise<ApiResponse<GlobalSite>> {
     },
   });
 
-  const res = await fetch(
+  return await fetchData<GlobalSite>(
     `${process.env.NEXT_PUBLIC_API_URL}/global?${query}`,
     {
       next: { revalidate: 60 },
     }
   );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
 }
 
 export default async function Footer() {
@@ -172,33 +165,23 @@ export default async function Footer() {
                   }}
                   display={{ base: "none", md: "flex" }}
                 >
-                  {footer.socialMedia.map((socialMedia) => {
-                    return (
-                      <ChakraLink
-                        key={socialMedia.platform}
-                        as="a"
-                        href={socialMedia.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        _hover={{ textDecoration: "none" }}
-                      >
-                        <IconButton
-                          rounded="full"
-                          border="1px solid"
-                          borderColor="brand.text.white"
-                          color="brand.text.white"
-                          bg="transparent"
-                          size={{ base: "sm", sm: "md" }}
-                          _hover={{
-                            bg: "brand.text.white",
-                            color: "brand.bg.green.forest",
-                          }}
-                          aria-label={`Follow us on ${socialMedia.platform}`}
-                        >
-                        </IconButton>
-                      </ChakraLink>
-                    );
-                  })}
+                  {footer.socialMedia.map((socialMedia) => (
+                    <ChakraLink
+                      key={socialMedia.platform}
+                      as="a"
+                      href={socialMedia.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      _hover={{ textDecoration: "none" }}
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${socialMedia.icon.url}`}
+                        w="4rem"
+                        h="4rem"
+                        rounded={"full"}
+                      />
+                    </ChakraLink>
+                  ))}
                 </HStack>
               )}
             </Box>
@@ -257,33 +240,23 @@ export default async function Footer() {
               justify="flex-start"
               display={{ base: "flex", md: "none" }}
             >
-              {footer.socialMedia.map((socialMedia) => {
-                return (
-                  <ChakraLink
-                    key={socialMedia.platform}
-                    as="a"
-                    href={socialMedia.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    _hover={{ textDecoration: "none" }}
-                  >
-                    <IconButton
-                      rounded="full"
-                      border="1px solid"
-                      borderColor="brand.text.white"
-                      color="brand.text.white"
-                      bg="transparent"
-                      size={{ base: "sm", sm: "md" }}
-                      _hover={{
-                        bg: "brand.text.white",
-                        color: "brand.bg.green.forest",
-                      }}
-                      aria-label={`Follow us on ${socialMedia.platform}`}
-                    >
-                    </IconButton>
-                  </ChakraLink>
-                );
-              })}
+              {footer.socialMedia.map((socialMedia) => (
+                <ChakraLink
+                  key={socialMedia.platform}
+                  as="a"
+                  href={socialMedia.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  _hover={{ textDecoration: "none" }}
+                >
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/${socialMedia.icon.url}`}
+                    w="4rem"
+                    h="4rem"
+                    rounded={"full"}
+                  />
+                </ChakraLink>
+              ))}
             </HStack>
           )}
         </Container>
