@@ -28,13 +28,15 @@ function Section({
   section,
   data,
   personType,
+  textBrand,
   flipPosition = false,
-}: {
+}: Readonly<{
   section: Section;
   data: Team[] | Intern[];
-  personType: "teams" | "interns",
+  personType: "teams" | "interns";
+  textBrand: string;
   flipPosition?: boolean;
-}) {
+}>) {
   const sectionContainerRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const sectionTitleRef = useRef<HTMLDivElement | null>(null);
@@ -159,7 +161,7 @@ function Section({
 
       <VStack
         ref={sectionRef}
-        textAlign={{ base: "center", lg: "end" }}
+        textAlign={{ base: "center", lg: flipPosition ? "start" : "end" }}
         flex="1"
         gap={6}
         maxW={{ base: "full", lg: "2/5" }}
@@ -176,7 +178,7 @@ function Section({
           color="brand.text.black"
           maxW={{ base: "full", md: "70%", xl: "full" }}
         >
-          <Text as="span" color="brand.text.orange">
+          <Text as="span" color={textBrand}>
             {firstText}
           </Text>{" "}
           {restText}
@@ -269,6 +271,7 @@ export default function ProfileSection({
           position="absolute"
           objectFit="contain"
           left="20%"
+          top="0"
           tweenVars={{ xPercent: -50, left: "20%" }}
           display={{ base: "none", md: "block" }}
         />
@@ -276,6 +279,7 @@ export default function ProfileSection({
         <Section
           section={data.teamSection.section}
           data={data.teamSection.teams}
+          textBrand="brand.text.blue"
           flipPosition={true}
           personType="teams"
         />
@@ -283,6 +287,7 @@ export default function ProfileSection({
         <Section
           section={data.internSection.section}
           data={data.internSection.interns}
+          textBrand="brand.text.orange"
           personType="interns"
         />
       </VStack>

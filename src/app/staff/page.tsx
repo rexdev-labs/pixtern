@@ -8,6 +8,8 @@ import Footer from "@/components/Footer/Footer";
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 
 import type { StaffPageResponse } from "@/types/api/response/staffPageResponse";
+import type { GlobalSite } from "@/types/api/global";
+import type { Metadata } from "next";
 
 async function getStaffData() {
   return await fetchData<StaffPageResponse>(
@@ -16,6 +18,20 @@ async function getStaffData() {
       next: { revalidate: 60 },
     }
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: globalData } = await fetchData<GlobalSite>(
+    `${process.env.NEXT_PUBLIC_API_URL}/global`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
+
+  return {
+    title: globalData.siteName,
+    description: globalData.siteDescription,
+  };
 }
 
 export default async function StaffPage() {

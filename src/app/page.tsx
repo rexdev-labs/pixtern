@@ -11,6 +11,8 @@ import Footer from "@/components/Footer/Footer";
 import { fetchData } from "@/utils/fetchData";
 
 import type { HomepageResponse } from "@/types/api/response/homepageResponse";
+import type { Metadata } from "next";
+import type { GlobalSite } from "@/types/api/global";
 
 async function getHomepageData() {
   return await fetchData<HomepageResponse>(
@@ -19,6 +21,20 @@ async function getHomepageData() {
       next: { revalidate: 60 },
     }
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: globalData } = await fetchData<GlobalSite>(
+    `${process.env.NEXT_PUBLIC_API_URL}/global`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
+
+  return {
+    title: globalData.siteName,
+    description: globalData.siteDescription,
+  };
 }
 
 export default async function Home() {

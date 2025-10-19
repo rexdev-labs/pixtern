@@ -12,6 +12,8 @@ import SocialMediaCard from "@/components/cards/profile/SocialMediaCard";
 import qs from "qs";
 
 import type { AboutPageResponse } from "@/types/api/response/aboutPageResponse";
+import type { GlobalSite } from "@/types/api/global";
+import type { Metadata } from "next";
 
 async function getAboutPageData() {
   const query = qs.stringify({
@@ -28,6 +30,20 @@ async function getAboutPageData() {
       next: { revalidate: 60 },
     }
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: globalData } = await fetchData<GlobalSite>(
+    `${process.env.NEXT_PUBLIC_API_URL}/global`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
+
+  return {
+    title: globalData.siteName,
+    description: globalData.siteDescription,
+  };
 }
 
 export default async function AboutPage() {

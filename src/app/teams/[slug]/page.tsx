@@ -15,6 +15,7 @@ import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 import Header from "@/components/header/Header";
 
 import type { Team } from "@/types/api/person/team";
+import type { Metadata } from "next";
 
 interface ProfilePageProps {
   params: Promise<{ slug: string }>;
@@ -31,6 +32,24 @@ async function getTeamData(slug: string) {
       next: { revalidate: 60 },
     }
   );
+}
+
+export async function generateMetadata({
+  params,
+}: Readonly<ProfilePageProps>): Promise<Metadata> {
+  const { slug } = await params;
+
+  const { data: teamData } = await fetchData<TeamWithSeeOthers>(
+    `${process.env.NEXT_PUBLIC_API_URL}/teams/${slug}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
+
+  return {
+    title: teamData.fullName,
+    description: teamData.detail!.aboutMe,
+  };
 }
 
 export default async function ProfilePage({
