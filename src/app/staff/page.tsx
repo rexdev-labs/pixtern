@@ -1,5 +1,5 @@
 import { Box, Container, VStack } from "@chakra-ui/react";
-import { fetchData } from "@/utils/fetchData";
+import { fetchData, fetchGlobalData } from "@/utils/fetchData";
 import CoreTeamSection from "@/components/sections/staff-profile/CoreTeamSection";
 import InternsSection from "@/components/sections/staff-profile/InternsSection";
 import Header from "@/components/header/Header";
@@ -8,7 +8,6 @@ import Footer from "@/components/Footer/Footer";
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 
 import type { StaffPageResponse } from "@/types/api/response/staffPageResponse";
-import type { GlobalSite } from "@/types/api/global";
 import type { Metadata } from "next";
 
 async function getStaffData() {
@@ -21,13 +20,8 @@ async function getStaffData() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: globalData } = await fetchData<GlobalSite>(
-    `${process.env.NEXT_PUBLIC_API_URL}/global`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
-
+  const { data: globalData } = await fetchGlobalData();
+  
   return {
     title: globalData.siteName,
     description: globalData.siteDescription,

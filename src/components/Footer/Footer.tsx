@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Container,
@@ -8,44 +10,13 @@ import {
   Separator,
   Link as ChakraLink,
 } from "@chakra-ui/react";
+import { useGlobalData } from "@/components/provider/GlobalDataProvider";
 import { Image } from "@/components/Image";
 import { FooterNavigationGroup } from "./FooterNavigationGroup";
-import { fetchData } from "@/utils/fetchData";
 import IlustrationImage from "./IlustrationImage";
-import qs from "qs";
 
-import type { GlobalSite } from "@/types/api/global";
-
-async function getGlobalSiteData() {
-  const query = qs.stringify({
-    populate: {
-      footer: {
-        populate: {
-          logo: {
-            populate: "*",
-          },
-          socialMedia: {
-            populate: "*",
-          },
-          groups: {
-            populate: "*",
-          },
-        },
-      },
-    },
-  });
-
-  return await fetchData<GlobalSite>(
-    `${process.env.NEXT_PUBLIC_API_URL}/global?${query}`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
-}
-
-export default async function Footer() {
-  const response = await getGlobalSiteData();
-  const footer = response.data.footer;
+export default function Footer() {
+  const { footer } = useGlobalData()!;
 
   return (
     <>
@@ -250,7 +221,7 @@ export default async function Footer() {
                   _hover={{ textDecoration: "none" }}
                 >
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/${socialMedia.icon.url}`}
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${socialMedia.icon.url}`}
                     w="4rem"
                     h="4rem"
                     rounded={"full"}

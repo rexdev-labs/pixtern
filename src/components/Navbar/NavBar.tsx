@@ -13,40 +13,18 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { MdSearch, MdMenu, MdClose } from "react-icons/md";
+import { useGlobalData } from "@/components/provider/GlobalDataProvider";
 import { useGSAP } from "@gsap/react";
 import { useState, useRef } from "react";
 import NextLink from "next/link";
 import gsap from "gsap";
 
-interface Route {
-  title: string;
-  href: string;
+interface NavbarProps {
+  theme?: "light" | "dark";
 }
 
-const routes: Route[] = [
-  {
-    title: "Beranda",
-    href: "/",
-  },
-  {
-    title: "Tentang",
-    href: "/about",
-  },
-  {
-    title: "Profil",
-    href: "/staff",
-  },
-  {
-    title: "Karya & Proyek",
-    href: "#",
-  },
-  {
-    title: "Testimoni",
-    href: "#",
-  },
-];
-
-export default function Navbar() {
+export default function Navbar({ theme = "light" }: NavbarProps) {
+  const { navbar } = useGlobalData()!;
   const navbarRef = useRef<HTMLDivElement | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -93,13 +71,24 @@ export default function Navbar() {
       left={0}
       zIndex={1000}
       transition="all 0.36s ease"
-      bg={scrolled ? "rgba(0,0,0,0.4)" : "transparent"}
+      bg={
+        scrolled
+          ? theme === "light"
+            ? "rgba(255,255,255,0.8)"
+            : "rgba(0,0,0,0.4)"
+          : "transparent"
+      }
       backdropFilter={scrolled ? "blur(12px)" : "none"}
       borderBottom={scrolled ? "1px solid rgba(255,255,255,0.06)" : "none"}
     >
       {/* Logo */}
       <Link as={NextLink} href="/" maxW="120px" display="block">
-        <Image src="/images/logo/pixel.png" alt="Pixel Logo" />
+        <Image
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}${
+            theme === "light" ? navbar.darkIcon.url : navbar.lightIcon.url
+          }`}
+          alt="Pixel Logo"
+        />
       </Link>
 
       {/* Menu desktop */}
@@ -109,8 +98,13 @@ export default function Navbar() {
         fontWeight="medium"
         display={{ base: "none", md: "none", lg: "flex" }}
       >
-        {routes.map((route) => (
-          <Link key={route.title} as={NextLink} color="white" href={route.href}>
+        {navbar.navigations?.map((route) => (
+          <Link
+            key={route.title}
+            as={NextLink}
+            color={theme === "light" ? "black" : "white"}
+            href={route.href}
+          >
             {route.title}
           </Link>
         ))}
@@ -124,7 +118,7 @@ export default function Navbar() {
               aria-label="Search"
               display={{ base: "none", md: "none", lg: "flex" }}
               bg="transparent"
-              color="white"
+              color={theme === "light" ? "black" : "white"}
               _hover={{ bg: "rgba(255,255,255,0.1)" }}
               size="sm"
               rounded="full"
@@ -172,7 +166,7 @@ export default function Navbar() {
               aria-label="Open menu"
               display={{ base: "flex", md: "flex", lg: "none" }}
               bg="transparent"
-              color="white"
+              color={theme === "light" ? "black" : "white"}
             >
               <MdMenu />
             </IconButton>
@@ -191,7 +185,7 @@ export default function Navbar() {
                       <IconButton
                         aria-label="Close menu"
                         bg="transparent"
-                        color="white"
+                        color={theme === "light" ? "black" : "white"}
                       >
                         <MdClose />
                       </IconButton>
@@ -223,7 +217,7 @@ export default function Navbar() {
 
                 {/* Links mobile */}
                 <VStack align="start" gap={5} mt={6}>
-                  {routes.map((route) => (
+                  {navbar.navigations?.map((route) => (
                     <Link
                       key={route.title}
                       as={NextLink}

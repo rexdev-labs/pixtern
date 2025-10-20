@@ -145,7 +145,7 @@ function Section({
               {persons.map((person) => (
                 <PersonCard
                   key={person.id}
-                  href={`${personType}/${person.slug}`}
+                  href={`/${personType}/${person.slug}`}
                   name={person.name}
                   backgroundColor={person.detail!.backgroundColor}
                   avatarImage={person.detail!.avatarImage}

@@ -1,5 +1,5 @@
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
-import { fetchData } from "@/utils/fetchData";
+import { fetchData, fetchGlobalData } from "@/utils/fetchData";
 import BackgroundCloud from "@/components/background/BackgroundCloud";
 import Navbar from "@/components/Navbar/NavBar";
 import Footer from "@/components/Footer/Footer";
@@ -12,7 +12,6 @@ import SocialMediaCard from "@/components/cards/profile/SocialMediaCard";
 import qs from "qs";
 
 import type { AboutPageResponse } from "@/types/api/response/aboutPageResponse";
-import type { GlobalSite } from "@/types/api/global";
 import type { Metadata } from "next";
 
 async function getAboutPageData() {
@@ -33,12 +32,7 @@ async function getAboutPageData() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: globalData } = await fetchData<GlobalSite>(
-    `${process.env.NEXT_PUBLIC_API_URL}/global`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
+  const { data: globalData } = await fetchGlobalData();
 
   return {
     title: globalData.siteName,

@@ -117,7 +117,7 @@ export default async function ProfilePage({
           </Container>
 
           {person.quotes && <QuotesCard quotes={person.quotes} />}
-          <SeeOthersCard others={person.seeOthers} />
+          <SeeOthersCard type="teams" others={person.seeOthers} />
           <Footer />
         </BackgroundCloud>
       </ScrollSmootherWrapper>

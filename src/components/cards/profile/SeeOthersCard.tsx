@@ -13,7 +13,8 @@ import type { Team } from "@/types/api/person/team";
 
 export default function SeeOthersCard({
   others,
-}: Readonly<{ others: Intern[] | Team[] }>) {
+  type,
+}: Readonly<{ others: Intern[] | Team[], type: "teams" | "interns" }>) {
   const containerRef = useRef(null);
 
   useGSAP(
@@ -96,6 +97,7 @@ export default function SeeOthersCard({
             {others.map((person) => (
               <PersonCard
                 key={person.id}
+                href={`/${type}/${person.slug}`}
                 name={person.name}
                 backgroundColor={person.detail!.backgroundColor}
                 avatarImage={person.detail!.avatarImage}

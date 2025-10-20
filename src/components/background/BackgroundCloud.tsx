@@ -9,22 +9,13 @@ interface BackgroundCloudProps {
 
 export default function BackgroundCloud({ children }: BackgroundCloudProps) {
   return (
-    <Box position="relative" w="full">
-      <Image
-        src="/images/cloud/cloudss.svg"
-        alt="Cloud Left"
-        position="absolute"
-        top={{ base: "40%", md: "15%", lg: "14%" }}
-        left="0"
-        w="100%"
-        h="auto"
-        objectFit="cover"
-        zIndex={0}
-        pointerEvents="none"
-      />
-      <Box position="relative" zIndex={1}>
-        {children}
-      </Box>
+    <Box
+      backgroundRepeat="no-repeat"
+      backgroundSize="cover"
+      backgroundPositionY="0"
+      backgroundImage="url(/images/cloud/cloudss.svg)"
+    >
+      {children}
     </Box>
   );
 }

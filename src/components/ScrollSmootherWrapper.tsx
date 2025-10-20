@@ -51,8 +51,7 @@ export default function ScrollSmootherWrapper({
         }
         window.removeEventListener("resize", handleResize);
       };
-    },
-    { scope: smoothWrapperRef }
+    }
   );
 
   return (

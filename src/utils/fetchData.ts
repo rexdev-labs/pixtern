@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+
+import type { Global } from "@/types/api/global";
 import type { ApiResponse } from "@/types/api/response/apiResponse";
 
 export async function fetchData<T>(
@@ -11,4 +13,13 @@ export async function fetchData<T>(
   if (!res.ok) throw new Error(`Fetch failed: ${res.statusText}`);
 
   return res.json();
+}
+
+export async function fetchGlobalData() {
+  return await fetchData<Global>(
+    `${process.env.NEXT_PUBLIC_API_URL}/global`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
 }
