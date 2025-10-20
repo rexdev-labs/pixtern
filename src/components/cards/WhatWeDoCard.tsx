@@ -1,6 +1,6 @@
 import { Box, Card } from "@chakra-ui/react";
 import { Image } from "@/components/Image";
-import type { Job } from "@/types/api/homepage/whatWeDoSection";
+import type { Job } from "@/types/api/job";
 
 export function WhatWeDoCard({ job }: Readonly<{ job: Job }>) {
   return (
@@ -94,7 +94,7 @@ export function WhatWeDoCard({ job }: Readonly<{ job: Job }>) {
             color="gray.600"
             lineClamp={5}
           >
-            {job.description}
+            {job.excerpt || job.description}
           </Card.Description>
         </Box>
       </Card.Body>

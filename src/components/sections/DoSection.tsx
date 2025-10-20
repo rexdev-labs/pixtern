@@ -16,6 +16,7 @@ import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { WhatWeDoCard } from "@/components/cards/WhatWeDoCard";
 import { Image } from "@/components/Image";
+import Link from "next/link";
 import Bird from "@/components/Bird";
 import gsap from "gsap";
 
@@ -297,6 +298,7 @@ export default function DoSection({
         <Box px={{ base: 16, md: 0 }}>
           <Center>
             <Button
+              asChild
               className="cta-button"
               bg="brand.bg.black"
               rounded="full"
@@ -308,7 +310,7 @@ export default function DoSection({
               w={{ base: "full", sm: "auto" }}
               minW={{ sm: "200px" }}
             >
-              Lihat Selengkapnya
+              <Link href="/what-we-do">Lihat Selengkapnya</Link>
             </Button>
           </Center>
         </Box>

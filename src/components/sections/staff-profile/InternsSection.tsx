@@ -60,6 +60,7 @@ export default function InternsSection({
         position="absolute"
         top="50%"
         left="10%"
+        display={{ base: "none", md: "block" }}
       />
 
       <Bird
@@ -70,6 +71,7 @@ export default function InternsSection({
         position="absolute"
         top="50%"
         right="10%"
+        display={{ base: "none", md: "block" }}
       />
     </VStack>
   );

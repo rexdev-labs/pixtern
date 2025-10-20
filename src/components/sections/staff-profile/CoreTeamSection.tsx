@@ -32,6 +32,7 @@ export default function CoreTeamSection({
         position="absolute"
         top="50%"
         left="10%"
+        display={{ base: "none", md: "block" }}
       />
       <VStack gap={{ base: 4, md: 6, lg: 8 }}>
         {teamChunks.map((chunk, index) => (

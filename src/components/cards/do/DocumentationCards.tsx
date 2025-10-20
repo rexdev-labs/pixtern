@@ -1,23 +1,18 @@
-"use client"
+"use client";
 
-import { Box, Grid, Image, Heading } from "@chakra-ui/react"
-import { useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { useGSAP } from "@gsap/react"
-  
-gsap.registerPlugin(ScrollTrigger)
+import { Box, Grid, Image, Heading } from "@chakra-ui/react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 
-interface CardDocumentProps {
-  images: string[]
-}
+import type { StrapiImage } from "@/types/api/strapiImage";
 
-export default function CardDocument({ images }: CardDocumentProps) {
-  const documentRef = useRef(null)
+export default function DocumentationCards({ images }: { images: StrapiImage[] }) {
+  const documentRef = useRef(null);
 
   useGSAP(
     () => {
-      gsap.set(".doc-card", { opacity: 0, x: 100 })
+      gsap.set(".doc-card", { opacity: 0, x: 100 });
 
       gsap.to(".doc-card", {
         opacity: 1,
@@ -27,14 +22,14 @@ export default function CardDocument({ images }: CardDocumentProps) {
         ease: "expo.inOut",
         scrollTrigger: {
           trigger: documentRef.current,
-          start: "top 75%", 
-          end: "bottom 25%", 
+          start: "top 75%",
+          end: "bottom 25%",
           toggleActions: "play none none reverse",
         },
-      })
+      });
     },
     { scope: documentRef }
-  )
+  );
 
   return (
     <Box ref={documentRef}>
@@ -53,10 +48,11 @@ export default function CardDocument({ images }: CardDocumentProps) {
         gap={{ base: 4, md: 6 }}
       >
         {images.map((src, index) => {
-          if (index >= 6) return null
+          if (index >= 6) return null;
+          
           return (
             <Box
-              key={index}
+              key={src.id}
               className="doc-card"
               bg="white"
               border="2px solid"
@@ -69,15 +65,15 @@ export default function CardDocument({ images }: CardDocumentProps) {
               overflow="hidden"
             >
               <Image
-                src={src}
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${src.url}`}
                 alt={`Documentation ${index + 1}`}
                 objectFit="cover"
                 boxSize="100%"
               />
             </Box>
-          )
+          );
         })}
       </Grid>
     </Box>
-  )
-}       
+  );
+}

@@ -6,6 +6,7 @@ import Header from "@/components/header/Header";
 import Navbar from "@/components/Navbar/NavBar";
 import Footer from "@/components/Footer/Footer";
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
+import BackgroundCloud from "@/components/background/BackgroundCloud";
 
 import type { StaffPageResponse } from "@/types/api/response/staffPageResponse";
 import type { Metadata } from "next";
@@ -21,7 +22,7 @@ async function getStaffData() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: globalData } = await fetchGlobalData();
-  
+
   return {
     title: globalData.siteName,
     description: globalData.siteDescription,
@@ -35,31 +36,33 @@ export default async function StaffPage() {
     <>
       <Navbar />
       <ScrollSmootherWrapper>
-        <Container as="main">
-          <Box
-            bgGradient="linear(to-br, blue.50, purple.50)"
-            py={{ base: 12, md: 20 }}
-            px={4}
-          >
-            <Header
-              text="Meet Our Creative Team"
-              variant="double"
-              color="brand.text.blue"
-            />
-          </Box>
+        <BackgroundCloud>
+          <Container as="main">
+            <Box
+              bgGradient="linear(to-br, blue.50, purple.50)"
+              py={{ base: 12, md: 20 }}
+              px={4}
+            >
+              <Header
+                text="Meet Our Creative Team"
+                variant="double"
+                color="brand.text.blue"
+              />
+            </Box>
 
-          {/* Core Team Section */}
-          <CoreTeamSection teams={data.data.teams} />
+            {/* Core Team Section */}
+            <CoreTeamSection teams={data.data.teams} />
 
-          {/* Internship Team Section */}
-          <VStack gap={12} alignItems="stretch">
-            {data.data.interns.map((internData) => (
-              <InternsSection key={internData.id} internData={internData} />
-            ))}
-          </VStack>
-        </Container>
+            {/* Internship Team Section */}
+            <VStack gap={12} alignItems="stretch">
+              {data.data.interns.map((internData) => (
+                <InternsSection key={internData.id} internData={internData} />
+              ))}
+            </VStack>
+          </Container>
 
-        <Footer />
+          <Footer />
+        </BackgroundCloud>
       </ScrollSmootherWrapper>
     </>
   );

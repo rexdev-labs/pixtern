@@ -49,9 +49,11 @@ const feedbackPreset = [
     bottom: { base: "16", md: "19%", lg: "19%" },
     position: { base: "relative", md: "absolute" },
   },
-]
+];
 
-export default function ClientSection({ data }: Readonly<{ data: TestimonialSection }>) {
+export default function ClientSection({
+  data,
+}: Readonly<{ data: TestimonialSection }>) {
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const floatingImagesRef = useRef<(HTMLImageElement | null)[]>([]);
 
@@ -87,14 +89,14 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
 
     floatingImagesRef.current.forEach((img, index) => {
       if (img) {
-        const isQuote = index === 2 || index === 5; 
+        const isQuote = index === 2 || index === 5;
 
         gsap.fromTo(
           img,
           {
             opacity: 0,
             scale: 0,
-            rotation: isQuote ? 0 : (index % 2 === 0 ? -180 : 180),
+            rotation: isQuote ? 0 : index % 2 === 0 ? -180 : 180,
           },
           {
             opacity: 1,
@@ -114,7 +116,13 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
 
         if (!isQuote) {
           gsap.to(img, {
-            y: isMobile ? (index % 2 === 0 ? -8 : -10) : (index % 2 === 0 ? -15 : -20),
+            y: isMobile
+              ? index % 2 === 0
+                ? -8
+                : -10
+              : index % 2 === 0
+              ? -15
+              : -20,
             duration: isMobile ? 1.5 + index * 0.2 : 2 + index * 0.3,
             ease: "sine.inOut",
             repeat: -1,
@@ -123,7 +131,13 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
           });
 
           gsap.to(img, {
-            rotation: isMobile ? (index % 2 === 0 ? 5 : -5) : (index % 2 === 0 ? 10 : -10),
+            rotation: isMobile
+              ? index % 2 === 0
+                ? 5
+                : -5
+              : index % 2 === 0
+              ? 10
+              : -10,
             duration: isMobile ? 2.5 + index * 0.15 : 3 + index * 0.2,
             ease: "sine.inOut",
             repeat: -1,
@@ -136,7 +150,12 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
   }, []);
 
   return (
-    <Box position="relative" py={{ base: 12, md: 20, lg: 20 }} overflow="hidden" id="testimoni">
+    <Box
+      position="relative"
+      py={{ base: 12, md: 20, lg: 20 }}
+      overflow="hidden"
+      id="testimoni"
+    >
       {/* Background Text */}
       <Text
         fontFamily="cursive"
@@ -169,7 +188,12 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
       </Text>
 
       {/* Section Heading */}
-      <Box textAlign="center" mb={{ base: 10, md: 32, lg: 32 }} zIndex={1} position="relative">
+      <Box
+        textAlign="center"
+        mb={{ base: 10, md: 32, lg: 32 }}
+        zIndex={1}
+        position="relative"
+      >
         <Heading
           fontSize={{ base: "5xl", sm: "4xl", md: "7xl", lg: "100px" }}
           fontWeight="extrabold"
@@ -210,27 +234,31 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
         gap={{ base: 5, sm: 6, md: 0, lg: 0 }}
         px={{ base: 4, sm: 4, md: 0, lg: 0 }}
       >
-        {data.testimonials?.slice(0, feedbackPreset.length).map((testimonial, index) => (
-          <ClientCard
-            key={testimonial.id}
-            ref={(el: HTMLDivElement | null) => {
-              if (el) cardsRef.current[index] = el;
-            }}
-            username={testimonial.username}
-            date={testimonial.date}
-            review={testimonial.review}
-            rating={testimonial.rating}
-            avatar={testimonial.avatar}
-            zIndex={index}
-            {...feedbackPreset[index]}
-          />
-        ))}
+        {data.testimonials
+          ?.slice(0, feedbackPreset.length)
+          .map((testimonial, index) => (
+            <ClientCard
+              key={testimonial.id}
+              ref={(el: HTMLDivElement | null) => {
+                if (el) cardsRef.current[index] = el;
+              }}
+              username={testimonial.username}
+              date={testimonial.date}
+              review={testimonial.review}
+              rating={testimonial.rating}
+              avatar={testimonial.avatar}
+              zIndex={index}
+              {...feedbackPreset[index]}
+            />
+          ))}
       </Box>
 
       {/* Floating Images */}
 
       <Image
-        ref={(el) => { floatingImagesRef.current[0] = el; }}
+        ref={(el) => {
+          floatingImagesRef.current[0] = el;
+        }}
         src="/images/float/starblue.png"
         alt="StarBlue"
         position="absolute"
@@ -240,7 +268,9 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
         zIndex={3}
       />
       <Image
-        ref={(el) => { floatingImagesRef.current[1] = el; }}
+        ref={(el) => {
+          floatingImagesRef.current[1] = el;
+        }}
         src="/images/float/starpurple.png"
         alt="StarPurple"
         position="absolute"
@@ -250,7 +280,9 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
         zIndex={3}
       />
       <Image
-        ref={(el) => { floatingImagesRef.current[2] = el; }}
+        ref={(el) => {
+          floatingImagesRef.current[2] = el;
+        }}
         src="/images/float/quote.png"
         alt="Quote"
         position="absolute"
@@ -260,7 +292,9 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
         zIndex={3}
       />
       <Image
-        ref={(el) => { floatingImagesRef.current[3] = el; }}
+        ref={(el) => {
+          floatingImagesRef.current[3] = el;
+        }}
         src="/images/float/starbase.png"
         alt="StarBase"
         position="absolute"
@@ -270,7 +304,9 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
         zIndex={3}
       />
       <Image
-        ref={(el) => { floatingImagesRef.current[4] = el; }}
+        ref={(el) => {
+          floatingImagesRef.current[4] = el;
+        }}
         src="/images/float/starred.png"
         alt="StarRed"
         position="absolute"
@@ -280,7 +316,9 @@ export default function ClientSection({ data }: Readonly<{ data: TestimonialSect
         zIndex={3}
       />
       <Image
-        ref={(el) => { floatingImagesRef.current[5] = el; }}
+        ref={(el) => {
+          floatingImagesRef.current[5] = el;
+        }}
         src="/images/float/quote.png"
         alt="Quote2"
         position="absolute"

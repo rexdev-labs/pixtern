@@ -71,13 +71,7 @@ export default function Navbar({ theme = "light" }: NavbarProps) {
       left={0}
       zIndex={1000}
       transition="all 0.36s ease"
-      bg={
-        scrolled
-          ? theme === "light"
-            ? "rgba(255,255,255,0.8)"
-            : "rgba(0,0,0,0.4)"
-          : "transparent"
-      }
+      bg={scrolled ? "rgba(0,0,0,0.4)" : "transparent"}
       backdropFilter={scrolled ? "blur(12px)" : "none"}
       borderBottom={scrolled ? "1px solid rgba(255,255,255,0.06)" : "none"}
     >
@@ -85,7 +79,9 @@ export default function Navbar({ theme = "light" }: NavbarProps) {
       <Link as={NextLink} href="/" maxW="120px" display="block">
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_URL}${
-            theme === "light" ? navbar.darkIcon.url : navbar.lightIcon.url
+            theme === "light" && !scrolled
+              ? navbar.darkIcon.url
+              : navbar.lightIcon.url
           }`}
           alt="Pixel Logo"
         />
@@ -102,7 +98,7 @@ export default function Navbar({ theme = "light" }: NavbarProps) {
           <Link
             key={route.title}
             as={NextLink}
-            color={theme === "light" ? "black" : "white"}
+            color={theme === "light" && !scrolled ? "black" : "white"}
             href={route.href}
           >
             {route.title}
@@ -118,7 +114,7 @@ export default function Navbar({ theme = "light" }: NavbarProps) {
               aria-label="Search"
               display={{ base: "none", md: "none", lg: "flex" }}
               bg="transparent"
-              color={theme === "light" ? "black" : "white"}
+              color={theme === "light" && !scrolled ? "black" : "white"}
               _hover={{ bg: "rgba(255,255,255,0.1)" }}
               size="sm"
               rounded="full"
