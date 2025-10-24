@@ -49,7 +49,7 @@ export default async function WhatWeDoPage() {
 
               <Box mx="auto" py={{ base: 10, md: 20 }} px={{ base: 4, md: 0 }}>
                 <DocumentationCards
-                  images={whatWeDoData.documentatiton || []}
+                  images={whatWeDoData.documentation || []}
                 />
               </Box>
             </Container>
